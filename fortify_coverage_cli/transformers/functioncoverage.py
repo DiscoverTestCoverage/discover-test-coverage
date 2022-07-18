@@ -10,7 +10,6 @@ from typing import Tuple
 import libcst as cst
 
 
-
 class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):
     """Transform program source code to collect fortified function coverage."""
 
