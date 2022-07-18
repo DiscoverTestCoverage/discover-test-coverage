@@ -29,7 +29,6 @@ def transform_files_using_libcst(
     project_directory_path: Path,
     program_directory: Path,
     coverage_type: coverage.CoverageType,
-    save_code: bool = False,
 ) -> None:
     """Transform directory of files by adding instrumentation for fortified coverage."""
     global progress
