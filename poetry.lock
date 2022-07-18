@@ -132,15 +132,11 @@ optional = false
 python-versions = "^3.8"
 develop = false
 
-[package.dependencies]
-isort = "^5.10.1"
-libcst = "^0.4.7"
-rich = "^12.5.1"
-typer = {version = "^0.6.1", extras = ["all"]}
-
 [package.source]
-type = "directory"
-url = "../fortify-coverage"
+type = "git"
+url = "https://github.com/FortifiedTestCoverage/fortify-coverage"
+reference = "master"
+resolved_reference = "b22d90263152023d4e5f8de87982455c35f1f359"
 
 [[package]]
 name = "iniconfig"
@@ -521,7 +517,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "b14ef74f7e088bf0c3ec6b9c9060da203db64d639497c09c92d1b01d906c6b24"
+content-hash = "8aa425c05fa2bc410a88bdfa57f9cd4e260dbca8b8a69d7c2a4ded1937dcba00"
 
 [metadata.files]
 astroid = []
