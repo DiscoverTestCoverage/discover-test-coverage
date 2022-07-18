@@ -1,7 +1,7 @@
 """Command-line interface for fortified coverage calculation."""
 
-from fortify_coverage import coverage
 from fortify_coverage_cli import debug
+from fortify_coverage_cli import instrumentation
 from fortify_coverage_cli import output
 from fortify_coverage_cli import run
 from fortify_coverage_cli import server
@@ -18,8 +18,8 @@ app = typer.Typer()
 def instrument_program(
     project_directory: Path = typer.Option(...),
     program_directory: Path = typer.Option(...),
-    coverage_type: coverage.CoverageType = typer.Option(
-        coverage.CoverageType.FUNCTION.value
+    instrumentation_type: instrumentation.InstrumentationType = typer.Option(
+        instrumentation.InstrumentationType.FUNCTION.value
     ),
     verbose: bool = typer.Option(False),
     debug_level: debug.DebugLevel = typer.Option(debug.DebugLevel.ERROR.value),
@@ -32,7 +32,7 @@ def instrument_program(
     output.setup(debug_level, debug_destination)
     output.logger.debug(f"Instrumenting the project in {project_directory}")
     output.logger.debug(f"Instrumenting program modules in {program_directory}")
-    output.logger.debug(f"Adding instrumentation for {coverage_type}")
+    output.logger.debug(f"Adding instrumentation for {instrumentation_type}")
     # display the header
     output.print_header()
     # display details about configuration as
@@ -41,13 +41,13 @@ def instrument_program(
         verbose,
         debug_level=debug_level,
         debug_destination=debug_destination,
-        coverage_type=coverage_type,
+        instrumentation_type=instrumentation_type,
         project_directory=project_directory,
         program_directory=program_directory,
     )
     # instrument all of the files in a program
     transform.transform_files_using_libcst(
-        project_directory, program_directory, coverage_type
+        project_directory, program_directory, instrumentation_type
     )
     # display the footer
     output.print_footer()
