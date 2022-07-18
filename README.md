@@ -8,4 +8,5 @@ This repository provides the `fortify` command that allows you to:
   - Collect standard coverage information
   - Collect fortified coverage information
 
-This project is in early stages and thus the documentation and implementation are emerging.
+This project is in early stages and thus the documentation and implementation
+are emerging.
