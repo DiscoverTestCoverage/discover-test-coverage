@@ -23,6 +23,21 @@ def setup(
     logger = configure.configure_logging(debug_level.value, debug_destination.value)
 
 
+def print_diagnostics(verbose, **configurations) -> None:
+    """Display all variables input to the function."""
+    global console
+    # display diagnostic information for each configuration keyword argument
+    if verbose:
+        console.print(":sparkles: Configured with these parameters:")
+        # iterate through each of the configuration keyword arguments
+        for configuration in configurations:
+            # print the name and the value of the keyword argument
+            console.print(
+                f"{constants.markers.Indent}{configuration} = {configurations[configuration]}"
+            )
+        console.print()
+
+
 def print_header() -> None:
     """Display tool details in the header."""
     global console
