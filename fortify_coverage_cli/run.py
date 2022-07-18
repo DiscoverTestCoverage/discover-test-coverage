@@ -23,5 +23,7 @@ def run_test_suite(
     output.logger.debug(f"Change into the project directory: {project_directory}")
     initial_current_working_directory = Path.cwd()
     os.chdir(project_directory)
+    output.print_test_start()
     subprocess.run(test_run_command, shell=True)
+    output.print_test_finish()
     os.chdir(initial_current_working_directory)
