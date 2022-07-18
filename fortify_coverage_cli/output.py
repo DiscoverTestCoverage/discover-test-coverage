@@ -41,6 +41,21 @@ def print_server() -> None:
     console.print()
 
 
+def print_test_start() -> None:
+    """Display details about the test run."""
+    global console
+    console.print(":sparkles: Start to run test suite for the specified program")
+    console.print()
+
+
+def print_test_finish() -> None:
+    """Display details about the test run."""
+    global console
+    console.print()
+    console.print(":sparkles: Finish running test suite for the specified program")
+    console.print()
+
+
 def print_footer() -> None:
     """Display concluding details in the footer."""
     global console
