@@ -54,6 +54,45 @@ def instrument_program(
 
 
 @app.command()
+def instrument_tests(
+    project_directory: Path = typer.Option(...),
+    tests_directory: Path = typer.Option(...),
+    instrumentation_type: instrumentation.InstrumentationType = typer.Option(
+        instrumentation.InstrumentationType.FIXTURE.value
+    ),
+    verbose: bool = typer.Option(False),
+    debug_level: debug.DebugLevel = typer.Option(debug.DebugLevel.ERROR.value),
+    debug_destination: debug.DebugDestination = typer.Option(
+        debug.DebugDestination.CONSOLE.value, "--debug-dest"
+    ),
+):
+    """Modify code of application and test suite."""
+    # setup the console and the logger through output module
+    output.setup(debug_level, debug_destination)
+    output.logger.debug(f"Instrumenting the project in {project_directory}")
+    output.logger.debug(f"Instrumenting test files in {tests_directory}")
+    output.logger.debug(f"Adding instrumentation for {instrumentation_type}")
+    # display the header
+    output.print_header()
+    # display details about configuration as
+    # long as verbose output was requested
+    output.print_diagnostics(
+        verbose,
+        debug_level=debug_level,
+        debug_destination=debug_destination,
+        instrumentation_type=instrumentation_type,
+        project_directory=project_directory,
+        program_directory=tests_directory,
+    )
+    # instrument all of the files in a program
+    transform.transform_files_using_libcst(
+        project_directory, tests_directory, instrumentation_type
+    )
+    # display the footer
+    output.print_footer()
+
+
+@app.command()
 def test(
     project_directory: Path = typer.Option(...),
     program_directory: Path = typer.Option(...),
