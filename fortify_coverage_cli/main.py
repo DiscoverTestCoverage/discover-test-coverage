@@ -70,7 +70,7 @@ def test(
         debug_destination=debug_destination,
         test_run_command=test_run_command,
         project_directory=project_directory,
-        program_directory=program_directory
+        program_directory=program_directory,
     )
     # run the test suite using Pytest
     run.run_test_suite(project_directory, program_directory, test_run_command)
