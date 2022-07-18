@@ -1,10 +1,9 @@
 """Instrument an application and its test suite using libCST."""
 
-from fortify_coverage import coverage
-
 from fortify_coverage_cli.transformers import functioncoverage
 
 from fortify_coverage_cli import file
+from fortify_coverage_cli import instrumentation
 from fortify_coverage_cli import output
 
 from pathlib import Path
@@ -28,9 +27,9 @@ source_tree_configuration = None
 def transform_files_using_libcst(
     project_directory_path: Path,
     program_directory: Path,
-    coverage_type: coverage.CoverageType,
+    instrumentation_type: instrumentation.InstrumentationType,
 ) -> None:
-    """Transform directory of files by adding instrumentation for fortified coverage."""
+    """Transform directory of files by adding instrumentation."""
     global progress
     # create the fully qualified directory that contains the program's source code
     fully_qualified_program_directory = project_directory_path / program_directory
@@ -49,7 +48,7 @@ def transform_files_using_libcst(
     with Progress() as progress:
         # create the instrumentation task label for the progress bar
         task = progress.add_task(
-            f":sparkles: Instrument to track {coverage_type} coverage",
+            f":sparkles: Add {instrumentation_type} instrumentation",
             total=len(program_files_list),
         )
         # iteratively transform the source code for each of the program files
@@ -57,7 +56,7 @@ def transform_files_using_libcst(
             progress.console.print(f"Instrumenting {file.elide_path(program_file)}")
             # instrument the current program file for the specific coverage type
             instrumented_module = transform_file_using_libcst(
-                program_file, coverage_type
+                program_file, instrumentation_type
             )
             # create a new pathlib Path object for the instrumented module
             instrumented_file = Path(hidden_program_directory / program_file.name)
@@ -68,7 +67,7 @@ def transform_files_using_libcst(
 
 def transform_file_using_libcst(
     program_file: Path,
-    coverage_type: coverage.CoverageType,
+    instrumentation_type: instrumentation.InstrumentationType,
 ) -> Module:
     """Transform specified file by adding instrumentation for fortified coverage."""
     global source_tree_configuration
