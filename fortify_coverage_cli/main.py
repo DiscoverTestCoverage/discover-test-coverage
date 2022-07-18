@@ -21,6 +21,7 @@ def instrument_program(
     coverage_type: coverage.CoverageType = typer.Option(
         coverage.CoverageType.FUNCTION.value
     ),
+    verbose: bool = typer.Option(False),
     debug_level: debug.DebugLevel = typer.Option(debug.DebugLevel.ERROR.value),
     debug_destination: debug.DebugDestination = typer.Option(
         debug.DebugDestination.CONSOLE.value, "--debug-dest"
@@ -34,6 +35,16 @@ def instrument_program(
     output.logger.debug(f"Adding instrumentation for {coverage_type}")
     # display the header
     output.print_header()
+    # display details about configuration as
+    # long as verbose output was requested
+    output.print_diagnostics(
+        verbose,
+        debug_level=debug_level,
+        debug_destination=debug_destination,
+        coverage_type=coverage_type,
+        project_directory=project_directory,
+        program_directory=program_directory,
+    )
     # instrument all of the files in a program
     transform.transform_files_using_libcst(
         project_directory, program_directory, coverage_type
