@@ -2,16 +2,14 @@
 
 from fortify_coverage import coverage
 
+from fortify_coverage_cli.transformers import functioncoverage
+
 from fortify_coverage_cli import file
 from fortify_coverage_cli import output
 
 from pathlib import Path
 
 import difflib
-
-from typing import List
-from typing import Optional
-from typing import Tuple
 
 from rich.table import Column
 from rich.progress import Progress, BarColumn, TextColumn
@@ -25,56 +23,6 @@ from libcst import Module
 # by various visit or leave methods after
 # the initial construction of CAST
 source_tree_configuration = None
-
-
-class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):
-    """Transform program source code to collect fortified function coverage."""
-
-    def __init__(self):
-        # stack for storing the canonical name of the current function
-        self.stack: List[Tuple[str, ...]] = []
-
-    def visit_ClassDef(self, node: cst.ClassDef) -> Optional[bool]:
-        self.stack.append(node.name.value)
-
-    def leave_ClassDef(
-        self, original_node: cst.ClassDef, updated_node: cst.ClassDef
-    ) -> cst.CSTNode:
-        self.stack.pop()
-        return updated_node
-
-    def visit_FunctionDef(self, node: cst.FunctionDef) -> Optional[bool]:
-        self.stack.append(node.name.value)
-        return False
-
-    def leave_FunctionDef(
-        self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
-    ) -> cst.CSTNode:
-        key = tuple(self.stack)
-        self.stack.pop()
-        output.logger.debug(
-            f"current function definition node's name: {original_node.name}"
-        )
-        output.logger.debug(f"contents of the stack after the pop() call: {self.stack}")
-        return updated_node.with_changes(decorators=[cst.Decorator(cst.Name("sample"))])
-
-    def leave_Module(
-        self, original_node: cst.Module, updated_node: cst.Module
-    ) -> cst.CSTNode:
-        global source_tree_configuration
-        output.logger.debug("start --->")
-        output.logger.debug(f"current module node's header: {original_node.header}")
-        output.logger.debug("---> end")
-        updated_node = updated_node.with_changes(
-            header=(
-                cst.parse_statement(
-                    "from fortify import sample # leave_Module",
-                    config=source_tree_configuration,
-                ),
-                *updated_node.header,
-            )
-        )
-        return updated_node
 
 
 def transform_files_using_libcst(
@@ -130,7 +78,7 @@ def transform_file_using_libcst(
     source_tree = cst.parse_module(single_file_text)
     # TODO: check the coverage_type variable and run the
     # requested type of coverage transformation
-    transformer = FortifiedFunctionCoverageTransformer()
+    transformer = functioncoverage.FortifiedFunctionCoverageTransformer()
     source_tree_configuration = source_tree.config_for_parsing
     modified_tree = source_tree.visit(transformer)
     modified_modified_tree = modified_tree.with_changes(
