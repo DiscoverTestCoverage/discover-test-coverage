@@ -14,7 +14,7 @@ typer = {extras = ["all"], version = "^0.6.1"}
 rich = "^12.5.1"
 isort = "^5.10.1"
 libcst = "^0.4.7"
-fortify-coverage = {path = "../fortify-coverage"}
+fortify-coverage = {git = "https://github.com/FortifiedTestCoverage/fortify-coverage"}
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.4"
