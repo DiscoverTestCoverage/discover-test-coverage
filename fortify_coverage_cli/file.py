@@ -9,9 +9,9 @@ from pathlib import PurePath
 from typing import List
 
 
-def find_python_files(program_directory: Path) -> List[Path]:
+def find_python_files(directory: Path) -> List[Path]:
     """Find all of the Python files in a specified directory."""
-    all_python_files = sorted(program_directory.rglob(constants.wildcards.All_Python))
+    all_python_files = sorted(directory.rglob(constants.wildcards.All_Python))
     return all_python_files
 
 
