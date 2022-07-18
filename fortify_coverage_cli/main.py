@@ -49,6 +49,7 @@ def test(
     test_run_command: str = typer.Option(
         run.TestRunCommand.TEST.value, "--test-run-cmd"
     ),
+    verbose: bool = typer.Option(False),
     debug_level: debug.DebugLevel = typer.Option(debug.DebugLevel.ERROR.value),
     debug_destination: debug.DebugDestination = typer.Option(
         debug.DebugDestination.CONSOLE.value, "--debug-dest"
@@ -61,6 +62,14 @@ def test(
     output.logger.debug(f"Testing program modules in {program_directory}")
     # display the header
     output.print_header()
+    output.print_diagnostics(
+        verbose,
+        debug_level=debug_level,
+        debug_destination=debug_destination,
+        test_run_command=test_run_command,
+        project_directory=project_directory,
+        program_directory=program_directory
+    )
     run.run_test_suite(project_directory, program_directory, test_run_command)
 
 
