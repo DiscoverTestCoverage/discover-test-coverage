@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "fortify-coverage-cli"
+version = "0.1.0"
+description = ""
+authors = ["Gregory M. Kapfhammer <gkapfham@allegheny.edu>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+fortify = "fortify_coverage_cli.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typer = {extras = ["all"], version = "^0.6.1"}
+rich = "^12.5.1"
+isort = "^5.10.1"
+libcst = "^0.4.7"
+fortify-coverage = {path = "../fortify-coverage"}
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.14.4"
+black = "^22.6.0"
+pydocstyle = "^6.1.1"
+taskipy = "^1.10.2"
+pytest-cov = "^3.0.0"
+flake8 = "^4.0.1"
+mypy = "^0.961"
+pytest = "^7.1.2"
+
+[tool.taskipy.tasks]
+black = { cmd = "black fortify tests --check", help = "Run the black checks for source code format" }
+flake8 = { cmd = "flake8 fortify tests", help = "Run the flake8 checks for source code documentation" }
+mypy = { cmd = "poetry run mypy fortify", help = "Run the mypy type checker for potential type errors" }
+pydocstyle = { cmd = "pydocstyle fortify tests", help = "Run the pydocstyle checks for source code documentation" }
+pylint = { cmd = "pylint fortify tests", help = "Run the pylint checks for source code documentation" }
+test = { cmd = "pytest -x -s", help = "Run the pytest test suite" }
+test-silent = { cmd = "pytest -x --show-capture=no", help = "Run the pytest test suite without showing output" }
+all = "task black && task flake8 && task pydocstyle && task pylint && task mypy && task test"
+lint = "task black && task flake8 && task pydocstyle && task pylint"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
