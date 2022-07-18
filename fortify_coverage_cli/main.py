@@ -15,7 +15,7 @@ app = typer.Typer()
 
 
 @app.command()
-def instrument(
+def instrument_program(
     project_directory: Path = typer.Option(...),
     program_directory: Path = typer.Option(...),
     coverage_type: coverage.CoverageType = typer.Option(
