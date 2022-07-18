@@ -59,7 +59,7 @@ fortify = create_constants(
     Name="fortify-coverage",
     Separator="/",
     Tagline="Fortify-Coverage: Give Vitamins to Your Coverage Criteria!",
-    Website="https://github.com/FortifiedCoverage/fortify-coverage",
+    Website="https://github.com/FortifiedTestCoverage/fortify-coverage-cli",
 )
 
 # define the wildcards constants
