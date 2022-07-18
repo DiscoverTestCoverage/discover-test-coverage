@@ -47,6 +47,8 @@ class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):
         output.logger.debug("start --->")
         output.logger.debug(f"current module node's header: {original_node.header}")
         output.logger.debug("---> end")
+        # TODO: Add in correct location and add correct import to a
+        # module that exists inside of the fortify-coverage package
         updated_node = updated_node.with_changes(
             header=(
                 cst.parse_statement(
