@@ -62,6 +62,8 @@ def test(
     output.logger.debug(f"Testing program modules in {program_directory}")
     # display the header
     output.print_header()
+    # display details about configuration as
+    # long as verbose output was requested
     output.print_diagnostics(
         verbose,
         debug_level=debug_level,
@@ -70,6 +72,7 @@ def test(
         project_directory=project_directory,
         program_directory=program_directory
     )
+    # run the test suite using Pytest
     run.run_test_suite(project_directory, program_directory, test_run_command)
 
 
