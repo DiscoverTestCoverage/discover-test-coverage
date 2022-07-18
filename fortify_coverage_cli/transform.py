@@ -1,6 +1,7 @@
 """Instrument an application and its test suite using libCST."""
 
 from fortify_coverage import coverage
+
 from fortify_coverage_cli import file
 from fortify_coverage_cli import output
 
