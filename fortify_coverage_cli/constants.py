@@ -44,7 +44,7 @@ markers = create_constants(
     "markers",
     Empty=b"",
     Hidden=".",
-    Indent="  ",
+    Indent="   ",
     Newline="\n",
     Nothing="",
     Space=" ",
