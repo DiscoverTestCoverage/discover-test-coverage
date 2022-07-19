@@ -5,10 +5,6 @@ from fortify_coverage_cli import transform
 
 from datetime import datetime
 
-from typing import List
-from typing import Optional
-from typing import Tuple
-
 import libcst as cst
 
 from libcst import Expr
@@ -54,15 +50,6 @@ class TestFixtureTransformer(cst.CSTTransformer):
         )
         output.logger.debug(f"length of body modified: {len(body_modified)}")
         updated_node = updated_node.with_changes(body=body_modified)
-        # updated_node = updated_node.with_changes(
-        #     header=(
-        #         cst.parse_statement(
-        #             "from fortify import sample # leave_Module",
-        #             config=transform.source_tree_configuration,
-        #         ),
-        #         *updated_node.header,
-        #     )
-        # )
         return updated_node
 
     @staticmethod
