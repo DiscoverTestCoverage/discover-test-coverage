@@ -8,7 +8,6 @@ from enum import Enum
 
 from typing import Union
 
-
 import libcst as cst
 from libcst._nodes.statement import BaseCompoundStatement, SimpleStatementLine
 
