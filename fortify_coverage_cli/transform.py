@@ -1,11 +1,9 @@
 """Instrument an application and its test suite using libCST transformers."""
 
-from fortify_coverage_cli.transformers import functioncoverage
-from fortify_coverage_cli.transformers import testfixtures
-
 from fortify_coverage_cli import file
 from fortify_coverage_cli import instrumentation
 from fortify_coverage_cli import output
+from fortify_coverage_cli import transformergenerator
 
 from pathlib import Path
 
@@ -25,31 +23,13 @@ from libcst import Module
 source_tree_configuration = None
 
 
-# TODO: move the instrumentationtype?
-class InstrumentationTypeGenerator(object):
-    def __init__(self, type) -> None:
-        self.type = type
-
-    def generate(self, *args, **kwgs) -> cst.CSTTransformer:
-        return getattr(self, "generate_transformer_{}".format(self.type))(*args, **kwgs)
-
-    def generate_transformer_function(self) -> cst.CSTTransformer:
-        transformer = functioncoverage.FortifiedFunctionCoverageTransformer()
-        return transformer
-
-    def generate_transformer_branch(self) -> None:
-        print("TODO: branch transformer")
-
-    def generate_transformer_fixture(self) -> cst.CSTTransformer:
-        transformer = testfixtures.TestFixtureTransformer()
-        return transformer
-
-
 def create_libcst_transformer(
     instrumentation_type: instrumentation.InstrumentationType,
 ) -> cst.CSTTransformer:
     """Create the correct transformer based on the requested type of instrumentation.."""
-    instrumentation_type_generator = InstrumentationTypeGenerator(instrumentation_type)
+    instrumentation_type_generator = transformergenerator.TransformerGenerator(
+        instrumentation_type
+    )
     libcst_transformer = instrumentation_type_generator.generate()
     output.logger.debug(libcst_transformer)
     output.logger.debug(type(libcst_transformer))
