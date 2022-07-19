@@ -85,9 +85,12 @@ def transform_file_using_libcst(
 ) -> Module:
     """Transform specified file by adding instrumentation for fortified coverage."""
     global source_tree_configuration
+    # extract the source code from the file so that it can be instrumented
     single_file_text = program_file.read_text()
-    output.logger.debug(single_file_text)
+    # use libcst to parse the source code of the file
     source_tree = cst.parse_module(single_file_text)
+    # use the helper function to create the correct type of transformer
+    # that uses libcst to instrumented the program file
     transformer = create_libcst_transformer(instrumentation_type)
     create_libcst_transformer(instrumentation_type)
     source_tree_configuration = source_tree.config_for_parsing
