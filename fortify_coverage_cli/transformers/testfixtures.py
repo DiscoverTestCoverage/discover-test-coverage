@@ -10,7 +10,10 @@ from typing import Optional
 from typing import Tuple
 
 import libcst as cst
-from libcst import SimpleStatementLine, Expr, SimpleString
+
+from libcst import Expr
+from libcst import SimpleStatementLine
+from libcst import SimpleString
 
 
 class TestFixtureTransformer(cst.CSTTransformer):
