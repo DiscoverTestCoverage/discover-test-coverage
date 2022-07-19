@@ -1,6 +1,7 @@
 """Instrument an application and its test suite using libCST."""
 
 from fortify_coverage_cli.transformers import functioncoverage
+from fortify_coverage_cli.transformers import testfixtures
 
 from fortify_coverage_cli import file
 from fortify_coverage_cli import instrumentation
@@ -22,6 +23,36 @@ from libcst import Module
 # by various visit or leave methods after
 # the initial construction of CAST
 source_tree_configuration = None
+
+
+class InstrumentationTypeGenerator(object):
+    def __init__(self, type) -> None:
+        self.type = type
+
+    def generate(self, *args, **kwgs) -> cst.CSTTransformer:
+        return getattr(self, "generate_transformer_{}".format(self.type))(*args, **kwgs)
+
+    def generate_transformer_function(self) -> cst.CSTTransformer:
+        transformer = functioncoverage.FortifiedFunctionCoverageTransformer()
+        return transformer
+
+    def generate_transformer_branch(self) -> None:
+        print("TODO: branch transformer")
+
+    def generate_transformer_fixture(self) -> cst.CSTTransformer:
+        transformer = testfixtures.TestFixtureTransformer()
+        return transformer
+
+
+def create_libcst_transformer(
+    instrumentation_type: instrumentation.InstrumentationType,
+) -> cst.CSTTransformer:
+    """Create the correct transformer based on the requested type of instrumentation.."""
+    instrumentation_type_generator = InstrumentationTypeGenerator(instrumentation_type)
+    libcst_transformer = instrumentation_type_generator.generate()
+    output.logger.debug(libcst_transformer)
+    output.logger.debug(type(libcst_transformer))
+    return libcst_transformer
 
 
 def transform_files_using_libcst(
@@ -76,7 +107,10 @@ def transform_file_using_libcst(
     source_tree = cst.parse_module(single_file_text)
     # TODO: check the coverage_type variable and run the
     # requested type of coverage transformation
-    transformer = functioncoverage.FortifiedFunctionCoverageTransformer()
+    # transformer = functioncoverage.FortifiedFunctionCoverageTransformer()
+    # transformer = testfixtures.TestFixtureTransformer()
+    transformer = create_libcst_transformer(instrumentation_type)
+    create_libcst_transformer(instrumentation_type)
     source_tree_configuration = source_tree.config_for_parsing
     modified_tree = source_tree.visit(transformer)
     modified_modified_tree = modified_tree.with_changes(
