@@ -25,6 +25,7 @@ from libcst import Module
 source_tree_configuration = None
 
 
+# TODO: move the instrumentationtype?
 class InstrumentationTypeGenerator(object):
     def __init__(self, type) -> None:
         self.type = type
@@ -113,17 +114,17 @@ def transform_file_using_libcst(
     create_libcst_transformer(instrumentation_type)
     source_tree_configuration = source_tree.config_for_parsing
     modified_tree = source_tree.visit(transformer)
-    modified_modified_tree = modified_tree.with_changes(
-        body=(
-            cst.parse_statement(
-                "from fortify import sample # instrument_file",
-                config=modified_tree.config_for_parsing,
-            ),
-            *modified_tree.body,
-        ),
-    )
-    output.logger.debug("Entire modified source code:")
-    output.logger.debug(modified_modified_tree.code)
+    # modified_modified_tree = modified_tree.with_changes(
+    #     body=(
+    #         cst.parse_statement(
+    #             "from fortify import sample # instrument_file",
+    #             config=modified_tree.config_for_parsing,
+    #         ),
+    #         *modified_tree.body,
+    #     ),
+    # )
+    # output.logger.debug("Entire modified source code:")
+    # output.logger.debug(modified_modified_tree.code)
     output.logger.debug("Diff of the modified source code:")
     output.logger.debug(
         "".join(
@@ -132,5 +133,5 @@ def transform_file_using_libcst(
             )
         )
     )
-    output.logger.debug(f"Type: {type(modified_modified_tree)}")
-    return modified_modified_tree
+    output.logger.debug(f"Type: {type(modified_tree)}")
+    return modified_tree
