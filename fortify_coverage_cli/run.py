@@ -18,9 +18,14 @@ class TestRunCommand(str, Enum):
     TEST_FAIL_FAST = "poetry run pytest -x"
 
 
-def copytree_overwrite(from_path, to_path):
+def copytree_overwrite(from_path: Path, to_path: Path) -> None:
+    """Copy from a path to a path, allowing an overwrite to occur if needed."""
+    # note that this function is needed because copytree will, by default,
+    # fail if you ask it to copy from_path to to_path and to_path exists
+    # the path already exists and thus it needs to be removed before using copytree
     if os.path.exists(to_path):
         rmtree(to_path)
+    # run the copytree to perform the directory copy
     copytree(from_path, to_path)
 
 
