@@ -27,7 +27,7 @@ def detect_module_docstring(node: cst.Module) -> bool:
 
 
 class TestFixtureTransformer(cst.CSTTransformer):
-    """Transform program source code to collect information about test execution."""
+    """Transform test suite source code to collect information about test execution."""
 
     def __init__(self):
         self.name = "TestFixtureTransformer"
@@ -39,9 +39,6 @@ class TestFixtureTransformer(cst.CSTTransformer):
         output.logger.debug(f"current module node's header: {original_node.header}")
         output.logger.debug(
             f"current module node's body first: {original_node.body[0]}"
-        )
-        output.logger.debug(
-            f"length of current module node's body: {len(original_node.body)}"
         )
         output.logger.debug("---> end")
         import_statement_type = codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
