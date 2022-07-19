@@ -1,4 +1,4 @@
-"""Execute external applications and test suites."""
+"""DEPRECATED: Execute external applications and test suites."""
 
 import pytest
 
