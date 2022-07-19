@@ -1,4 +1,4 @@
-"""Instrument an application and its test suite using libCST."""
+"""Instrument an application and its test suite using libCST transformers."""
 
 from fortify_coverage_cli.transformers import functioncoverage
 from fortify_coverage_cli.transformers import testfixtures
