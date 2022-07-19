@@ -40,7 +40,7 @@ class InstrumentedSourceCodeGenerator(object):
         # construct the import statement that will import the test fixtures:
         # -- session_setup_teardown: initializes coverage tracking and saves it
         # Step 1: construct the source code as a string
-        #         - line 1: comment showing when instrumentation was generated
+        #         - line 1: comment showing when instrumentation was generated and by what
         #         - line 2: import the session_setup_teardown from fortify_coverage module
         # Note: fortify_coverage package is not part of the fortify_coverage_cli package;
         # it is a separate package on which fortify_coverage_cli and a subject program depends
@@ -49,7 +49,7 @@ class InstrumentedSourceCodeGenerator(object):
             f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {self.name}\n"
             "from fortify_coverage.fixture import session_setup_teardown"
         )
-        # use libcst to construct a concrete abstract syntax tree out of the source code
+        # Step 2: use libcst to construct a concrete abstract syntax tree out of the source code
         import_statement = cst.parse_statement(
             multiple_line_import_statement_str,
             config=transform.source_tree_configuration,
