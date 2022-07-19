@@ -14,11 +14,15 @@ def detect_module_docstring(node: cst.Module) -> bool:
     """Determine if a specific module node has a docstring or not."""
     # assume that the module does not have a docstring and prove otherwise
     has_module_docstring = False
-    n = node.body[0]
-    if isinstance(n, SimpleStatementLine):
-        n = n.body[0]
-        if isinstance(n, Expr):
-            if len(n.children) == 1 and isinstance(n.children[0], SimpleString):
+    # extract the statement in the body of the module
+    first_node_of_body = node.body[0]
+    # incrementally determine whether the first node is a docstring
+    if isinstance(first_node_of_body, SimpleStatementLine):
+        first_node_of_body = first_node_of_body.body[0]
+        if isinstance(first_node_of_body, Expr):
+            if len(first_node_of_body.children) == 1 and isinstance(
+                first_node_of_body.children[0], SimpleString
+            ):
                 has_module_docstring = True
     return has_module_docstring
 
