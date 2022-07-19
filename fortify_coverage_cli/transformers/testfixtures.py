@@ -44,16 +44,6 @@ class TestFixtureTransformer(cst.CSTTransformer):
             f"length of current module node's body: {len(original_node.body)}"
         )
         output.logger.debug("---> end")
-        # construct the import statement that will import the test fixtures:
-        # -- session_setup_teardown: initializes coverage tracking and saves it
-        # multiple_line_import_statement_str = (
-        #     f"\n# fortify-coverage instrumentation generated on {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')}\n"
-        #     "from fortify_coverage.fixture import session_setup_teardown"
-        # )
-        # import_statement = cst.parse_statement(
-        #     multiple_line_import_statement_str,
-        #     config=transform.source_tree_configuration,
-        # )
         import_statement_type = codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
         instrumentation_type_generator = codegenerator.InstrumentedSourceCodeGenerator(import_statement_type)
         import_statement = instrumentation_type_generator.generate()
