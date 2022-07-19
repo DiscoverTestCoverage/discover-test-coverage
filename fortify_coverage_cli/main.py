@@ -96,6 +96,7 @@ def instrument_tests(
 def test(
     project_directory: Path = typer.Option(...),
     program_directory: Path = typer.Option(...),
+    tests_directory: Path = typer.Option(...),
     test_run_command: str = typer.Option(
         run.TestRunCommand.TEST.value, "--test-run-cmd"
     ),
@@ -123,7 +124,9 @@ def test(
         program_directory=program_directory,
     )
     # run the test suite using Pytest
-    run.run_test_suite(project_directory, program_directory, test_run_command)
+    run.run_test_suite(
+        project_directory, program_directory, tests_directory, test_run_command
+    )
 
 
 @app.command()
