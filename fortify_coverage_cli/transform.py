@@ -27,12 +27,14 @@ def create_libcst_transformer(
     instrumentation_type: instrumentation.InstrumentationType,
 ) -> cst.CSTTransformer:
     """Create the correct transformer based on the requested type of instrumentation.."""
+    # create a TransformerGenerator that knows how to create a transformer subclass
+    # based on the type on the requested type of instrumentation
     instrumentation_type_generator = transformergenerator.TransformerGenerator(
         instrumentation_type
     )
+    # generate the requested type of transformer
     libcst_transformer = instrumentation_type_generator.generate()
-    output.logger.debug(libcst_transformer)
-    output.logger.debug(type(libcst_transformer))
+    output.logger.debug(f"Created the transformer: {type(libcst_transformer)}")
     return libcst_transformer
 
 
