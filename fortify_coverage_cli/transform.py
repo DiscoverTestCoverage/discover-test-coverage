@@ -88,10 +88,6 @@ def transform_file_using_libcst(
     single_file_text = program_file.read_text()
     output.logger.debug(single_file_text)
     source_tree = cst.parse_module(single_file_text)
-    # TODO: check the coverage_type variable and run the
-    # requested type of coverage transformation
-    # transformer = functioncoverage.FortifiedFunctionCoverageTransformer()
-    # transformer = testfixtures.TestFixtureTransformer()
     transformer = create_libcst_transformer(instrumentation_type)
     create_libcst_transformer(instrumentation_type)
     source_tree_configuration = source_tree.config_for_parsing
