@@ -22,15 +22,16 @@ class InstrumentationTypeSourceCode(str, Enum):
 class InstrumentedSourceCodeGenerator(object):
     """Use a form of single dispatch to generate concrete abstract syntax trees."""
 
-    def __init__(self, type) -> None:
-        """Construct a new TransformerGenerator with requested type of transformer."""
-        self.type = type
+    def __init__(self, code_type, name) -> None:
+        """Construct a new TransformerGenerator with the requested type of transformer."""
+        self.code_type = code_type
+        self.name = name
 
     def generate(
         self, *args, **kwgs
     ) -> Union[SimpleStatementLine, BaseCompoundStatement]:
         """Generate a concrete abstract syntax tree based on type of instrumentation needed."""
-        return getattr(self, "generate_{}".format(self.type))(*args, **kwgs)
+        return getattr(self, "generate_{}".format(self.code_type))(*args, **kwgs)
 
     def generate_test_session_docstring(
         self,
@@ -45,7 +46,7 @@ class InstrumentedSourceCodeGenerator(object):
         # it is a separate package on which fortify_coverage_cli and a subject program depends
         multiple_line_import_statement_str = (
             "\n# fortify-coverage instrumentation generated on"
-            f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')}\n"
+            f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {self.name}\n"
             "from fortify_coverage.fixture import session_setup_teardown"
         )
         # use libcst to construct a concrete abstract syntax tree out of the source code
