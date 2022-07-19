@@ -45,7 +45,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
         # the module has a docstring and thus the import statement should
         # be inserted after the docstring and before any other imports
         if module_has_docstring:
-            # generate the correct type of import statement
+            # generate the correct type of import statement for a module with a docstring
             import_statement_type = (
                 codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
             )
