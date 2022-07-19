@@ -2,6 +2,7 @@
 
 from fortify_coverage_cli import output
 from fortify_coverage_cli import transform
+from fortify_coverage_cli import codegenerator
 
 from datetime import datetime
 
@@ -45,14 +46,17 @@ class TestFixtureTransformer(cst.CSTTransformer):
         output.logger.debug("---> end")
         # construct the import statement that will import the test fixtures:
         # -- session_setup_teardown: initializes coverage tracking and saves it
-        multiple_line_import_statement_str = (
-            f"\n# fortify-coverage instrumentation generated on {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')}\n"
-            "from fortify_coverage.fixture import session_setup_teardown"
-        )
-        import_statement = cst.parse_statement(
-            multiple_line_import_statement_str,
-            config=transform.source_tree_configuration,
-        )
+        # multiple_line_import_statement_str = (
+        #     f"\n# fortify-coverage instrumentation generated on {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')}\n"
+        #     "from fortify_coverage.fixture import session_setup_teardown"
+        # )
+        # import_statement = cst.parse_statement(
+        #     multiple_line_import_statement_str,
+        #     config=transform.source_tree_configuration,
+        # )
+        import_statement_type = codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
+        instrumentation_type_generator = codegenerator.InstrumentedSourceCodeGenerator(import_statement_type)
+        import_statement = instrumentation_type_generator.generate()
         # determine whether or not the module has a docstring
         module_has_docstring = detect_module_docstring(original_node)
         if module_has_docstring:
