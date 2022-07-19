@@ -1,10 +1,7 @@
 """Instrument an application for function coverage using libCST."""
 
 from fortify_coverage_cli import output
-from fortify_coverage_cli import transform
 from fortify_coverage_cli import codegenerator
-
-from datetime import datetime
 
 import libcst as cst
 
