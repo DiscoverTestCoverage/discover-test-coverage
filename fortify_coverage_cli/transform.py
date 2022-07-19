@@ -100,7 +100,7 @@ def transform_file_using_libcst(
     output.logger.debug(
         "".join(
             difflib.unified_diff(
-                single_file_text.splitlines(1), modified_tree.code.splitlines(1)
+                single_file_text.splitlines(1), modified_tree.code.splitlines(1)  # type: ignore
             )
         )
     )
