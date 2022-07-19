@@ -51,7 +51,9 @@ class TestFixtureTransformer(cst.CSTTransformer):
                 codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
             )
             instrumentation_type_generator = (
-                codegenerator.InstrumentedSourceCodeGenerator(import_statement_type, self.name)
+                codegenerator.InstrumentedSourceCodeGenerator(
+                    import_statement_type, self.name
+                )
             )
             import_statement = instrumentation_type_generator.generate()
             # insert the import statement between the docstring and the rest of the code
@@ -68,7 +70,9 @@ class TestFixtureTransformer(cst.CSTTransformer):
                 codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
             )
             instrumentation_type_generator = (
-                codegenerator.InstrumentedSourceCodeGenerator(import_statement_type, self.name)
+                codegenerator.InstrumentedSourceCodeGenerator(
+                    import_statement_type, self.name
+                )
             )
             import_statement = instrumentation_type_generator.generate()
             body_modified = (
