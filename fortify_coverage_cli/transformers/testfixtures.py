@@ -31,7 +31,8 @@ class TestFixtureTransformer(cst.CSTTransformer):
 
     def __init__(self):
         """Construct a TestFixtureTransformer and give it a name."""
-        self.name = "TestFixtureTransformer"
+        # construct a fully qualified name of the TestFixtureTransformer
+        self.name = str(self.__module__ + "." + type(self).__qualname__)
 
     def leave_Module(
         self, original_node: cst.Module, updated_node: cst.Module
@@ -49,8 +50,8 @@ class TestFixtureTransformer(cst.CSTTransformer):
             import_statement_type = (
                 codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
             )
-            instrumentation_type_generator = codegenerator.InstrumentedSourceCodeGenerator(
-                import_statement_type
+            instrumentation_type_generator = (
+                codegenerator.InstrumentedSourceCodeGenerator(import_statement_type, self.name)
             )
             import_statement = instrumentation_type_generator.generate()
             # insert the import statement between the docstring and the rest of the code
@@ -66,14 +67,16 @@ class TestFixtureTransformer(cst.CSTTransformer):
             import_statement_type = (
                 codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
             )
-            instrumentation_type_generator = codegenerator.InstrumentedSourceCodeGenerator(
-                import_statement_type
+            instrumentation_type_generator = (
+                codegenerator.InstrumentedSourceCodeGenerator(import_statement_type, self.name)
             )
             import_statement = instrumentation_type_generator.generate()
             body_modified = (
                 import_statement,
                 *updated_node.body,
             )
-            output.logger.debug(f"Modified source code body to have length: {len(body_modified)}")
+            output.logger.debug(
+                f"Modified source code body to have length: {len(body_modified)}"
+            )
             updated_node = updated_node.with_changes(body=body_modified)
         return updated_node
