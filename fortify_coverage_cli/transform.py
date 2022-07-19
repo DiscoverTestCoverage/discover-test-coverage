@@ -104,5 +104,4 @@ def transform_file_using_libcst(
             )
         )
     )
-    output.logger.debug(f"Type: {type(modified_tree)}")
     return modified_tree
