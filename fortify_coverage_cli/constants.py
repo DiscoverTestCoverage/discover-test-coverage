@@ -39,6 +39,17 @@ logging = create_constants(
     Rich="Rich",
 )
 
+# define the constants for the fortify tool
+fortify = create_constants(
+    "fortify",
+    Emoji=":flexed_biceps:",
+    Https="https://",
+    Name="fortify-coverage",
+    Separator="/",
+    Tagline="Fortify-Coverage: Give Vitamins to Your Coverage Criteria!",
+    Website="https://github.com/FortifiedTestCoverage/fortify-coverage-cli",
+)
+
 # define the constants for markers
 markers = create_constants(
     "markers",
@@ -50,16 +61,6 @@ markers = create_constants(
     Space=" ",
     Tab="\t",
     Underscore="_",
-)
-
-fortify = create_constants(
-    "fortify",
-    Emoji=":flexed_biceps:",
-    Https="https://",
-    Name="fortify-coverage",
-    Separator="/",
-    Tagline="Fortify-Coverage: Give Vitamins to Your Coverage Criteria!",
-    Website="https://github.com/FortifiedTestCoverage/fortify-coverage-cli",
 )
 
 # define the wildcards constants
