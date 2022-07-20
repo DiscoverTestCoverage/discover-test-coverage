@@ -31,7 +31,6 @@ def copytree_overwrite(from_path: Path, to_path: Path) -> None:
 
 def run_test_suite(
     project_directory: Path,
-    program_directory: Path,
     test_directory: Path,
     test_run_command: str,
 ) -> None:
