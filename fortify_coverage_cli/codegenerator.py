@@ -9,7 +9,9 @@ from enum import Enum
 from typing import Union
 
 import libcst as cst
-from libcst._nodes.statement import BaseCompoundStatement, SimpleStatementLine
+from libcst import CSTNode
+from libcst._nodes.statement import BaseCompoundStatement
+from libcst._nodes.statement import SimpleStatementLine
 
 
 class InstrumentationTypeSourceCode(str, Enum):
@@ -17,6 +19,7 @@ class InstrumentationTypeSourceCode(str, Enum):
 
     TEST_SESSION_DOCSTRONG = "test_session_docstring"
     TEST_SESSION_NO_DOCSTRONG = "test_session_no_docstring"
+    EMPTY_LINE = "empty_line"
 
 
 class InstrumentedSourceCodeGenerator(object):
@@ -50,13 +53,13 @@ class InstrumentedSourceCodeGenerator(object):
 
     def generate(
         self, *args, **kwgs
-    ) -> Union[SimpleStatementLine, BaseCompoundStatement]:
-        """Generate a concrete abstract syntax tree based on type of instrumentation needed."""
+    ) -> Union[CSTNode, SimpleStatementLine, BaseCompoundStatement]:
+        """Generate by dispatch a concrete abstract syntax tree by needed instrumentation."""
         return getattr(self, "generate_{}".format(self.code_type))(*args, **kwgs)
 
     def generate_test_session_no_docstring(
         self,
-    ) -> Union[SimpleStatementLine, BaseCompoundStatement]:
+    ) -> Union[CSTNode, SimpleStatementLine, BaseCompoundStatement]:
         """Generate a concrete abstract syntax tree for importing test fixture when no docstring."""
         # construct the import statement that will import the test fixtures:
         # -- session_setup_teardown: initializes coverage tracking and saves it
@@ -76,7 +79,7 @@ class InstrumentedSourceCodeGenerator(object):
 
     def generate_test_session_docstring(
         self,
-    ) -> Union[SimpleStatementLine, BaseCompoundStatement]:
+    ) -> Union[CSTNode, SimpleStatementLine, BaseCompoundStatement]:
         """Generate a concrete abstract syntax tree for importing test fixture when docstring."""
         # construct the import statement that will import the test fixtures:
         # -- session_setup_teardown: initializes coverage tracking and saves it
@@ -93,3 +96,11 @@ class InstrumentedSourceCodeGenerator(object):
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
         )
+
+    def generate_empty_line(
+        self,
+    ) -> Union[CSTNode, SimpleStatementLine, BaseCompoundStatement]:
+        """Generate a concrete abstract syntax tree for an empty line."""
+        # construct an empty line in the libcst format
+        empty_line = cst.EmptyLine()
+        return empty_line
