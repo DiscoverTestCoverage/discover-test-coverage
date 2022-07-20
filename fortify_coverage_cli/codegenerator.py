@@ -27,11 +27,52 @@ class InstrumentedSourceCodeGenerator(object):
         self.code_type = code_type
         self.name = name
 
+    @staticmethod
+    def create_parsed_statement(import_statement):
+        """Create a parsed statement out of the provided Python source code."""
+        import_statement = cst.parse_statement(
+            import_statement,
+            config=transform.source_tree_configuration,
+        )
+        return import_statement
+
+    def get_fortify_comment_code(self) -> str:
+        """Return the standard comment that goes along with fortify's instrumentation."""
+        fortify_comment_code = (
+            "# fortify-coverage instrumentation generated on"
+            f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {self.name}\n"
+        )
+        return fortify_comment_code
+
+    def get_fortify_import_test_session_fixture(self) -> str:
+        """Return the import statement for the test session fixture."""
+        return "from fortify_coverage.fixture import session_setup_teardown\n\n"
+
     def generate(
         self, *args, **kwgs
     ) -> Union[SimpleStatementLine, BaseCompoundStatement]:
         """Generate a concrete abstract syntax tree based on type of instrumentation needed."""
         return getattr(self, "generate_{}".format(self.code_type))(*args, **kwgs)
+
+    def generate_test_session_no_docstring(
+        self,
+    ) -> Union[SimpleStatementLine, BaseCompoundStatement]:
+        """Generate a concrete abstract syntax tree for importing test fixture when no docstring."""
+        # construct the import statement that will import the test fixtures:
+        # -- session_setup_teardown: initializes coverage tracking and saves it
+        # construct the source code as a string
+        #         - line 1: comment showing when instrumentation was generated and by what
+        #         - line 2: import the session_setup_teardown from fortify_coverage module
+        # Note: fortify_coverage package is not part of the fortify_coverage_cli package;
+        # it is a separate package on which fortify_coverage_cli and a subject program depends
+        multiple_line_import_statement_str = (
+            self.get_fortify_comment_code()
+            + self.get_fortify_import_test_session_fixture()
+            + "\n\n"
+        )
+        return InstrumentedSourceCodeGenerator.create_parsed_statement(
+            multiple_line_import_statement_str
+        )
 
     def generate_test_session_docstring(
         self,
@@ -39,19 +80,16 @@ class InstrumentedSourceCodeGenerator(object):
         """Generate a concrete abstract syntax tree for importing test fixture when docstring."""
         # construct the import statement that will import the test fixtures:
         # -- session_setup_teardown: initializes coverage tracking and saves it
-        # Step 1: construct the source code as a string
+        # construct the source code as a string
         #         - line 1: comment showing when instrumentation was generated and by what
         #         - line 2: import the session_setup_teardown from fortify_coverage module
         # Note: fortify_coverage package is not part of the fortify_coverage_cli package;
         # it is a separate package on which fortify_coverage_cli and a subject program depends
         multiple_line_import_statement_str = (
-            "\n# fortify-coverage instrumentation generated on"
-            f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {self.name}\n"
-            "from fortify_coverage.fixture import session_setup_teardown"
+            "\n" + self.get_fortify_comment_code()
+            + self.get_fortify_import_test_session_fixture()
         )
         # Step 2: use libcst to construct a concrete abstract syntax tree out of the source code
-        import_statement = cst.parse_statement(
-            multiple_line_import_statement_str,
-            config=transform.source_tree_configuration,
+        return InstrumentedSourceCodeGenerator.create_parsed_statement(
+            multiple_line_import_statement_str
         )
-        return import_statement
