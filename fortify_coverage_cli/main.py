@@ -125,7 +125,7 @@ def test(
     )
     # run the test suite using Pytest
     run.run_test_suite(
-        project_directory, program_directory, tests_directory, test_run_command
+        project_directory, tests_directory, test_run_command
     )
 
 
