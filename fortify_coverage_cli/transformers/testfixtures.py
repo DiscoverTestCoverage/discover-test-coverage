@@ -56,6 +56,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
                     import_statement_type, self.name
                 )
             )
+            # generate the concrete abstract syntax tree for a test with a docstring
             import_statement = instrumentation_type_generator.generate()
             # insert the import statement between the docstring and the rest of the code
             body_modified = (
@@ -68,14 +69,16 @@ class TestFixtureTransformer(cst.CSTTransformer):
         # should be imported as the first line inside of the module's body
         else:
             import_statement_type = (
-                codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
+                codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_NO_DOCSTRONG
             )
             instrumentation_type_generator = (
                 codegenerator.InstrumentedSourceCodeGenerator(
                     import_statement_type, self.name
                 )
             )
+            # generate the concrete abstract syntax tree for a test with no docstring
             import_statement = instrumentation_type_generator.generate()
+            # insert the import statement before all existing lines of the body
             body_modified = (
                 import_statement,
                 *updated_node.body,
