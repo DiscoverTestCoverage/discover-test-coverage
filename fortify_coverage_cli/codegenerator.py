@@ -92,7 +92,6 @@ class InstrumentedSourceCodeGenerator(object):
             "\n" + self.get_fortify_comment_code()
             + self.get_fortify_import_test_session_fixture()
         )
-        # Step 2: use libcst to construct a concrete abstract syntax tree out of the source code
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
         )
