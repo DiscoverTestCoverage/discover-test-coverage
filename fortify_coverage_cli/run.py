@@ -50,8 +50,6 @@ def run_test_suite(
     subprocess.run(test_run_command, shell=True)
     output.print_test_finish()
     rmtree(test_directory)
-    # test_directory.rmdir()
     copytree_overwrite(test_directory_backup, test_directory)
-    # test_directory_backup.rmdir()
     rmtree(test_directory_backup)
     os.chdir(initial_current_working_directory)
