@@ -41,6 +41,8 @@ class InstrumentedSourceCodeGenerator(object):
 
     def get_fortify_comment_code(self) -> str:
         """Return the standard comment that goes along with fortify's instrumentation."""
+        # define the standard code comment to include the name of the
+        # module that added the instrumentation and full date-time details
         fortify_comment_code = (
             "# fortify-coverage instrumentation generated on"
             f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {self.name}\n"
@@ -49,6 +51,7 @@ class InstrumentedSourceCodeGenerator(object):
 
     def get_fortify_import_test_session_fixture(self) -> str:
         """Return the import statement for the test session fixture."""
+        # define the import statement for the session_setup_teardown fixture
         return "from fortify_coverage.fixture import session_setup_teardown\n\n"
 
     def generate(
