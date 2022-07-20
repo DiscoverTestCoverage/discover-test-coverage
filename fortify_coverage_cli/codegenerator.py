@@ -71,7 +71,6 @@ class InstrumentedSourceCodeGenerator(object):
         multiple_line_import_statement_str = (
             self.get_fortify_comment_code()
             + self.get_fortify_import_test_session_fixture()
-            + "\n\n"
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
