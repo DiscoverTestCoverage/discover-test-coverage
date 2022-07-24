@@ -15,7 +15,9 @@ class TestRunCommand(str, Enum):
     """The predefined commands for running a test suite."""
 
     TEST = "poetry run pytest"
+    TEST_OUTPUT = "poetry run pytest -s"
     TEST_FAIL_FAST = "poetry run pytest -x"
+    TEST_FAIL_FAST_OUTPUT = "poetry run pytest -x -s"
 
 
 def copytree_overwrite(from_path: Path, to_path: Path) -> None:
