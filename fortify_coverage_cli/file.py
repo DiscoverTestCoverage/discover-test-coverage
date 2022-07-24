@@ -5,6 +5,7 @@ from fortify_coverage_cli import output
 
 from pathlib import Path
 from pathlib import PurePath
+from shutil import rmtree
 
 from typing import List
 
@@ -35,6 +36,11 @@ def create_hidden_directory(containing_directory: Path, directory: Path) -> Path
     hidden_directory = Path(
         containing_directory / Path(constants.markers.Hidden + str(directory.name))
     )
-    hidden_directory.mkdir(parents=True, exist_ok=True)
+    # delete the hidden directory if it already exists
+    rmtree(hidden_directory)
+    # create the hidden directory for storing instrumentation
+    # note that mkdir throws an exception if the directory exists;
+    # since it was already deleted, the exception should not occur
+    hidden_directory.mkdir(parents=True)
     output.logger.debug(f"Created the hidden directory: {hidden_directory}")
     return hidden_directory
