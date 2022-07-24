@@ -12,6 +12,10 @@ from typing import List
 
 def find_python_files(directory: Path) -> List[Path]:
     """Find all of the Python files in a specified directory."""
+    # note that this function works for both test cases and
+    # program files as long as the directory is specified;
+    # with that said, this works by a convention that a developer
+    # may not follow (i.e., tests could be inside program directories)
     all_python_files = sorted(directory.rglob(constants.wildcards.All_Python))
     return all_python_files
 
