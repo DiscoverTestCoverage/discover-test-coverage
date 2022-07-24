@@ -52,7 +52,7 @@ class InstrumentedSourceCodeGenerator(object):
     def get_fortify_import_test_session_fixture(self) -> str:
         """Return the import statement for the test session fixture."""
         # define the import statement for the session_setup_teardown fixture
-        return "from fortify_coverage.fixture import *\n\n"
+        return "from fortify_coverage.testfixture import *\n\n"
 
     def generate(
         self, *args, **kwgs
