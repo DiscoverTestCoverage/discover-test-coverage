@@ -59,7 +59,7 @@ def print_server() -> None:
 def print_test_start() -> None:
     """Display details about the test run."""
     global console
-    console.print(":sparkles: Start to run test suite for the specified program")
+    console.print(constants.output.Test_Start)
     console.print()
 
 
