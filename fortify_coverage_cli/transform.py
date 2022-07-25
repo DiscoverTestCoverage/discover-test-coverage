@@ -1,16 +1,13 @@
-"""Instrument an application and its test suite using libCST."""
+"""Instrument an application and its test suite using libCST transformers."""
 
-from fortify_coverage import coverage
 from fortify_coverage_cli import file
+from fortify_coverage_cli import instrumentation
 from fortify_coverage_cli import output
+from fortify_coverage_cli import transformergenerator
 
 from pathlib import Path
 
 import difflib
-
-from typing import List
-from typing import Optional
-from typing import Tuple
 
 from rich.table import Column
 from rich.progress import Progress, BarColumn, TextColumn
@@ -26,63 +23,27 @@ from libcst import Module
 source_tree_configuration = None
 
 
-class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):
-    """Transform program source code to collect fortified function coverage."""
-
-    def __init__(self):
-        # stack for storing the canonical name of the current function
-        self.stack: List[Tuple[str, ...]] = []
-
-    def visit_ClassDef(self, node: cst.ClassDef) -> Optional[bool]:
-        self.stack.append(node.name.value)
-
-    def leave_ClassDef(
-        self, original_node: cst.ClassDef, updated_node: cst.ClassDef
-    ) -> cst.CSTNode:
-        self.stack.pop()
-        return updated_node
-
-    def visit_FunctionDef(self, node: cst.FunctionDef) -> Optional[bool]:
-        self.stack.append(node.name.value)
-        return False
-
-    def leave_FunctionDef(
-        self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
-    ) -> cst.CSTNode:
-        key = tuple(self.stack)
-        self.stack.pop()
-        output.logger.debug(
-            f"current function definition node's name: {original_node.name}"
-        )
-        output.logger.debug(f"contents of the stack after the pop() call: {self.stack}")
-        return updated_node.with_changes(decorators=[cst.Decorator(cst.Name("sample"))])
-
-    def leave_Module(
-        self, original_node: cst.Module, updated_node: cst.Module
-    ) -> cst.CSTNode:
-        global source_tree_configuration
-        output.logger.debug("start --->")
-        output.logger.debug(f"current module node's header: {original_node.header}")
-        output.logger.debug("---> end")
-        updated_node = updated_node.with_changes(
-            header=(
-                cst.parse_statement(
-                    "from fortify import sample # leave_Module",
-                    config=source_tree_configuration,
-                ),
-                *updated_node.header,
-            )
-        )
-        return updated_node
+def create_libcst_transformer(
+    instrumentation_type: instrumentation.InstrumentationType,
+) -> cst.CSTTransformer:
+    """Create the correct transformer based on the requested type of instrumentation.."""
+    # create a TransformerGenerator that knows how to create a transformer subclass
+    # based on the type on the requested type of instrumentation
+    instrumentation_type_generator = transformergenerator.TransformerGenerator(
+        instrumentation_type
+    )
+    # generate the requested type of transformer
+    libcst_transformer = instrumentation_type_generator.generate()
+    output.logger.debug(f"Created the transformer: {type(libcst_transformer)}")
+    return libcst_transformer
 
 
 def transform_files_using_libcst(
     project_directory_path: Path,
     program_directory: Path,
-    coverage_type: coverage.CoverageType,
-    save_code: bool = False,
+    instrumentation_type: instrumentation.InstrumentationType,
 ) -> None:
-    """Transform directory of files by adding instrumentation for fortified coverage."""
+    """Transform directory of files by adding instrumentation."""
     global progress
     # create the fully qualified directory that contains the program's source code
     fully_qualified_program_directory = project_directory_path / program_directory
@@ -101,7 +62,7 @@ def transform_files_using_libcst(
     with Progress() as progress:
         # create the instrumentation task label for the progress bar
         task = progress.add_task(
-            f":sparkles: Instrument to track {coverage_type} coverage",
+            f":sparkles: Add {instrumentation_type} instrumentation",
             total=len(program_files_list),
         )
         # iteratively transform the source code for each of the program files
@@ -109,7 +70,7 @@ def transform_files_using_libcst(
             progress.console.print(f"Instrumenting {file.elide_path(program_file)}")
             # instrument the current program file for the specific coverage type
             instrumented_module = transform_file_using_libcst(
-                program_file, coverage_type
+                program_file, instrumentation_type
             )
             # create a new pathlib Path object for the instrumented module
             instrumented_file = Path(hidden_program_directory / program_file.name)
@@ -120,36 +81,27 @@ def transform_files_using_libcst(
 
 def transform_file_using_libcst(
     program_file: Path,
-    coverage_type: coverage.CoverageType,
+    instrumentation_type: instrumentation.InstrumentationType,
 ) -> Module:
     """Transform specified file by adding instrumentation for fortified coverage."""
     global source_tree_configuration
+    # extract the source code from the file so that it can be instrumented
     single_file_text = program_file.read_text()
-    output.logger.debug(single_file_text)
+    # use libcst to parse the source code of the file
     source_tree = cst.parse_module(single_file_text)
-    # TODO: check the coverage_type variable and run the
-    # requested type of coverage transformation
-    transformer = FortifiedFunctionCoverageTransformer()
+    # use the helper function to create the correct type of transformer
+    # that uses libcst to instrumented the program file
+    transformer = create_libcst_transformer(instrumentation_type)
     source_tree_configuration = source_tree.config_for_parsing
+    # visit the source code using the constructed transformer
+    # so that the instrumentation exists in the modified tree
     modified_tree = source_tree.visit(transformer)
-    modified_modified_tree = modified_tree.with_changes(
-        body=(
-            cst.parse_statement(
-                "from fortify import sample # instrument_file",
-                config=modified_tree.config_for_parsing,
-            ),
-            *modified_tree.body,
-        ),
-    )
-    output.logger.debug("Entire modified source code:")
-    output.logger.debug(modified_modified_tree.code)
     output.logger.debug("Diff of the modified source code:")
     output.logger.debug(
         "".join(
             difflib.unified_diff(
-                single_file_text.splitlines(1), modified_tree.code.splitlines(1)
+                single_file_text.splitlines(1), modified_tree.code.splitlines(1)  # type: ignore
             )
         )
     )
-    output.logger.debug(f"Type: {type(modified_modified_tree)}")
-    return modified_modified_tree
+    return modified_tree
