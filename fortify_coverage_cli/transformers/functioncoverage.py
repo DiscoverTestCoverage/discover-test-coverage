@@ -1,3 +1,5 @@
+# flake8: noqa
+
 """Instrument an application for function coverage using libCST."""
 
 from fortify_coverage_cli import output
@@ -33,7 +35,7 @@ class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):
     def leave_FunctionDef(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
     ) -> cst.CSTNode:
-        key = tuple(self.stack)
+        # key = tuple(self.stack)
         self.stack.pop()
         output.logger.debug(
             f"current function definition node's name: {original_node.name}"
