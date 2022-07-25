@@ -61,7 +61,3 @@ jobs:
         - name: Run pylint Linting Tool
           run: |
             poetry run task pylint
-        # Run the mypy type checking tool
-        - name: Run mypy Linting Tool
-          run: |
-            poetry run task mypy
