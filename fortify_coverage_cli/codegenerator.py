@@ -94,7 +94,8 @@ class InstrumentedSourceCodeGenerator(object):
         # Note: fortify_coverage package is not part of the fortify_coverage_cli package;
         # it is a separate package on which fortify_coverage_cli and a subject program depends
         multiple_line_import_statement_str = (
-            "\n" + self.get_fortify_comment_code()
+            "\n"
+            + self.get_fortify_comment_code()
             + self.get_fortify_import_test_session_fixture()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(

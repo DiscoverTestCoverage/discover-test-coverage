@@ -124,9 +124,7 @@ def test(
         program_directory=program_directory,
     )
     # run the test suite using Pytest
-    run.run_test_suite(
-        project_directory, tests_directory, test_run_command
-    )
+    run.run_test_suite(project_directory, tests_directory, test_run_command)
 
 
 @app.command()
