@@ -1,4 +1,4 @@
-"""Perform logging and/or console output for fortify."""
+"""Perform logging and/or console output."""
 
 from fortify_coverage_cli import configure
 from fortify_coverage_cli import debug
