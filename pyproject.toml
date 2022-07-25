@@ -27,6 +27,9 @@ pytest-cov = "^3.0.0"
 flake8 = "^4.0.1"
 mypy = "^0.961"
 pytest = "^7.1.2"
+pytest-randomly = "^3.12.0"
+pytest-clarity = "^1.0.1"
+pytest-sugar = "^0.9.5"
 
 [tool.taskipy.tasks]
 black = { cmd = "black fortify_coverage_cli tests --check", help = "Run the black checks for source code format" }
