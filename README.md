@@ -1,6 +1,6 @@
-[![build](https://github.com/FortifiedTestCoverage/fortify-coverage-cli/actions/workflows/build.yml/badge.svg)](https://github.com/FortifiedTestCoverage/fortify-coverage-cli/actions/workflows/build.yml)
-
 # fortify-coverage-cli
+
+[![build](https://github.com/FortifiedTestCoverage/fortify-coverage-cli/actions/workflows/build.yml/badge.svg)](https://github.com/FortifiedTestCoverage/fortify-coverage-cli/actions/workflows/build.yml)
 
 This repository provides the `fortify` command that allows you to:
 
