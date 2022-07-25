@@ -21,6 +21,7 @@ def run_test_suite(
 ) -> None:
     """Run the test suite with a provided command."""
     output.logger.debug(f"Change into the project directory: {project_directory}")
+    output.logger.debug(f"Preparing to run the test command: {test_run_command}")
     initial_current_working_directory = Path.cwd()
     os.chdir(project_directory)
     output.print_test_start()
