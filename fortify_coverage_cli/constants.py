@@ -78,6 +78,12 @@ server = create_constants(
     Port=2525,
 )
 
+# define the constants for syslog server
+tests = create_constants(
+    "tests",
+    Backup="-backup",
+)
+
 # define the wildcards constants
 wildcards = create_constants(
     "wildcards",
