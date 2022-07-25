@@ -38,8 +38,12 @@ def run_test_suite(
 ) -> None:
     """Run the test suite with a provided command."""
     output.logger.debug(f"Change into the project directory: {project_directory}")
+    # extract and save the directory where running test suite starts;
+    # this does not have to be the directory of project under test
     initial_current_working_directory = Path.cwd()
+    # change into the directory for the specified project
     os.chdir(project_directory)
+    # display a label in standard output about running the test suite
     output.print_test_start()
     test_directory = Path(project_directory / test_directory)
     test_directory_backup = Path(

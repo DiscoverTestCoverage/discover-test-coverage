@@ -63,6 +63,13 @@ markers = create_constants(
     Underscore="_",
 )
 
+# define the constants for output
+output = create_constants(
+    "output",
+    Syslog=":sparkles: Syslog server for receiving debugging information",
+    Test_Start=":sparkles: Start to run test suite for the specified program",
+)
+
 # define the constants for syslog server
 server = create_constants(
     "server",
