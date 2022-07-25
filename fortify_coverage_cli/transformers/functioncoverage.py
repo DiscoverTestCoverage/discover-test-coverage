@@ -15,26 +15,26 @@ import libcst as cst
 class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):
     """Transform program source code to collect fortified function coverage."""
 
-    def __init__(self):
+    def __init__(self):  # noqa
         # stack for storing the canonical name of the current function
         self.stack: List[Tuple[str, ...]] = []
 
-    def visit_ClassDef(self, node: cst.ClassDef) -> Optional[bool]:
-        self.stack.append(node.name.value)
+    def visit_ClassDef(self, node: cst.ClassDef) -> Optional[bool]:  # noqa
+        self.stack.append(node.name.value)  # type: ignore
 
     def leave_ClassDef(
         self, original_node: cst.ClassDef, updated_node: cst.ClassDef
-    ) -> cst.CSTNode:
+    ) -> cst.CSTNode:  # noqa
         self.stack.pop()
         return updated_node
 
-    def visit_FunctionDef(self, node: cst.FunctionDef) -> Optional[bool]:
-        self.stack.append(node.name.value)
+    def visit_FunctionDef(self, node: cst.FunctionDef) -> Optional[bool]:  # noqa
+        self.stack.append(node.name.value)  # type:ignore
         return False
 
     def leave_FunctionDef(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
-    ) -> cst.CSTNode:
+    ) -> cst.CSTNode:  # noqa
         # key = tuple(self.stack)
         self.stack.pop()
         output.logger.debug(
@@ -45,7 +45,7 @@ class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):
 
     def leave_Module(
         self, original_node: cst.Module, updated_node: cst.Module
-    ) -> cst.CSTNode:
+    ) -> cst.CSTNode:  # noqa
         output.logger.debug("start --->")
         output.logger.debug(f"current module node's header: {original_node.header}")
         output.logger.debug("---> end")
