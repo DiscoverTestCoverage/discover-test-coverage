@@ -39,6 +39,17 @@ logging = create_constants(
     Rich="Rich",
 )
 
+# define the constants for the fortify tool
+fortify = create_constants(
+    "fortify",
+    Emoji=":flexed_biceps:",
+    Https="https://",
+    Name="fortify-coverage",
+    Separator="/",
+    Tagline="Fortify-Coverage: Give Vitamins to Your Coverage Criteria!",
+    Website="https://github.com/FortifiedTestCoverage/fortify-coverage-cli",
+)
+
 # define the constants for markers
 markers = create_constants(
     "markers",
@@ -52,14 +63,19 @@ markers = create_constants(
     Underscore="_",
 )
 
-fortify = create_constants(
-    "fortify",
-    Emoji=":flexed_biceps:",
-    Https="https://",
-    Name="fortify-coverage",
-    Separator="/",
-    Tagline="Fortify-Coverage: Give Vitamins to Your Coverage Criteria!",
-    Website="https://github.com/FortifiedTestCoverage/fortify-coverage-cli",
+# define the constants for output
+output = create_constants(
+    "output",
+    Syslog=":sparkles: Syslog server for receiving debugging information",
+    Test_Start=":sparkles: Start to run test suite for the specified program",
+)
+
+# define the constants for syslog server
+server = create_constants(
+    "server",
+    Localhost="127.0.0.1",
+    Log_File=".fortify.log",
+    Port=2525,
 )
 
 # define the wildcards constants

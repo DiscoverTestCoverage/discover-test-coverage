@@ -29,6 +29,8 @@ def configure_logging_rich(
     debug_level: str = constants.logging.Default_Logging_Level,
 ) -> logging.Logger:
     """Configure standard Python logging package to use rich."""
+    # use the RichHandler to provide formatted
+    # debugging output in the console
     logging.basicConfig(
         level=debug_level,
         format=constants.logging.Format,
@@ -44,6 +46,7 @@ def configure_logging_syslog(
     debug_level: str = constants.logging.Default_Logging_Level,
 ) -> logging.Logger:
     """Configure standard Python logging package to use syslog."""
+    # use the SysLogHandler to send output to a localhost on a port
     syslog_handler = logging.handlers.SysLogHandler(address=("127.0.0.1", 2525))
     logging.basicConfig(
         level=debug_level,

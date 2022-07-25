@@ -1,13 +1,15 @@
 """Create a syslog remote server."""
 
+from fortify_coverage_cli import constants
 from fortify_coverage_cli import output
 
 import logging
 import logging.handlers
 import socketserver
 
-LOG_FILE = ".fortify.log"
-HOST, PORT = "127.0.0.1", 2525
+LOG_FILE = constants.server.Log_File
+HOST = constants.server.Localhost
+PORT = constants.server.Port
 
 logger = logging.getLogger("fortify-syslog")
 

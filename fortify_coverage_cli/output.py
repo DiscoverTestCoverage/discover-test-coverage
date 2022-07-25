@@ -52,14 +52,14 @@ def print_header() -> None:
 def print_server() -> None:
     """Display server details in the header."""
     global console
-    console.print(":sparkles: Syslog server for receiving debugging information")
+    console.print(constants.output.Syslog)
     console.print()
 
 
 def print_test_start() -> None:
     """Display details about the test run."""
     global console
-    console.print(":sparkles: Start to run test suite for the specified program")
+    console.print(constants.output.Test_Start)
     console.print()
 
 

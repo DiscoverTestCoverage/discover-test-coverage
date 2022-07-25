@@ -5,13 +5,18 @@ from fortify_coverage_cli import output
 
 from pathlib import Path
 from pathlib import PurePath
+from shutil import rmtree
 
 from typing import List
 
 
-def find_python_files(program_directory: Path) -> List[Path]:
+def find_python_files(directory: Path) -> List[Path]:
     """Find all of the Python files in a specified directory."""
-    all_python_files = sorted(program_directory.rglob(constants.wildcards.All_Python))
+    # note that this function works for both test cases and
+    # program files as long as the directory is specified;
+    # with that said, this works by a convention that a developer
+    # may not follow (i.e., tests could be inside program directories)
+    all_python_files = sorted(directory.rglob(constants.wildcards.All_Python))
     return all_python_files
 
 
@@ -35,6 +40,11 @@ def create_hidden_directory(containing_directory: Path, directory: Path) -> Path
     hidden_directory = Path(
         containing_directory / Path(constants.markers.Hidden + str(directory.name))
     )
-    hidden_directory.mkdir(parents=True, exist_ok=True)
+    # delete the hidden directory if it already exists
+    rmtree(hidden_directory)
+    # create the hidden directory for storing instrumentation
+    # note that mkdir throws an exception if the directory exists;
+    # since it was already deleted, the exception should not occur
+    hidden_directory.mkdir(parents=True)
     output.logger.debug(f"Created the hidden directory: {hidden_directory}")
     return hidden_directory
