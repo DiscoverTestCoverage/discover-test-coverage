@@ -1,1 +1,1 @@
-__version__ = "0.1.0"
+"""Define an empty file to designate package."""
