@@ -21,6 +21,7 @@ def find_python_files(directory: Path) -> List[Path]:
 
 
 def elide_path(path, maximum_parts: int = 4, include_up_to: int = 5):
+    """Elide a path so that it supports compact display."""
     parts = list(PurePath(path).parts)
     # if the path is too long (i.e., has more than maximum_parts parts),
     # then "elide" it by omitting details from the "middle" of the path,
