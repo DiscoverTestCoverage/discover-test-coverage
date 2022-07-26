@@ -54,6 +54,7 @@ fortify = create_constants(
 markers = create_constants(
     "markers",
     Empty=b"",
+    Dot=".",
     Hidden=".",
     Indent="   ",
     Newline="\n",
