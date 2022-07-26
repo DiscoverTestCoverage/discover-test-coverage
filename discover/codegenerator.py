@@ -1,17 +1,15 @@
 """Generate concrete abstract syntax trees based on source code strings."""
 
-from fortify_coverage_cli import transform
-
 from datetime import datetime
-
 from enum import Enum
-
 from typing import Union
 
 import libcst as cst
 from libcst import CSTNode
 from libcst._nodes.statement import BaseCompoundStatement
 from libcst._nodes.statement import SimpleStatementLine
+
+from discover import transform
 
 
 class InstrumentationTypeSourceCode(str, Enum):
@@ -71,8 +69,8 @@ class InstrumentedSourceCodeGenerator(object):
         # construct the source code as a string
         #         - line 1: comment showing when instrumentation was generated and by what
         #         - line 2: import the session_setup_teardown from fortify_coverage module
-        # Note: fortify_coverage package is not part of the fortify_coverage_cli package;
-        # it is a separate package on which fortify_coverage_cli and a subject program depends
+        # Note: fortify_coverage package is not part of the discover package;
+        # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
             self.get_fortify_comment_code()
             + self.get_fortify_import_test_session_fixture()
@@ -91,8 +89,8 @@ class InstrumentedSourceCodeGenerator(object):
         #         - line 0: an extra newline before the other generated code
         #         - line 1: comment showing when instrumentation was generated and by what
         #         - line 2: import the session_setup_teardown from fortify_coverage module
-        # Note: fortify_coverage package is not part of the fortify_coverage_cli package;
-        # it is a separate package on which fortify_coverage_cli and a subject program depends
+        # Note: fortify_coverage package is not part of the discover package;
+        # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
             "\n"
             + self.get_fortify_comment_code()
