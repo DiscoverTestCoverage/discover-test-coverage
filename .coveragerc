@@ -1,0 +1,3 @@
+[run]
+omit=test/*
+include=fortify_coverage_cli/*
