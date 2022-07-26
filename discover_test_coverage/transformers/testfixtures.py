@@ -1,7 +1,5 @@
 """Instrument an application coverage tracking using libCST."""
 
-from typing import Union
-
 import libcst as cst
 from libcst import Expr
 from libcst import SimpleStatementLine
