@@ -42,7 +42,7 @@ logging = create_constants(
 # define the constants for the discover tool
 discover = create_constants(
     "discover",
-    Emoji=":flexed_biceps:",
+    Emoji=":shield:",
     Https="https://",
     Name="discover.py",
     Separator="/",
