@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "fortify-coverage-cli"
+name = "discover.py"
 version = "0.1.0"
 description = ""
 authors = ["Gregory M. Kapfhammer <gkapfham@allegheny.edu>"]
 readme = "README.md"
 
 [tool.poetry.scripts]
-fortify = "fortify_coverage_cli.main:app"
+fortify = "discover.main:app"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -14,8 +14,6 @@ typer = {extras = ["all"], version = "^0.6.1"}
 rich = "^12.5.1"
 isort = "^5.10.1"
 libcst = "^0.4.7"
-# fortify-coverage = {path= "../fortify-coverage/", develop = true}
-fortify-coverage = {git = "https://github.com/FortifiedTestCoverage/fortify-coverage"}
 pydantic = "^1.9.1"
 
 [tool.poetry.dev-dependencies]
