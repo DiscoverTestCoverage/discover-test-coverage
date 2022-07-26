@@ -1,6 +1,9 @@
 """Instrument an application coverage tracking using libCST."""
 
+from typing import Union
+
 import libcst as cst
+from libcst import BaseCompoundStatement
 from libcst import Expr
 from libcst import SimpleStatementLine
 from libcst import SimpleString
@@ -18,7 +21,7 @@ def detect_module_docstring(node: cst.Module) -> bool:
     first_node_of_body = node.body[0]
     # incrementally determine whether the first node is a docstring
     if isinstance(first_node_of_body, SimpleStatementLine):
-        first_node_of_body = first_node_of_body.body[0]
+        first_node_of_body = first_node_of_body.body[0]  # type: ignore
         if isinstance(first_node_of_body, Expr):
             if len(first_node_of_body.children) == 1 and isinstance(
                 first_node_of_body.children[0], SimpleString
@@ -39,7 +42,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
 
     def leave_Module(
         self, original_node: cst.Module, updated_node: cst.Module
-    ) -> cst.CSTNode:
+    ) -> cst.Module:
         """Instrument the starting source code in the module to add test fixture import."""
         output.logger.debug(
             f"Modifying source code body with starting length: {len(updated_node.body)}"
