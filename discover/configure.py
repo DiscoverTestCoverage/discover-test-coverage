@@ -49,7 +49,9 @@ def configure_logging_syslog(
 ) -> logging.Logger:
     """Configure standard Python logging package to use syslog."""
     # use the SysLogHandler to send output to a localhost on a port
-    syslog_handler = logging.handlers.SysLogHandler(address=("127.0.0.1", 2525))
+    syslog_handler = logging.handlers.SysLogHandler(
+        address=(constants.server.Localhost, constants.server.Port)
+    )
     logging.basicConfig(
         level=debug_level,
         format=constants.logging.Format,
