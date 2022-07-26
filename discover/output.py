@@ -1,10 +1,10 @@
 """Perform logging and/or console output."""
 
-from discover import configure
-from discover import debug
-from discover import constants
-
 from rich.console import Console
+
+from discover import configure
+from discover import constants
+from discover import debug
 
 logger = None
 console = Console()
