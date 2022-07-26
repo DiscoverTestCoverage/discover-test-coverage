@@ -137,8 +137,8 @@ def start_log_server():
     output.print_server()
     # run the server; note that this
     # syslog server receives debugging
-    # information from discover_test_coverage.py and must
-    # be started in a separate process
+    # information from discover-test-coverage
+    # and must be started in a separate process
     # before running any sub-command
     # of the discover-test-coverage tool
     server.start_syslog_server()
