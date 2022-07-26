@@ -1,6 +1,6 @@
-# discover.py
+# discover-test-coverage
 
-[![build](https://github.com/DiscoverTestCoverage/discover.py/actions/workflows/build.yml/badge.svg)](https://github.com/DiscoverTestCoverage/discover.py/actions/workflows/build.yml)
+[![build](https://github.com/DiscoverTestCoverage/discover-test-coverage/actions/workflows/build.yml/badge.svg)](https://github.com/DiscoverTestCoverage/discover-test-coverage/actions/workflows/build.yml)
 
 This repository provides the `discover` command that allows you to:
 
