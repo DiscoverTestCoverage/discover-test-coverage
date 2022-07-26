@@ -61,7 +61,10 @@ discover = create_constants(
 # define the constants for markers
 markers = create_constants(
     "markers",
-    Empty=b"",
+    Bad_Fifteen="<15>",
+    Bad_Zero_Zero="",
+    Empty_Bytes=b"",
+    Empty="",
     Ellipse="...",
     Dot=".",
     Hidden=".",
