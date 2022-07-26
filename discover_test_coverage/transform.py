@@ -44,7 +44,6 @@ def transform_files_using_libcst(
     instrumentation_type: instrumentation.InstrumentationType,
 ) -> None:
     """Transform directory of files by adding instrumentation."""
-    global progress
     # create the fully qualified directory that contains the program's source code
     fully_qualified_program_directory = project_directory_path / program_directory
     output.logger.debug(fully_qualified_program_directory)
