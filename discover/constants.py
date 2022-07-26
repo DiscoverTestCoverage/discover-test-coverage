@@ -44,7 +44,7 @@ discover = create_constants(
     "discover",
     Emoji=":flexed_biceps:",
     Https="https://",
-    Name="fortify-coverage",
+    Name="discover.py",
     Separator="/",
     Tagline="discover.py: Discover the effectiveness of your test coverage!",
     Website="https://github.com/DiscoverTestCoverage/discover.py",
