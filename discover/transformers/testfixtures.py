@@ -6,6 +6,7 @@ from libcst import SimpleStatementLine
 from libcst import SimpleString
 
 from discover import codegenerator
+from discover import constants
 from discover import output
 
 
@@ -32,7 +33,9 @@ class TestFixtureTransformer(cst.CSTTransformer):
     def __init__(self):
         """Construct a TestFixtureTransformer and give it a name."""
         # construct a fully qualified name of the TestFixtureTransformer
-        self.name = str(self.__module__ + "." + type(self).__qualname__)
+        self.name = str(
+            self.__module__ + constants.markers.Dot + type(self).__qualname__
+        )
 
     def leave_Module(
         self, original_node: cst.Module, updated_node: cst.Module
