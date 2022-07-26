@@ -59,12 +59,12 @@ pydocstyle = "^6.1.1"
 toml = "^0.10.2"
 
 [tool.taskipy.tasks]
-black = { cmd = "black discover tests --check", help = "Run the black checks for source code format" }
+black = { cmd = "black discover_test_coverage tests --check", help = "Run the black checks for source code format" }
 coverage = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report term-missing --cov-report xml --cov --cov-branch", help = "Run coverage monitoring for the test suite" }
-flake8 = { cmd = "flake8 discover tests", help = "Run the flake8 checks for source code documentation" }
+flake8 = { cmd = "flake8 discover_test_coverage tests", help = "Run the flake8 checks for source code documentation" }
 mypy = { cmd = "poetry run mypy discover", help = "Run the mypy type checker for potential type errors" }
-pydocstyle = { cmd = "pydocstyle discover tests", help = "Run the pydocstyle checks for source code documentation" }
-pylint = { cmd = "pylint discover tests", help = "Run the pylint checks for source code documentation" }
+pydocstyle = { cmd = "pydocstyle discover_test_coverage tests", help = "Run the pydocstyle checks for source code documentation" }
+pylint = { cmd = "pylint discover_test_coverage tests", help = "Run the pylint checks for source code documentation" }
 test = { cmd = "pytest -x -s", help = "Run the pytest test suite" }
 test-silent = { cmd = "pytest -x --show-capture=no", help = "Run the pytest test suite without showing output" }
 all = "task black && task flake8 && task pydocstyle && task pylint && task mypy && task test"
