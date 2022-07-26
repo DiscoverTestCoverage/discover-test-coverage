@@ -1,6 +1,7 @@
 # discover-test-coverage
 
 [![build](https://github.com/DiscoverTestCoverage/discover-test-coverage/actions/workflows/build.yml/badge.svg)](https://github.com/DiscoverTestCoverage/discover-test-coverage/actions/workflows/build.yml)
+![Coverage badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/DiscoverTestCoverage/discover-test-coverage/python-coverage-comment-action-badge.json)
 
 This repository provides the `discover` command that allows you to:
 
