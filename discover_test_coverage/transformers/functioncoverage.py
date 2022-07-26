@@ -1,4 +1,5 @@
 # flake8: noqa
+# type: ignore
 
 """Instrument an application for function coverage using libCST."""
 
