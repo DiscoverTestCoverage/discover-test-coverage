@@ -24,7 +24,7 @@ class SyslogUDPHandler(socketserver.BaseRequestHandler):
         message = bytes.decode(
             self.request[0].strip(), encoding=constants.server.Utf8_Encoding
         )
-        # remote not-printable characters that can appear in message
+        # remove not-printable characters that can appear in message
         enhanced_message = str(message).replace(
             constants.markers.Bad_Fifteen, constants.markers.Empty
         )
