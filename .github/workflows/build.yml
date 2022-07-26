@@ -66,20 +66,42 @@ jobs:
           run: |
             poetry run task pylint
         # Run the test suite and collect coverage
-        - name: Run Test Coverage Monitoring
+        - name: Run the Test Suite
           run: |
-            poetry run task coverage
+            poetry run task test
+        - name: Install everything, run the tests, produce a .coverage.xxx file
+          run: poetry run task coverage-report
+          env:
+            COVERAGE_FILE: ".coverage.${{ matrix.python_version }}"
+            # Alternatively you can run coverage with the --parallel flag or add
+            # `parallel = True` in the coverage config file.
+            # If using pytest-cov, you can also add the `--cov-append` flag
+            # directly or through PYTEST_ADD_OPTS.
+        - name: Store coverage file
+          uses: actions/upload-artifact@v2
+          with:
+            name: coverage
+            path: .coverage.${{ matrix.python_version }}
+
+  coverage:
+      name: Coverage
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions/download-artifact@v2
+          id: download
+          with:
+            name: 'coverage'
         - name: Coverage comment
           id: coverage_comment
           uses: ewjoachim/python-coverage-comment-action@v2
           with:
-              GITHUB_TOKEN: ${{ github.token }}
-              VERBOSE: true
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            MERGE_COVERAGE_FILES: true
         - name: Store Pull Request comment to be posted
           uses: actions/upload-artifact@v2
           if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
           with:
-            # If you use a different name, update COMMENT_ARTIFACT_NAME accordingly
             name: python-coverage-comment-action
-            # If you use a different name, update COMMENT_FILENAME accordingly
             path: python-coverage-comment-action.txt
