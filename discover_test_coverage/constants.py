@@ -53,7 +53,7 @@ discover = create_constants(
     Https="https://",
     Name="discover-test-coverage",
     Separator="/",
-    Server_Shutdown=":person_shrugging: Shut down fortify's sylog server",
+    Server_Shutdown=":person_shrugging: Shut down discover's sylog server",
     Tagline="discover-test-coverage: Does your test suite have effective coverage?",
     Website="https://github.com/DiscoverTestCoverage/discover-test-coverage",
 )
