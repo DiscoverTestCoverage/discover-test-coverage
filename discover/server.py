@@ -25,8 +25,12 @@ class SyslogUDPHandler(socketserver.BaseRequestHandler):
             self.request[0].strip(), encoding=constants.server.Utf8_Encoding
         )
         # remote not-printable characters that can appear in message
-        enhanced_message = str(message).replace("<15>", "")
-        enhanced_message = enhanced_message.replace("\x00", "")
+        enhanced_message = str(message).replace(
+            constants.markers.Bad_Fifteen, constants.markers.Empty
+        )
+        enhanced_message = enhanced_message.replace(
+            constants.markers.Bad_Zero_Zero, constants.markers.Empty
+        )
         # display the message inside of the syslog's console
         output.console.print(enhanced_message)
         # write the logging message to a file using a rotating file handler
