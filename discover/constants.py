@@ -54,6 +54,7 @@ discover = create_constants(
 markers = create_constants(
     "markers",
     Empty=b"",
+    Ellipse="...",
     Dot=".",
     Hidden=".",
     Indent="   ",
