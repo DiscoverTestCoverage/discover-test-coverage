@@ -82,9 +82,13 @@ output = create_constants(
 # define the constants for syslog server
 server = create_constants(
     "server",
+    Backup_Count=1,
     Localhost="127.0.0.1",
     Log_File=".discover.log",
+    Max_Log_Size=1048576,
+    Poll_Interval=0.5,
     Port=2525,
+    Utf8_Encoding="utf-8",
 )
 
 # define the constants for syslog server
