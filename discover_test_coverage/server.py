@@ -37,8 +37,8 @@ class SyslogUDPHandler(socketserver.BaseRequestHandler):
         logger.debug(enhanced_message)
 
 
-def run_syslog_server():
-    """Run a syslog server."""
+def start_syslog_server():
+    """Start a syslog server."""
     global logger
     # always log all of the messages to a file
     logger.setLevel(logging.DEBUG)

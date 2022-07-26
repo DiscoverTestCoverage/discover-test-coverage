@@ -140,5 +140,5 @@ def start_log_server():
     # information from discover_test_coverage.py and must
     # be started in a separate process
     # before running any sub-command
-    # of the discover.py tool
-    server.run_syslog_server()
+    # of the discover-test-coverage tool
+    server.start_syslog_server()
