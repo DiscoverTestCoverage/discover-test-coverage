@@ -75,7 +75,7 @@ output = create_constants(
 server = create_constants(
     "server",
     Localhost="127.0.0.1",
-    Log_File=".fortify.log",
+    Log_File=".discover.log",
     Port=2525,
 )
 
