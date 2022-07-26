@@ -39,15 +39,15 @@ logging = create_constants(
     Rich="Rich",
 )
 
-# define the constants for the fortify tool
-fortify = create_constants(
-    "fortify",
+# define the constants for the discover tool
+discover = create_constants(
+    "discover",
     Emoji=":flexed_biceps:",
     Https="https://",
     Name="fortify-coverage",
     Separator="/",
-    Tagline="Fortify-Coverage: Give Vitamins to Your Coverage Criteria!",
-    Website="https://github.com/FortifiedTestCoverage/fortify-coverage-cli",
+    Tagline="discover.py: Discover the effectiveness of your test coverage!",
+    Website="https://github.com/DiscoverTestCoverage/discover.py",
 )
 
 # define the constants for markers
