@@ -1,10 +1,11 @@
-# fortify-coverage-cli
+# discover.py
 
-[![build](https://github.com/FortifiedTestCoverage/fortify-coverage-cli/actions/workflows/build.yml/badge.svg)](https://github.com/FortifiedTestCoverage/fortify-coverage-cli/actions/workflows/build.yml)
+[![build](https://github.com/DiscoverTestCoverage/discover.py/actions/workflows/build.yml/badge.svg)](https://github.com/DiscoverTestCoverage/discover.py/actions/workflows/build.yml)
 
-This repository provides the `fortify` command that allows you to:
+This repository provides the `discover` command that allows you to:
 
-- Instrument a subject application to collect fortified coverage
+- Instrument a subject application to collect discover test coverage through
+  disabling code segments
 - Run the test suite of a subject application to:
   - Execute the test suite and report its status
   - Collect standard coverage information
