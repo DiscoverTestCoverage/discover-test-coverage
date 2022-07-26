@@ -9,16 +9,21 @@ from typing import Tuple
 
 import libcst as cst
 
+from discover_test_coverage import constants
 from discover_test_coverage import output
 from discover_test_coverage import transform
 
 
-class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):
+class FunctionCoverageTransformer(cst.CSTTransformer):
     """Transform program source code to collect fortified function coverage."""
 
     def __init__(self):  # noqa
         # stack for storing the canonical name of the current function
         self.stack: List[Tuple[str, ...]] = []
+        # construct a fully qualified name of the TestFixtureTransformer
+        self.name = str(
+            self.__module__ + constants.markers.Dot + type(self).__qualname__
+        )
 
     def visit_ClassDef(self, node: cst.ClassDef) -> Optional[bool]:  # noqa
         self.stack.append(node.name.value)  # type: ignore
