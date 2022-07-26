@@ -3,7 +3,6 @@
 from typing import Union
 
 import libcst as cst
-from libcst import BaseCompoundStatement
 from libcst import Expr
 from libcst import SimpleStatementLine
 from libcst import SimpleString
