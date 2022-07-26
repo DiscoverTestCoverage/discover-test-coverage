@@ -1,4 +1,4 @@
-"""Create a syslog remote server."""
+"""Create and run a syslog remote server."""
 
 from discover import constants
 from discover import output
@@ -11,7 +11,7 @@ LOG_FILE = constants.server.Log_File
 HOST = constants.server.Localhost
 PORT = constants.server.Port
 
-logger = logging.getLogger("fortify-syslog")
+logger = logging.getLogger(constants.logger.Syslog)
 
 
 class SyslogUDPHandler(socketserver.BaseRequestHandler):
@@ -21,7 +21,9 @@ class SyslogUDPHandler(socketserver.BaseRequestHandler):
         """Receive a message and then display it in output and log it to a file."""
         global logger
         # receive the message from the syslog logging client
-        message = bytes.decode(self.request[0].strip(), encoding="utf-8")
+        message = bytes.decode(
+            self.request[0].strip(), encoding=constants.server.Utf8_Encoding
+        )
         # remote not-printable characters that can appear in message
         enhanced_message = str(message).replace("<15>", "")
         enhanced_message = enhanced_message.replace("\x00", "")
@@ -41,14 +43,16 @@ def run_syslog_server():
     # -- it can never be bigger than 1 MB
     # -- one backup is created when log file gets too big
     rotating_file_handler = logging.handlers.RotatingFileHandler(
-        LOG_FILE, maxBytes=1048576, backupCount=1
+        LOG_FILE,
+        maxBytes=constants.server.Max_Log_Size,
+        backupCount=constants.server.Backup_Count,
     )
     # add the rotating file handler to the logger
     logger.addHandler(rotating_file_handler)
     # startup the server and then let it run forever
     try:
         server = socketserver.UDPServer((HOST, PORT), SyslogUDPHandler)
-        server.serve_forever(poll_interval=0.5)
+        server.serve_forever(poll_interval=constants.server.Poll_Interval)
     # let the server crash and raise an error on SystemExit and IOError
     except SystemExit:
         raise
