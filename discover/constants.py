@@ -53,6 +53,7 @@ discover = create_constants(
     Https="https://",
     Name="discover.py",
     Separator="/",
+    Server_Shutdown=":person_shrugging: Shut down fortify's sylog server",
     Tagline="discover.py: Discover the effectiveness of your test coverage!",
     Website="https://github.com/DiscoverTestCoverage/discover.py",
 )
