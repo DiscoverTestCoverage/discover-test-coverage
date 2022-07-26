@@ -2,9 +2,9 @@
 
 from rich.console import Console
 
-from discover import configure
-from discover import constants
-from discover import debug
+from discover_test_coverage import configure
+from discover_test_coverage import constants
+from discover_test_coverage import debug
 
 logger = None
 console = Console()

@@ -4,12 +4,16 @@ from pathlib import Path
 
 import typer
 
-from discover import debug
-from discover import instrumentation
-from discover import output
-from discover import run
-from discover import server
-from discover import transform
+from discover_test_coverage import debug
+from discover_test_coverage import instrumentation
+from discover_test_coverage import output
+from discover_test_coverage import run
+from discover_test_coverage import server
+from discover_test_coverage import transform
+
+# create a typer object
+# for command-line interface
+app = typer.Typer()
 
 
 def instrument_program(
@@ -125,7 +129,7 @@ def test(
 
 
 @app.command()
-def log_server():
+def start_log_server():
     """Run the logging server."""
     # display the header
     output.print_header()
@@ -133,7 +137,7 @@ def log_server():
     output.print_server()
     # run the server; note that this
     # syslog server receives debugging
-    # information from discover.py and must
+    # information from discover_test_coverage.py and must
     # be started in a separate process
     # before running any sub-command
     # of the discover.py tool

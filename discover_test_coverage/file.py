@@ -5,8 +5,8 @@ from pathlib import PurePath
 from shutil import rmtree
 from typing import List
 
-from discover import constants
-from discover import output
+from discover_test_coverage import constants
+from discover_test_coverage import output
 
 
 def find_python_files(directory: Path) -> List[Path]:

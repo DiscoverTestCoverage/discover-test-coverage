@@ -7,8 +7,8 @@ from pathlib import Path
 from shutil import copytree
 from shutil import rmtree
 
-from discover import constants
-from discover import output
+from discover_test_coverage import constants
+from discover_test_coverage import output
 
 
 class TestRunCommand(str, Enum):

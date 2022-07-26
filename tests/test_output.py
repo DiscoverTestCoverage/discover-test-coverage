@@ -1,7 +1,7 @@
 """Test cases for the output module."""
 
 
-from fortify_coverage_cli import output
+from discover_test_coverage import output
 
 
 def test_print_header_produces_two_output_lines(capsys):

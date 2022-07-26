@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "discover.py"
+name = "discover-test-coverage"
 version = "0.1.0"
-description = ""
+description = "Discover the effectiveness of your test suite"
 authors = ["Gregory M. Kapfhammer <gkapfham@allegheny.edu>"]
 readme = "README.md"
 license = "LGPL-3.0-or-later"
-repository = "https://github.com/DiscoverTestCoverage/discover.py"
+repository = "https://github.com/DiscoverTestCoverage/discover-test-coverage"
 keywords = [
     "test coverage",
     "test adequacy",
@@ -33,7 +33,7 @@ classifiers = [
 ]
 
 [tool.poetry.scripts]
-fortify = "discover.main:app"
+discover = "discover_test_coverage.main:app"
 
 [tool.poetry.dependencies]
 python = "^3.8"

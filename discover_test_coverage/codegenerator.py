@@ -9,7 +9,7 @@ from libcst import CSTNode
 from libcst._nodes.statement import BaseCompoundStatement
 from libcst._nodes.statement import SimpleStatementLine
 
-from discover import transform
+from discover_test_coverage import transform
 
 
 class InstrumentationTypeSourceCode(str, Enum):

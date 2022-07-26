@@ -8,8 +8,8 @@ from typing import Tuple
 
 import libcst as cst
 
-from discover import output
-from discover import transform
+from discover_test_coverage import output
+from discover_test_coverage import transform
 
 
 class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):

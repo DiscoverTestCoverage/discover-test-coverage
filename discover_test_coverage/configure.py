@@ -7,7 +7,7 @@ import logging.handlers
 from rich.logging import RichHandler
 from rich.traceback import install
 
-from discover import constants
+from discover_test_coverage import constants
 
 
 def configure_tracebacks() -> None:

@@ -5,9 +5,9 @@ from libcst import Expr
 from libcst import SimpleStatementLine
 from libcst import SimpleString
 
-from discover import codegenerator
-from discover import constants
-from discover import output
+from discover_test_coverage import codegenerator
+from discover_test_coverage import constants
+from discover_test_coverage import output
 
 
 def detect_module_docstring(node: cst.Module) -> bool:

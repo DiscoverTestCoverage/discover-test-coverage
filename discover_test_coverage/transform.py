@@ -10,10 +10,10 @@ from rich.progress import Progress
 from rich.progress import TextColumn
 from rich.table import Column
 
-from discover import file
-from discover import instrumentation
-from discover import output
-from discover import transformergenerator
+from discover_test_coverage import file
+from discover_test_coverage import instrumentation
+from discover_test_coverage import output
+from discover_test_coverage import transformergenerator
 
 # global configuration of the source tree
 # that libCST creates through initial parse;

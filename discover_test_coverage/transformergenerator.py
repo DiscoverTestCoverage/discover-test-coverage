@@ -2,8 +2,8 @@
 
 import libcst as cst
 
-from discover.transformers import functioncoverage
-from discover.transformers import testfixtures
+from discover_test_coverage.transformers import functioncoverage
+from discover_test_coverage.transformers import testfixtures
 
 
 class TransformerGenerator(object):
