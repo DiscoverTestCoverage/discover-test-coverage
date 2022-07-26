@@ -1,4 +1,4 @@
-"""Instrument an application for function coverage using libCST."""
+"""Instrument an application coverage tracking using libCST."""
 
 import libcst as cst
 from libcst import Expr
