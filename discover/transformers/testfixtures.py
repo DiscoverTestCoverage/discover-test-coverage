@@ -1,13 +1,12 @@
 """Instrument an application for function coverage using libCST."""
 
-from fortify_coverage_cli import output
-from fortify_coverage_cli import codegenerator
-
 import libcst as cst
-
 from libcst import Expr
 from libcst import SimpleStatementLine
 from libcst import SimpleString
+
+from discover import codegenerator
+from discover import output
 
 
 def detect_module_docstring(node: cst.Module) -> bool:
