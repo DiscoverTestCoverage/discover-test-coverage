@@ -136,8 +136,8 @@ def log_server():
     output.print_server()
     # run the server; note that this
     # syslog server receives debugging
-    # information from fortify and must
+    # information from discover.py and must
     # be started in a separate process
     # before running any sub-command
-    # of the fortify tool
+    # of the discover.py tool
     server.run_syslog_server()
