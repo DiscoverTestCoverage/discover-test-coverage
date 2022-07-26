@@ -50,18 +50,24 @@ jobs:
           run: |
             poetry install
         # Run the black code formatter in checking mode
-        - name: Run black Code Formatter
+        - name: Run Black Code Formatter
           run: |
             poetry run task black
         # Run the flake8 linting tool
-        - name: Run flake8 Linting Tool
+        - name: Run Flake8 Linting Tool
           run: |
             poetry run task flake8
         # Run the pydocstyle linting tool
-        - name: Run pydocstyle Linting Tool
+        - name: Run Pydocstyle Linting Tool
           run: |
             poetry run task pydocstyle
         # Run the pylint linting tool
-        - name: Run pylint Linting Tool
+        - name: Run Pylint Linting Tool
           run: |
             poetry run task pylint
+        # Upload pytest-cov coverage report in HTML
+        - name: Upload Coverage Report
+          uses: actions/upload-artifact@v3
+          with:
+            name: html-coverage-report
+            path: htmlcov/
