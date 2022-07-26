@@ -39,6 +39,13 @@ logging = create_constants(
     Rich="Rich",
 )
 
+# define the logger constants
+logger = create_constants(
+    "logger",
+    Richlog="discover-richlog",
+    Syslog="discover-syslog",
+)
+
 # define the constants for the discover tool
 discover = create_constants(
     "discover",
