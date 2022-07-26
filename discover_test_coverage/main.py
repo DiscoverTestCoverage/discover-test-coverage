@@ -1,20 +1,21 @@
 """Command-line interface for fortified coverage calculation."""
 
-from fortify_coverage_cli import debug
-from fortify_coverage_cli import instrumentation
-from fortify_coverage_cli import output
-from fortify_coverage_cli import run
-from fortify_coverage_cli import server
-from fortify_coverage_cli import transform
-
 from pathlib import Path
 
 import typer
 
+from discover_test_coverage import debug
+from discover_test_coverage import instrumentation
+from discover_test_coverage import output
+from discover_test_coverage import run
+from discover_test_coverage import server
+from discover_test_coverage import transform
+
+# create a typer object
+# for command-line interface
 app = typer.Typer()
 
 
-@app.command()
 def instrument_program(
     project_directory: Path = typer.Option(...),
     program_directory: Path = typer.Option(...),
@@ -128,16 +129,16 @@ def test(
 
 
 @app.command()
-def log_server():
-    """Run the logging server."""
+def start_log_server():
+    """Start the logging server."""
     # display the header
     output.print_header()
     # display details about the server
     output.print_server()
     # run the server; note that this
     # syslog server receives debugging
-    # information from fortify and must
+    # information from discover_test_coverage.py and must
     # be started in a separate process
     # before running any sub-command
-    # of the fortify tool
+    # of the discover.py tool
     server.run_syslog_server()

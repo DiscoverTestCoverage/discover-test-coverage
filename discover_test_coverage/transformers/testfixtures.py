@@ -1,13 +1,13 @@
 """Instrument an application for function coverage using libCST."""
 
-from fortify_coverage_cli import output
-from fortify_coverage_cli import codegenerator
-
 import libcst as cst
-
 from libcst import Expr
 from libcst import SimpleStatementLine
 from libcst import SimpleString
+
+from discover_test_coverage import codegenerator
+from discover_test_coverage import constants
+from discover_test_coverage import output
 
 
 def detect_module_docstring(node: cst.Module) -> bool:
@@ -33,7 +33,9 @@ class TestFixtureTransformer(cst.CSTTransformer):
     def __init__(self):
         """Construct a TestFixtureTransformer and give it a name."""
         # construct a fully qualified name of the TestFixtureTransformer
-        self.name = str(self.__module__ + "." + type(self).__qualname__)
+        self.name = str(
+            self.__module__ + constants.markers.Dot + type(self).__qualname__
+        )
 
     def leave_Module(
         self, original_node: cst.Module, updated_node: cst.Module

@@ -1,15 +1,14 @@
 """Run commands to execute commands of a subject."""
 
-from fortify_coverage_cli import output
-from fortify_coverage_cli import constants
-
 import os
 import subprocess
-
 from enum import Enum
 from pathlib import Path
 from shutil import copytree
 from shutil import rmtree
+
+from discover_test_coverage import constants
+from discover_test_coverage import output
 
 
 class TestRunCommand(str, Enum):

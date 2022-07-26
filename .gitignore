@@ -354,3 +354,6 @@ Temporary Items
 
 # .txt files
 *.txt
+
+# pytest-cov htmlcov
+htmlcov

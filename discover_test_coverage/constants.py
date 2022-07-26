@@ -39,21 +39,34 @@ logging = create_constants(
     Rich="Rich",
 )
 
-# define the constants for the fortify tool
-fortify = create_constants(
-    "fortify",
-    Emoji=":flexed_biceps:",
+# define the logger constants
+logger = create_constants(
+    "logger",
+    Richlog="discover-richlog",
+    Syslog="discover-syslog",
+)
+
+# define the constants for the discover tool
+discover = create_constants(
+    "discover",
+    Emoji=":shield: ",
     Https="https://",
-    Name="fortify-coverage",
+    Name="discover-test-coverage",
     Separator="/",
-    Tagline="Fortify-Coverage: Give Vitamins to Your Coverage Criteria!",
-    Website="https://github.com/FortifiedTestCoverage/fortify-coverage-cli",
+    Server_Shutdown=":person_shrugging: Shut down fortify's sylog server",
+    Tagline="discover-test-coverage: Does your test suite have effective coverage?",
+    Website="https://github.com/DiscoverTestCoverage/discover-test-coverage",
 )
 
 # define the constants for markers
 markers = create_constants(
     "markers",
-    Empty=b"",
+    Bad_Fifteen="<15>",
+    Bad_Zero_Zero="",
+    Empty_Bytes=b"",
+    Empty="",
+    Ellipse="...",
+    Dot=".",
     Hidden=".",
     Indent="   ",
     Newline="\n",
@@ -73,9 +86,13 @@ output = create_constants(
 # define the constants for syslog server
 server = create_constants(
     "server",
+    Backup_Count=1,
     Localhost="127.0.0.1",
-    Log_File=".fortify.log",
+    Log_File=".discover.log",
+    Max_Log_Size=1048576,
+    Poll_Interval=0.5,
     Port=2525,
+    Utf8_Encoding="utf-8",
 )
 
 # define the constants for syslog server

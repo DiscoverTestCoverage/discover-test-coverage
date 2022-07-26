@@ -1,9 +1,9 @@
 """Generate different subclasses of CSTTransformer depending on requested instrumentation."""
 
-from fortify_coverage_cli.transformers import functioncoverage
-from fortify_coverage_cli.transformers import testfixtures
-
 import libcst as cst
+
+from discover_test_coverage.transformers import functioncoverage
+from discover_test_coverage.transformers import testfixtures
 
 
 class TransformerGenerator(object):

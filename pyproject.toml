@@ -1,12 +1,39 @@
 [tool.poetry]
-name = "fortify-coverage-cli"
+name = "discover-test-coverage"
 version = "0.1.0"
-description = ""
+description = "Discover the effectiveness of your test suite"
 authors = ["Gregory M. Kapfhammer <gkapfham@allegheny.edu>"]
 readme = "README.md"
+license = "LGPL-3.0-or-later"
+repository = "https://github.com/DiscoverTestCoverage/discover-test-coverage"
+keywords = [
+    "test coverage",
+    "test adequacy",
+    "mutation testing",
+    "test generation"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Education :: Testing",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Testing :: Unit",
+    "Typing :: Typed",
+]
 
 [tool.poetry.scripts]
-fortify = "fortify_coverage_cli.main:app"
+discover = "discover_test_coverage.main:app"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -14,14 +41,11 @@ typer = {extras = ["all"], version = "^0.6.1"}
 rich = "^12.5.1"
 isort = "^5.10.1"
 libcst = "^0.4.7"
-# fortify-coverage = {path= "../fortify-coverage/", develop = true}
-fortify-coverage = {git = "https://github.com/FortifiedTestCoverage/fortify-coverage"}
 pydantic = "^1.9.1"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.4"
 black = "^22.6.0"
-pydocstyle = "^6.1.1"
 taskipy = "^1.10.2"
 pytest-cov = "^3.0.0"
 flake8 = "^4.0.1"
@@ -30,14 +54,19 @@ pytest = "^7.1.2"
 pytest-randomly = "^3.12.0"
 pytest-clarity = "^1.0.1"
 pytest-sugar = "^0.9.5"
+isort = "^5.10.1"
+pydocstyle = "^6.1.1"
+toml = "^0.10.2"
 
 [tool.taskipy.tasks]
-black = { cmd = "black fortify_coverage_cli tests --check", help = "Run the black checks for source code format" }
+black = { cmd = "black discover_test_coverage tests --check", help = "Run the black checks for source code format" }
 coverage = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report term-missing --cov-report xml --cov --cov-branch", help = "Run coverage monitoring for the test suite" }
-flake8 = { cmd = "flake8 fortify_coverage_cli tests", help = "Run the flake8 checks for source code documentation" }
-mypy = { cmd = "poetry run mypy fortify_coverage_cli", help = "Run the mypy type checker for potential type errors" }
-pydocstyle = { cmd = "pydocstyle fortify_coverage_cli tests", help = "Run the pydocstyle checks for source code documentation" }
-pylint = { cmd = "pylint fortify_coverage_cli tests", help = "Run the pylint checks for source code documentation" }
+coverage-html = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report term-missing --cov-report html --cov --cov-branch", help = "Run coverage monitoring for the test suite" }
+coverage-report = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report term-missing --cov-report xml --cov --cov-branch --cov-append", help = "Run coverage monitoring for the test suite" }
+flake8 = { cmd = "flake8 discover_test_coverage tests", help = "Run the flake8 checks for source code documentation" }
+mypy = { cmd = "poetry run mypy discover", help = "Run the mypy type checker for potential type errors" }
+pydocstyle = { cmd = "pydocstyle discover_test_coverage tests", help = "Run the pydocstyle checks for source code documentation" }
+pylint = { cmd = "pylint discover_test_coverage tests", help = "Run the pylint checks for source code documentation" }
 test = { cmd = "pytest -x -s", help = "Run the pytest test suite" }
 test-silent = { cmd = "pytest -x --show-capture=no", help = "Run the pytest test suite without showing output" }
 all = "task black && task flake8 && task pydocstyle && task pylint && task mypy && task test"

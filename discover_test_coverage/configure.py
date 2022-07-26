@@ -1,13 +1,13 @@
 """Configure logging and console output."""
 
-from fortify_coverage_cli import constants
-
 import logging
 import logging.config
 import logging.handlers
 
 from rich.logging import RichHandler
 from rich.traceback import install
+
+from discover_test_coverage import constants
 
 
 def configure_tracebacks() -> None:
@@ -20,8 +20,10 @@ def configure_logging(
     debug_dest: str = constants.logging.Default_Logging_Destination,
 ) -> logging.Logger:
     """Configure standard Python logging package."""
+    # use rich logger as the destination if it console specified
     if debug_dest == constants.logging.Console_Logging_Destination:
         return configure_logging_rich(debug_level)
+    # otherwise, use the default sys logger
     return configure_logging_syslog(debug_level)
 
 
@@ -38,7 +40,7 @@ def configure_logging_rich(
         handlers=[RichHandler()],
     )
     # create a logger and then return it
-    logger = logging.getLogger("fortify-richlog")
+    logger = logging.getLogger(constants.logger.Richlog)
     return logger
 
 
@@ -47,7 +49,9 @@ def configure_logging_syslog(
 ) -> logging.Logger:
     """Configure standard Python logging package to use syslog."""
     # use the SysLogHandler to send output to a localhost on a port
-    syslog_handler = logging.handlers.SysLogHandler(address=("127.0.0.1", 2525))
+    syslog_handler = logging.handlers.SysLogHandler(
+        address=(constants.server.Localhost, constants.server.Port)
+    )
     logging.basicConfig(
         level=debug_level,
         format=constants.logging.Format,
@@ -55,5 +59,5 @@ def configure_logging_syslog(
         handlers=[syslog_handler],
     )
     # create a logger and then return it
-    logger = logging.getLogger("fortify-syslog")
+    logger = logging.getLogger(constants.logger.Syslog)
     return logger
