@@ -2,14 +2,14 @@
 
 """Instrument an application for function coverage using libCST."""
 
-from fortify_coverage_cli import output
-from fortify_coverage_cli import transform
-
 from typing import List
 from typing import Optional
 from typing import Tuple
 
 import libcst as cst
+
+from discover import output
+from discover import transform
 
 
 class FortifiedFunctionCoverageTransformer(cst.CSTTransformer):
