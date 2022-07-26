@@ -1,4 +1,5 @@
 [run]
+source=.
 relative_files=true
 omit=test/*
 include=discover_test_coverage/*
