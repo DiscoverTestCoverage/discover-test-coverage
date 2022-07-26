@@ -130,7 +130,7 @@ def test(
 
 @app.command()
 def start_log_server():
-    """Run the logging server."""
+    """Start the logging server."""
     # display the header
     output.print_header()
     # display details about the server
