@@ -1,8 +1,8 @@
 """Perform logging and/or console output."""
 
-from fortify_coverage_cli import configure
-from fortify_coverage_cli import debug
-from fortify_coverage_cli import constants
+from discover import configure
+from discover import debug
+from discover import constants
 
 from rich.console import Console
 
@@ -43,9 +43,9 @@ def print_header() -> None:
     global console
     console.print()
     console.print(
-        constants.fortify.Emoji + constants.markers.Space + constants.fortify.Tagline
+        constants.discover.Emoji + constants.markers.Space + constants.discover.Tagline
     )
-    console.print(constants.fortify.Website)
+    console.print(constants.discover.Website)
     console.print()
 
 
