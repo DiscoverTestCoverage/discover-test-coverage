@@ -1,13 +1,12 @@
 """Perform file operations."""
 
-from fortify_coverage_cli import constants
-from fortify_coverage_cli import output
-
 from pathlib import Path
 from pathlib import PurePath
 from shutil import rmtree
-
 from typing import List
+
+from discover import constants
+from discover import output
 
 
 def find_python_files(directory: Path) -> List[Path]:
@@ -28,7 +27,7 @@ def elide_path(path, maximum_parts: int = 4, include_up_to: int = 5):
     # starting at the part of the path at include_up_to, going up to but
     # not including the name of the file that should always display
     if len(parts) >= maximum_parts:
-        parts[include_up_to:-1] = ["..."]
+        parts[include_up_to:-1] = [constants.markers.Ellipse]
     return PurePath(*parts)
 
 
