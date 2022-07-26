@@ -1,5 +1,9 @@
 """Command-line interface for fortified coverage calculation."""
 
+from pathlib import Path
+
+import typer
+
 from discover import debug
 from discover import instrumentation
 from discover import output
@@ -7,14 +11,7 @@ from discover import run
 from discover import server
 from discover import transform
 
-from pathlib import Path
 
-import typer
-
-app = typer.Typer()
-
-
-@app.command()
 def instrument_program(
     project_directory: Path = typer.Option(...),
     program_directory: Path = typer.Option(...),
