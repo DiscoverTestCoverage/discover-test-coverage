@@ -1,11 +1,11 @@
 """Command-line interface for fortified coverage calculation."""
 
-from fortify_coverage_cli import debug
-from fortify_coverage_cli import instrumentation
-from fortify_coverage_cli import output
-from fortify_coverage_cli import run
-from fortify_coverage_cli import server
-from fortify_coverage_cli import transform
+from discover import debug
+from discover import instrumentation
+from discover import output
+from discover import run
+from discover import server
+from discover import transform
 
 from pathlib import Path
 
