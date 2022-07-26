@@ -1,7 +1,7 @@
 """Create a syslog remote server."""
 
-from fortify_coverage_cli import constants
-from fortify_coverage_cli import output
+from discover import constants
+from discover import output
 
 import logging
 import logging.handlers
