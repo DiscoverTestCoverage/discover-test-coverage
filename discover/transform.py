@@ -1,19 +1,19 @@
 """Instrument an application and its test suite using libCST transformers."""
 
-from fortify_coverage_cli import file
-from fortify_coverage_cli import instrumentation
-from fortify_coverage_cli import output
-from fortify_coverage_cli import transformergenerator
-
-from pathlib import Path
-
 import difflib
-
-from rich.table import Column
-from rich.progress import Progress, BarColumn, TextColumn
+from pathlib import Path
 
 import libcst as cst
 from libcst import Module
+from rich.progress import BarColumn
+from rich.progress import Progress
+from rich.progress import TextColumn
+from rich.table import Column
+
+from discover import file
+from discover import instrumentation
+from discover import output
+from discover import transformergenerator
 
 # global configuration of the source tree
 # that libCST creates through initial parse;
