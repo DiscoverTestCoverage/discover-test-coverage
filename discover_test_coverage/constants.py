@@ -49,13 +49,13 @@ logger = create_constants(
 # define the constants for the discover tool
 discover = create_constants(
     "discover",
-    Emoji=":shield:",
+    Emoji=":shield: ",
     Https="https://",
     Name="discover.py",
     Separator="/",
     Server_Shutdown=":person_shrugging: Shut down fortify's sylog server",
-    Tagline="discover.py: Discover the effectiveness of your test coverage!",
-    Website="https://github.com/DiscoverTestCoverage/discover.py",
+    Tagline="discover-test-coverage: Does your test suite have effective coverage?",
+    Website="https://github.com/DiscoverTestCoverage/discover-test-coverage",
 )
 
 # define the constants for markers
