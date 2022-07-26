@@ -69,20 +69,19 @@ jobs:
         - name: Run the Test Suite
           run: |
             poetry run task test
+        # Create a coverage report
         - name: Install everything, run the tests, produce a .coverage.xxx file
           run: poetry run task coverage-report
           env:
             COVERAGE_FILE: ".coverage.${{ matrix.python_version }}"
-            # Alternatively you can run coverage with the --parallel flag or add
-            # `parallel = True` in the coverage config file.
-            # If using pytest-cov, you can also add the `--cov-append` flag
-            # directly or through PYTEST_ADD_OPTS.
+        # Store the coverage file
         - name: Store coverage file
           uses: actions/upload-artifact@v2
           with:
             name: coverage
             path: .coverage.${{ matrix.python_version }}
 
+  # Create a coverage report and create the badge
   coverage:
       name: Coverage
       runs-on: ubuntu-latest
