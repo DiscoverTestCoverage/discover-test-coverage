@@ -40,7 +40,7 @@ def configure_logging_rich(
         handlers=[RichHandler()],
     )
     # create a logger and then return it
-    logger = logging.getLogger("discover-richlog")
+    logger = logging.getLogger(constants.logger.Richlog)
     return logger
 
 
@@ -57,5 +57,5 @@ def configure_logging_syslog(
         handlers=[syslog_handler],
     )
     # create a logger and then return it
-    logger = logging.getLogger("discover-syslog")
+    logger = logging.getLogger(constants.logger.Syslog)
     return logger
