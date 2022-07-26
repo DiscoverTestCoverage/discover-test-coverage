@@ -65,6 +65,10 @@ jobs:
         - name: Run Pylint Linting Tool
           run: |
             poetry run task pylint
+        # Run the test suite and collect coverage
+        - name: Run Test Coverage Monitoring
+          run: |
+            poetry run task coverage-html
         # Upload pytest-cov coverage report in HTML
         - name: Upload Coverage Report
           uses: actions/upload-artifact@v3
