@@ -124,24 +124,6 @@ pycodestyle = ">=2.8.0,<2.9.0"
 pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
-name = "fortify-coverage"
-version = "0.1.0"
-description = ""
-category = "main"
-optional = false
-python-versions = "^3.8"
-develop = false
-
-[package.dependencies]
-pydantic = "^1.9.1"
-
-[package.source]
-type = "git"
-url = "https://github.com/FortifiedTestCoverage/fortify-coverage"
-reference = "master"
-resolved_reference = "bdb8c7beb71a5b000dfd98539dbe50f05fa7bd33"
-
-[[package]]
 name = "importlib-metadata"
 version = "4.12.0"
 description = "Read metadata from Python packages"
@@ -617,7 +599,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "c2d077dcc2baf99e4a95cfff04416b54415e9541d6c65de52905dbf7a5334aee"
+content-hash = "610699c456dd9e7887bc57a4117e21a153291c5634e733e496717daf9e3cf5e7"
 
 [metadata.files]
 astroid = []
@@ -642,7 +624,6 @@ commonmark = [
 coverage = []
 dill = []
 flake8 = []
-fortify-coverage = []
 importlib-metadata = [
     {file = "importlib_metadata-4.12.0-py3-none-any.whl", hash = "sha256:7401a975809ea1fdc658c3aa4f78cc2195a0e019c5cbc4c06122884e9ae80c23"},
     {file = "importlib_metadata-4.12.0.tar.gz", hash = "sha256:637245b8bab2b6502fcbc752cc4b7a6f6243bb02b31c5c26156ad103d3d45670"},
