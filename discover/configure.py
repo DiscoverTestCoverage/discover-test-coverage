@@ -1,13 +1,13 @@
 """Configure logging and console output."""
 
-from fortify_coverage_cli import constants
-
 import logging
 import logging.config
 import logging.handlers
 
 from rich.logging import RichHandler
 from rich.traceback import install
+
+from discover import constants
 
 
 def configure_tracebacks() -> None:
