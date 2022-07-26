@@ -60,5 +60,5 @@ def run_syslog_server():
         raise
     # display a diagnostic message when server is manually stopped
     except KeyboardInterrupt:
-        output.console.print(":person_shrugging: Shut down fortify's sylog server")
+        output.console.print(constants.discover.Server_Shutdown)
         output.console.print()
