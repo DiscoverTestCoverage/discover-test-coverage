@@ -41,7 +41,6 @@ typer = {extras = ["all"], version = "^0.6.1"}
 rich = "^12.5.1"
 isort = "^5.10.1"
 libcst = "^0.4.7"
-pydantic = "^1.9.1"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.4"
