@@ -37,15 +37,15 @@ class InstrumentedSourceCodeGenerator(object):
         )
         return import_statement
 
-    def get_fortify_comment_code(self) -> str:
+    def get_discover_comment_code(self) -> str:
         """Return the standard comment that goes along with fortify's instrumentation."""
         # define the standard code comment to include the name of the
         # module that added the instrumentation and full date-time details
-        fortify_comment_code = (
+        discover_comment_code = (
             "# discover-test-coverage instrumentation generated on"
             f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {self.name}\n"
         )
-        return fortify_comment_code
+        return discover_comment_code
 
     def get_testfixture_start_import(self) -> str:
         """Return the import statement for the test session fixture."""
@@ -68,11 +68,11 @@ class InstrumentedSourceCodeGenerator(object):
         # -- session_setup_teardown: initializes coverage tracking and saves it
         # construct the source code as a string
         #         - line 1: comment showing when instrumentation was generated and by what
-        #         - line 2: import the session_setup_teardown from fortify_coverage module
-        # Note: fortify_coverage package is not part of the discover package;
+        #         - line 2: import the session_setup_teardown from discover_test_coverage module
+        # Note: discover_test_coverage package is not part of the discover package;
         # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
-            self.get_fortify_comment_code() + self.get_testfixture_start_import()
+            self.get_discover_comment_code() + self.get_testfixture_start_import()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
@@ -87,11 +87,11 @@ class InstrumentedSourceCodeGenerator(object):
         # construct the source code as a string
         #         - line 0: an extra newline before the other generated code
         #         - line 1: comment showing when instrumentation was generated and by what
-        #         - line 2: import the session_setup_teardown from fortify_coverage module
-        # Note: fortify_coverage package is not part of the discover package;
+        #         - line 2: import the session_setup_teardown from discover_test_coverage module
+        # Note: discover_test_coverage package is not part of the discover package;
         # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
-            "\n" + self.get_fortify_comment_code() + self.get_testfixture_start_import()
+            "\n" + self.get_discover_comment_code() + self.get_testfixture_start_import()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
