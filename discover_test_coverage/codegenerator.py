@@ -42,15 +42,15 @@ class InstrumentedSourceCodeGenerator(object):
         # define the standard code comment to include the name of the
         # module that added the instrumentation and full date-time details
         fortify_comment_code = (
-            "# fortify-coverage instrumentation generated on"
+            "# discover-test-coverage instrumentation generated on"
             f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {self.name}\n"
         )
         return fortify_comment_code
 
-    def get_fortify_import_test_session_fixture(self) -> str:
+    def get_testfixture_start_import(self) -> str:
         """Return the import statement for the test session fixture."""
-        # define the import statement for the session_setup_teardown fixture
-        return "from fortify_coverage.testfixture import *\n\n"
+        # define the import statement for all of the test fixtures
+        return "from libdct.testfixture import *\n"
 
     def generate(
         self, *args, **kwgs
@@ -73,7 +73,7 @@ class InstrumentedSourceCodeGenerator(object):
         # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
             self.get_fortify_comment_code()
-            + self.get_fortify_import_test_session_fixture()
+            + self.get_testfixture_start_import()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
@@ -94,7 +94,7 @@ class InstrumentedSourceCodeGenerator(object):
         multiple_line_import_statement_str = (
             "\n"
             + self.get_fortify_comment_code()
-            + self.get_fortify_import_test_session_fixture()
+            + self.get_testfixture_start_import()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
