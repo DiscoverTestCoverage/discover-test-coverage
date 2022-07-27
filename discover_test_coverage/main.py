@@ -124,8 +124,45 @@ def test(
         project_directory=project_directory,
         program_directory=program_directory,
     )
-    # run the test suite using Pytest
-    run.run_test_suite(project_directory, tests_directory, test_run_command)
+    # run the test suite using Pytest without collect coverage information;
+    # this run will not use instrumented program and/or test source code
+    run.run_test_suite(project_directory, tests_directory, test_run_command, "without_coverage")
+
+
+@app.command()
+def test_coverage(
+    project_directory: Path = typer.Option(...),
+    program_directory: Path = typer.Option(...),
+    tests_directory: Path = typer.Option(...),
+    test_run_command: str = typer.Option(
+        run.TestRunCommand.TEST.value, "--test-run-cmd"
+    ),
+    verbose: bool = typer.Option(False),
+    debug_level: debug.DebugLevel = typer.Option(debug.DebugLevel.ERROR.value),
+    debug_destination: debug.DebugDestination = typer.Option(
+        debug.DebugDestination.CONSOLE.value, "--debug-dest"
+    ),
+):
+    """Run the program's test suite and collect code coverage."""
+    # setup the console and the logger through output module
+    output.setup(debug_level, debug_destination)
+    output.logger.debug(f"Testing the project in {project_directory}")
+    output.logger.debug(f"Testing program modules in {program_directory}")
+    # display the header
+    output.print_header()
+    # display details about configuration as
+    # long as verbose output was requested
+    output.print_diagnostics(
+        verbose,
+        debug_level=debug_level,
+        debug_destination=debug_destination,
+        test_run_command=test_run_command,
+        project_directory=project_directory,
+        program_directory=program_directory,
+    )
+    # run the test suite using Pytest without collect coverage information;
+    # this run will not use instrumented program and/or test source code
+    run.run_test_suite_with_coverage(project_directory, tests_directory, test_run_command)
 
 
 @app.command()
