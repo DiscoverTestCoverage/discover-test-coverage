@@ -90,6 +90,16 @@ def prepare_for_coverage_monitoring(
     return test_directory_backup
 
 
+def finalize_coverage_monitoring(test_directory: Path, test_directory_backup: Path) -> None:
+    """Finalize the system after running test coverage monitoring."""
+    # delete the test directory that contains the instrumented tests
+    rmtree(test_directory)
+    # return the original tests to the testing directory
+    copytree_overwrite(test_directory_backup, test_directory)
+    # delete the backup directory for the original tests
+    rmtree(test_directory_backup)
+
+
 def run_test_suite_with_coverage(
     project_directory: Path,
     test_directory: Path,
@@ -110,11 +120,6 @@ def run_test_suite_with_coverage(
     subprocess.run(test_run_command, shell=True)
     # display a label in standard output about finishing the test suite run
     output.print_test_finish()
-    # delete the test directory that contains the instrumented tests
-    rmtree(test_directory)
-    # return the original tests to the testing directory
-    copytree_overwrite(test_directory_backup, test_directory)
-    # delete the backup directory for the original tests
-    rmtree(test_directory_backup)
+    finalize_coverage_monitoring(test_directory, test_directory_backup)
     # return to the main working directory for the program
     os.chdir(initial_current_working_directory)
