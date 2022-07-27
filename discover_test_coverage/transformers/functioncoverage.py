@@ -29,7 +29,7 @@ class FunctionCoverageTransformer(cst.CSTTransformer):
         self.stack.append(node.name.value)  # type: ignore
 
     def leave_ClassDef(
-        self, original_node: cst.ClassDef, updated_node: cst.ClassDef
+        self, original_node: cst.ClassDef, updated_node: cst.ClassDef  # noqa
     ) -> cst.CSTNode:  # noqa
         self.stack.pop()
         return updated_node
