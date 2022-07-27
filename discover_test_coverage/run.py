@@ -31,41 +31,43 @@ def copytree_overwrite(from_path: Path, to_path: Path) -> None:
     copytree(from_path, to_path)
 
 
-def run_test_suite(
-    project_directory: Path,
-    test_directory: Path,
-    test_run_command: str,
-    use_coverage_or_not: str,
-) -> None:
-    """Run the test suite with a provided command."""
-    locals()["run_test_suite" + use_coverage_or_not]
+# def run_test_suite(
+#     project_directory: Path,
+#     test_directory: Path,
+#     test_run_command: str,
+#     use_coverage_or_not: str,
+# ) -> None:
+#     """Run the test suite with a provided command."""
+#     locals()["run_test_suite" + use_coverage_or_not]
 
 
-def run_test_suite_without_coverage(
-    project_directory: Path,
-    test_directory: Path,
-    test_run_command: str,
-) -> None:
-    """Run the test suite with a provided command with coverage monitoring."""
-    output.logger.debug(f"Change into the project directory: {project_directory}")
-    output.logger.debug(f"Preparing to run the test command: {test_run_command}")
-    initial_current_working_directory = Path.cwd()
-    # change into the directory for the specified project
-    os.chdir(project_directory)
-    # display a label in standard output about running the test suite
-    output.print_test_start()
-    # create the directory where tests are stored by default
-    test_directory = Path(project_directory / test_directory)
-    # run the test suite with the provided test execution command
-    subprocess.run(test_run_command, shell=True)
-    # display a label in standard output about finishing the test suite run
-    output.print_test_finish()
-    # return to the main working directory for the program
-    os.chdir(initial_current_working_directory)
+# def run_test_suite_without_coverage(
+#     project_directory: Path,
+#     test_directory: Path,
+#     test_run_command: str,
+# ) -> None:
+#     """Run the test suite with a provided command with coverage monitoring."""
+#     output.logger.debug(f"Change into the project directory: {project_directory}")
+#     output.logger.debug(f"Preparing to run the test command: {test_run_command}")
+#     initial_current_working_directory = Path.cwd()
+#     # change into the directory for the specified project
+#     os.chdir(project_directory)
+#     # display a label in standard output about running the test suite
+#     output.print_test_start()
+#     # create the directory where tests are stored by default
+#     test_directory = Path(project_directory / test_directory)
+#     # run the test suite with the provided test execution command
+#     subprocess.run(test_run_command, shell=True)
+#     # display a label in standard output about finishing the test suite run
+#     output.print_test_finish()
+#     # return to the main working directory for the program
+#     os.chdir(initial_current_working_directory)
 
 
 def prepare_for_coverage_monitoring(
-    project_directory: Path, test_directory: Path
+    project_directory: Path,
+    test_directory: Path,
+    coverage: bool,
 ) -> Path:
     """Prepare to run the test suite with coverage monitoring."""
     # create the directory where tests are stored by default
@@ -76,34 +78,41 @@ def prepare_for_coverage_monitoring(
         project_directory
         / (constants.markers.Hidden + test_directory.name + constants.tests.Backup)
     )
-    # create a hidden directory that will store the instrumented tests
-    test_directory_instrumented = Path(
-        project_directory / (constants.markers.Hidden + test_directory.name)
-    )
-    # copy the original test directory to the backup directory; this will
-    # ensure that original test cases are not deleted during test execution
-    copytree_overwrite(test_directory, test_directory_backup)
-    # recursively remove the test directory and all of its contents
-    rmtree(test_directory)
-    # recursively copy the instrumented tests into the original test directory
-    copytree_overwrite(test_directory_instrumented, test_directory)
+    if coverage:
+        # create a hidden directory that will store the instrumented tests
+        test_directory_instrumented = Path(
+            project_directory / (constants.markers.Hidden + test_directory.name)
+        )
+        # copy the original test directory to the backup directory; this will
+        # ensure that original test cases are not deleted during test execution
+        copytree_overwrite(test_directory, test_directory_backup)
+        # recursively remove the test directory and all of its contents
+        rmtree(test_directory)
+        # recursively copy the instrumented tests into the original test directory
+        copytree_overwrite(test_directory_instrumented, test_directory)
     return test_directory_backup
 
 
-def finalize_coverage_monitoring(test_directory: Path, test_directory_backup: Path) -> None:
+def finalize_coverage_monitoring(
+    test_directory: Path,
+    test_directory_backup: Path,
+    coverage: bool,
+) -> None:
     """Finalize the system after running test coverage monitoring."""
-    # delete the test directory that contains the instrumented tests
-    rmtree(test_directory)
-    # return the original tests to the testing directory
-    copytree_overwrite(test_directory_backup, test_directory)
-    # delete the backup directory for the original tests
-    rmtree(test_directory_backup)
+    if coverage:
+        # delete the test directory that contains the instrumented tests
+        rmtree(test_directory)
+        # return the original tests to the testing directory
+        copytree_overwrite(test_directory_backup, test_directory)
+        # delete the backup directory for the original tests
+        rmtree(test_directory_backup)
 
 
-def run_test_suite_with_coverage(
+def run_test_suite_with_optional_coverage(
     project_directory: Path,
     test_directory: Path,
     test_run_command: str,
+    coverage: bool = False,
 ) -> None:
     """Run the test suite with a provided command and collect coverage."""
     output.logger.debug(f"Change into the project directory: {project_directory}")
@@ -114,12 +123,12 @@ def run_test_suite_with_coverage(
     # display a label in standard output about running the test suite
     output.print_test_start()
     test_directory_backup = prepare_for_coverage_monitoring(
-        project_directory, test_directory
+        project_directory, test_directory, coverage
     )
     # run the test suite with the provided test execution command
     subprocess.run(test_run_command, shell=True)
     # display a label in standard output about finishing the test suite run
     output.print_test_finish()
-    finalize_coverage_monitoring(test_directory, test_directory_backup)
+    finalize_coverage_monitoring(test_directory, test_directory_backup, coverage)
     # return to the main working directory for the program
     os.chdir(initial_current_working_directory)
