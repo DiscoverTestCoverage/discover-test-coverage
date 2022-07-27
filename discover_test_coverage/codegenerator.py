@@ -72,8 +72,7 @@ class InstrumentedSourceCodeGenerator(object):
         # Note: fortify_coverage package is not part of the discover package;
         # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
-            self.get_fortify_comment_code()
-            + self.get_testfixture_start_import()
+            self.get_fortify_comment_code() + self.get_testfixture_start_import()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
@@ -92,9 +91,7 @@ class InstrumentedSourceCodeGenerator(object):
         # Note: fortify_coverage package is not part of the discover package;
         # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
-            "\n"
-            + self.get_fortify_comment_code()
-            + self.get_testfixture_start_import()
+            "\n" + self.get_fortify_comment_code() + self.get_testfixture_start_import()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
