@@ -50,7 +50,7 @@ class InstrumentedSourceCodeGenerator(object):
     def get_testfixture_start_import(self) -> str:
         """Return the import statement for the test session fixture."""
         # define the import statement for all of the test fixtures
-        return "from libdct.testfixture import *\n"
+        return "from libdtc.testfixture import *\n"
 
     def generate(
         self, *args, **kwgs
