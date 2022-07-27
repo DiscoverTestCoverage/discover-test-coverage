@@ -16,7 +16,11 @@ def find_python_files(directory: Path) -> List[Path]:
     # with that said, this works by a convention that a developer
     # may not follow (i.e., tests could be inside program directories)
     all_python_files = sorted(directory.rglob(constants.wildcards.All_Python))
+    output.logger.debug(f"Type of all_python_files: {type(all_python_files)}")
     return all_python_files
+
+
+# def contains_conftest_file()
 
 
 def elide_path(path, maximum_parts: int = 4, include_up_to: int = 5):
@@ -41,7 +45,8 @@ def create_hidden_directory(containing_directory: Path, directory: Path) -> Path
         containing_directory / Path(constants.markers.Hidden + str(directory.name))
     )
     # delete the hidden directory if it already exists
-    rmtree(hidden_directory)
+    if hidden_directory.exists() and hidden_directory.is_dir():
+        rmtree(hidden_directory)
     # create the hidden directory for storing instrumentation
     # note that mkdir throws an exception if the directory exists;
     # since it was already deleted, the exception should not occur
