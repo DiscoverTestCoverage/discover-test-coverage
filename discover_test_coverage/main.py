@@ -126,8 +126,8 @@ def test(
     )
     # run the test suite using Pytest without collect coverage information;
     # this run will not use instrumented program and/or test source code
-    run.run_test_suite(
-        project_directory, tests_directory, test_run_command, "without_coverage"
+    run.run_test_suite_with_optional_coverage(
+        project_directory, tests_directory, test_run_command, False
     )
 
 
@@ -164,8 +164,8 @@ def test_coverage(
     )
     # run the test suite using Pytest without collect coverage information;
     # this run will not use instrumented program and/or test source code
-    run.run_test_suite_with_coverage(
-        project_directory, tests_directory, test_run_command
+    run.run_test_suite_with_optional_coverage(
+        project_directory, tests_directory, test_run_command, True
     )
 
 
