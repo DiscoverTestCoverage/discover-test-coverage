@@ -1,5 +1,7 @@
 """Perform file operations."""
 
+from typing import List
+
 from pathlib import Path
 from pathlib import PurePath
 from shutil import rmtree
@@ -20,7 +22,19 @@ def find_python_files(directory: Path) -> List[Path]:
     return all_python_files
 
 
-# def contains_conftest_file()
+def find_conftest_files(directory: Path) -> List[Path]:
+    """Determine if the list of Path objects contains one for the conftest file."""
+    conftest_file_list = []
+    python_file_list = find_python_files(directory)
+    for python_file in python_file_list:
+        if python_file.name == "conftest.py":
+            conftest_file_list.append(python_file)
+    if len(conftest_file_list) == 0:
+        initial_conftest_file = Path(str(directory) + "/" + "conftest.py")
+        initial_conftest_file.write_text('"""created conftest file."""')
+        conftest_file_list.append(initial_conftest_file)
+    conftest_file_list.extend(python_file_list)
+    return conftest_file_list
 
 
 def elide_path(path, maximum_parts: int = 4, include_up_to: int = 5):
