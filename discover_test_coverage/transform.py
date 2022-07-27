@@ -1,5 +1,7 @@
 """Instrument an application and its test suite using libCST transformers."""
 
+from typing import Callable
+
 import difflib
 from pathlib import Path
 
@@ -42,13 +44,14 @@ def transform_files_using_libcst(
     project_directory_path: Path,
     program_directory: Path,
     instrumentation_type: instrumentation.InstrumentationType,
+    file_finder: Callable,
 ) -> None:
     """Transform directory of files by adding instrumentation."""
     # create the fully qualified directory that contains the program's source code
     fully_qualified_program_directory = project_directory_path / program_directory
     output.logger.debug(fully_qualified_program_directory)
     # find all of the Python source code files for instrumentation
-    program_files_list = file.find_python_files(fully_qualified_program_directory)
+    program_files_list = file_finder(fully_qualified_program_directory)
     # configure a progress bar for visual display in the terminal window
     text_column = TextColumn("{task.description}", table_column=Column(ratio=1))
     bar_column = BarColumn(bar_width=None, table_column=Column(ratio=2))
