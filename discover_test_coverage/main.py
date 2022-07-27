@@ -5,6 +5,7 @@ from pathlib import Path
 import typer
 
 from discover_test_coverage import debug
+from discover_test_coverage import file
 from discover_test_coverage import instrumentation
 from discover_test_coverage import output
 from discover_test_coverage import run
@@ -48,7 +49,10 @@ def instrument_program(
     )
     # instrument all of the files in a program
     transform.transform_files_using_libcst(
-        project_directory, program_directory, instrumentation_type
+        project_directory,
+        program_directory,
+        instrumentation_type,
+        file.find_python_files,
     )
     # display the footer
     output.print_footer()
@@ -87,7 +91,10 @@ def instrument_tests(
     )
     # instrument all of the files in a program
     transform.transform_files_using_libcst(
-        project_directory, tests_directory, instrumentation_type
+        project_directory,
+        tests_directory,
+        instrumentation_type,
+        file.find_conftest_files,
     )
     # display the footer
     output.print_footer()
