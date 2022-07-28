@@ -1,5 +1,5 @@
 <p align="center">
-<img width="350" height="350" src="https://raw.githubusercontent.com/DiscoverTestCoverage/discover-test-coverage/master/.github/logos/Discover.svg" alt="DiscoverTestCoverage"</img>
+<img src="https://raw.githubusercontent.com/DiscoverTestCoverage/discover-test-coverage/master/.github/logos/Discover.svg" alt="DiscoverTestCoverage"</img>
 </p>
 
 # discover-test-coverage
