@@ -4,6 +4,7 @@ from pathlib import Path
 
 import typer
 
+from discover_test_coverage import codegenerator
 from discover_test_coverage import debug
 from discover_test_coverage import file
 from discover_test_coverage import instrumentation
@@ -97,13 +98,15 @@ def instrument_tests(
         project_directory,
         tests_directory,
         instrumentation_type,
-        file.find_conftest_files
+        file.find_conftest_files,
     )
     # there were no conftest.py files that were found and then
     # instrumented and thus one needs to be created and then
     # copied to the hidden directory location for the tests
     if transformed_file_count == 0:
-        print("need to copy one over!")
+        codegenerator.create_instrumented_conftest_file(
+            project_directory, tests_directory
+        )
     # add a blank line between the status outputs in the console
     # for the two different types of tasks
     output.console.print()
@@ -111,10 +114,9 @@ def instrument_tests(
     # the hidden directory that contains the instrumented conftest.py
     # file (and any other instrumented tests that were needed)
     transformed_file_count = transfer.transfer_files(
-        project_directory,
-        tests_directory,
-        file.find_python_files_not_conftest
+        project_directory, tests_directory, file.find_python_files
     )
+    codegenerator.delete_instrumented_conftest_file(project_directory, tests_directory)
     # display the footer
     output.print_footer()
 
