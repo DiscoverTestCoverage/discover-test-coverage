@@ -15,6 +15,25 @@ def create_constants(name, *args, **kwargs):
     return new_constants(*itertools.chain(args, kwargs.values()))
 
 
+# define the constants for the discover tool
+discover = create_constants(
+    "discover",
+    Emoji=":shield: ",
+    Https="https://",
+    Name="discover-test-coverage",
+    Separator="/",
+    Server_Shutdown=":person_shrugging: Shut down discover's sylog server",
+    Tagline="discover-test-coverage: Disabling code to discover test effectiveness",
+    Website="https://github.com/DiscoverTestCoverage/discover-test-coverage",
+)
+
+# define the logger constants
+logger = create_constants(
+    "logger",
+    Richlog="discover-richlog",
+    Syslog="discover-syslog",
+)
+
 # The defined logging levels, in order of increasing severity, are as follows:
 #
 # DEBUG
@@ -37,25 +56,6 @@ logging = create_constants(
     Default_Logging_Level="ERROR",
     Format="%(message)s",
     Rich="Rich",
-)
-
-# define the logger constants
-logger = create_constants(
-    "logger",
-    Richlog="discover-richlog",
-    Syslog="discover-syslog",
-)
-
-# define the constants for the discover tool
-discover = create_constants(
-    "discover",
-    Emoji=":shield: ",
-    Https="https://",
-    Name="discover-test-coverage",
-    Separator="/",
-    Server_Shutdown=":person_shrugging: Shut down discover's sylog server",
-    Tagline="discover-test-coverage: Disabling code to discover test effectiveness",
-    Website="https://github.com/DiscoverTestCoverage/discover-test-coverage",
 )
 
 # define the constants for markers
