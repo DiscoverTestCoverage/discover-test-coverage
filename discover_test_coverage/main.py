@@ -10,6 +10,7 @@ from discover_test_coverage import instrumentation
 from discover_test_coverage import output
 from discover_test_coverage import run
 from discover_test_coverage import server
+from discover_test_coverage import transfer
 from discover_test_coverage import transform
 
 # create a typer object
@@ -89,20 +90,29 @@ def instrument_tests(
         project_directory=project_directory,
         program_directory=tests_directory,
     )
-    # instrument all of the conftest.py files in a program
+    # instrument all of the conftest.py files in a program; note
+    # that these are normally in the tests/ directory but can,
+    # in fact, be at any location in a project
     transformed_file_count = transform.transform_files_using_libcst(
         project_directory,
         tests_directory,
         instrumentation_type,
         file.find_conftest_files
     )
+    # there were no conftest.py files that were found and then
+    # instrumented and thus one needs to be created and then
+    # copied to the hidden directory location for the tests
     if transformed_file_count == 0:
         print("need to copy one over!")
+    # add a blank line between the status outputs in the console
+    # for the two different types of tasks
     output.console.print()
-    transformed_file_count = transform.transfer_files(
+    # transfer the test from the program's test directory to
+    # the hidden directory that contains the instrumented conftest.py
+    # file (and any other instrumented tests that were needed)
+    transformed_file_count = transfer.transfer_files(
         project_directory,
         tests_directory,
-        instrumentation_type,
         file.find_python_files_not_conftest
     )
     # display the footer
