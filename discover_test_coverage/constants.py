@@ -43,6 +43,7 @@ generator = create_constants(
 # define the logger constants
 logger = create_constants(
     "logger",
+    Function_Prefix="configure_logging_",
     Richlog="discover-richlog",
     Syslog="discover-syslog",
 )
