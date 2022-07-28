@@ -18,7 +18,7 @@ def transfer_files(
     program_directory: Path,
     file_finder: Callable,
 ) -> int:
-    """Transform directory of files by adding instrumentation."""
+    """Transfer a directory of files to a hidden directory derived from existing directory."""
     # create the fully qualified directory that contains the program's source code
     fully_qualified_program_directory = project_directory_path / program_directory
     output.logger.debug(fully_qualified_program_directory)
@@ -32,22 +32,21 @@ def transfer_files(
     hidden_program_directory = file.get_hidden_directory(
         project_directory_path, project_directory_path / program_directory
     )
-    # hidden_program_directory = Path(
-    # project_directory_path / project_directory_path / program_directory
-    # )
-    # instrument each of the individual files in the program, updating progress bar
+    # copy each of the individual files in the specified directory,
+    # updating progress bar after each one of the transfers
     if len(program_files_list) > 0:
         with Progress() as progress:
-            # create the instrumentation task label for the progress bar
+            # create the task label for the progress bar
             task = progress.add_task(
                 ":sparkles: Copy test files",
                 total=len(program_files_list),
             )
-            # iteratively transform the source code for each of the program files
+            # iteratively transfer the source code for each file
             for program_file in program_files_list:
                 progress.console.print(f"Copying {file.elide_path(program_file)}")
-                # create a new pathlib Path object for the "instrumented" module
+                # create a new pathlib Path object for the module in the hidden directory
                 instrumented_file = Path(hidden_program_directory / program_file.name)
+                # copy the existing file to the "instrumented" one in hidden directory
                 shutil.copy(program_file, instrumented_file)
                 # indicate that the current task is finished to advance progress bar
                 progress.advance(task)
