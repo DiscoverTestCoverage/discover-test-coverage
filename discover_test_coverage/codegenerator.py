@@ -87,13 +87,14 @@ class InstrumentedSourceCodeGenerator(object):
         self.name = name
 
     @staticmethod
-    def create_parsed_statement(import_statement):
+    def create_parsed_statement(source_code_statement):
         """Create a parsed statement out of the provided Python source code."""
-        import_statement = cst.parse_statement(
-            import_statement,
+        # create a parsed source code statement using libcst
+        source_code_statement_parsed = cst.parse_statement(
+            source_code_statement,
             config=transform.source_tree_configuration,
         )
-        return import_statement
+        return source_code_statement_parsed
 
     def generate(
         self, *args, **kwgs
