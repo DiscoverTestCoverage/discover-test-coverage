@@ -64,6 +64,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
             # generate the concrete abstract syntax tree for a test with a docstring
             import_statement = instrumentation_type_generator.generate()
             # insert the import statement between the docstring and the rest of the code
+            # use array slicing to extract segments of the node's body
             body_modified = (
                 *updated_node.body[0:1],
                 import_statement,
