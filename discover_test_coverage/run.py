@@ -18,6 +18,10 @@ class TestRunCommand(str, Enum):
     TEST_OUTPUT = "poetry run pytest -s"
     TEST_FAIL_FAST = "poetry run pytest -x"
     TEST_FAIL_FAST_OUTPUT = "poetry run pytest -x -s"
+    VENV_TEST = ".venv/bin/pytest"
+    VENV_TEST_OUTPUT = ".venv/bin/pytest -s"
+    VENV_TEST_FAIL_FAST = ".venv/bin/pytest -x"
+    VENV_TEST_FAIL_FAST_OUTPUT = ".venv/bin/pytest-x -s"
 
 
 def copytree_overwrite(from_path: Path, to_path: Path) -> None:
