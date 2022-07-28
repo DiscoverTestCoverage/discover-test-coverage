@@ -54,7 +54,7 @@ discover = create_constants(
     Name="discover-test-coverage",
     Separator="/",
     Server_Shutdown=":person_shrugging: Shut down discover's sylog server",
-    Tagline="discover-test-coverage: Does your test suite have effective coverage?",
+    Tagline="discover-test-coverage: Disabling code to discover test effectiveness",
     Website="https://github.com/DiscoverTestCoverage/discover-test-coverage",
 )
 
@@ -99,6 +99,7 @@ server = create_constants(
 tests = create_constants(
     "tests",
     Backup="-backup",
+    Conftest="conftest.py",
 )
 
 # define the wildcards constants
