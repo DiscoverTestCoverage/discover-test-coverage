@@ -135,7 +135,7 @@ def test(
     program_directory: Path = typer.Option(...),
     tests_directory: Path = typer.Option(...),
     test_run_command: str = typer.Option(
-        run.TestRunCommand.TEST.value, "--test-run-cmd"
+        run.TestRunCommand.VENV_TEST.value, "--test-run-cmd"
     ),
     verbose: bool = typer.Option(False),
     debug_level: debug.DebugLevel = typer.Option(debug.DebugLevel.ERROR.value),
@@ -173,7 +173,7 @@ def test_coverage(
     program_directory: Path = typer.Option(...),
     tests_directory: Path = typer.Option(...),
     test_run_command: str = typer.Option(
-        run.TestRunCommand.TEST.value, "--test-run-cmd"
+        run.TestRunCommand.VENV_TEST.value, "--test-run-cmd"
     ),
     verbose: bool = typer.Option(False),
     debug_level: debug.DebugLevel = typer.Option(debug.DebugLevel.ERROR.value),
