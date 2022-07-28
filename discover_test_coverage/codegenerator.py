@@ -70,8 +70,11 @@ def delete_instrumented_conftest_file(
     project_directory: Path, test_directory: Path
 ) -> None:
     """Delete an instrumented conftest.py file in specified directory."""
-    conftest_path = Path("conftest.py")
+    # create a pathlib Path object for the conftest.py file
+    conftest_path = Path(constants.tests.Conftest)
+    # create a fully qualified conftest.py file in the test directory of project
     initial_conftest_file = Path(project_directory / test_directory / conftest_path)
+    # unlink the file, which causes the file to be removed from directory
     initial_conftest_file.unlink()
 
 
