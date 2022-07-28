@@ -28,7 +28,7 @@ def find_python_files_not_conftest(directory: Path) -> List[Path]:
     # add to the not_conftest_file_list all files that
     # are not conftest.py according to their name
     for python_file in python_file_list:
-        if python_file.name != "conftest.py":
+        if python_file.name != constants.tests.Conftest:
             not_conftest_file_list.append(python_file)
     return not_conftest_file_list
 
@@ -42,7 +42,7 @@ def find_conftest_files(directory: Path) -> List[Path]:
     # add to the conftest_file_list all files that are
     # conftest.py according to their name
     for python_file in python_file_list:
-        if python_file.name == "conftest.py":
+        if python_file.name == constants.tests.Conftest:
             conftest_file_list.append(python_file)
     return conftest_file_list
 
