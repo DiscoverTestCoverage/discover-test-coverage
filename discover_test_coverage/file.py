@@ -5,7 +5,6 @@ from pathlib import PurePath
 from shutil import rmtree
 from typing import List
 
-from discover_test_coverage import codegenerator
 from discover_test_coverage import constants
 from discover_test_coverage import output
 
