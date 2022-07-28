@@ -1,4 +1,4 @@
-"""Instrument an application for function coverage using libCST."""
+"""Instrument an application coverage tracking using libCST."""
 
 import libcst as cst
 from libcst import Expr
@@ -14,16 +14,19 @@ def detect_module_docstring(node: cst.Module) -> bool:
     """Determine if a specific module node has a docstring or not."""
     # assume that the module does not have a docstring and prove otherwise
     has_module_docstring = False
-    # extract the statement in the body of the module
-    first_node_of_body = node.body[0]
-    # incrementally determine whether the first node is a docstring
-    if isinstance(first_node_of_body, SimpleStatementLine):
-        first_node_of_body = first_node_of_body.body[0]
-        if isinstance(first_node_of_body, Expr):
-            if len(first_node_of_body.children) == 1 and isinstance(
-                first_node_of_body.children[0], SimpleString
-            ):
-                has_module_docstring = True
+    # there is content in the body of this node and thus it
+    # is safe to inspect it for a module docstring
+    if len(node.body) > 0:
+        # extract the statement in the body of the module
+        first_node_of_body = node.body[0]
+        # incrementally determine whether the first node is a docstring
+        if isinstance(first_node_of_body, SimpleStatementLine):
+            first_node_of_body = first_node_of_body.body[0]  # type: ignore
+            if isinstance(first_node_of_body, Expr):
+                if len(first_node_of_body.children) == 1 and isinstance(
+                    first_node_of_body.children[0], SimpleString
+                ):
+                    has_module_docstring = True
     return has_module_docstring
 
 
@@ -39,7 +42,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
 
     def leave_Module(
         self, original_node: cst.Module, updated_node: cst.Module
-    ) -> cst.CSTNode:
+    ) -> cst.Module:
         """Instrument the starting source code in the module to add test fixture import."""
         output.logger.debug(
             f"Modifying source code body with starting length: {len(updated_node.body)}"
@@ -51,7 +54,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
         if module_has_docstring:
             # generate the correct type of import statement for a module with a docstring
             import_statement_type = (
-                codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
+                codegenerator.InstrumentationTypeSourceCode.TEST_INSTRUMENTATION_DOCSTRING
             )
             instrumentation_type_generator = (
                 codegenerator.InstrumentedSourceCodeGenerator(
@@ -61,6 +64,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
             # generate the concrete abstract syntax tree for a test with a docstring
             import_statement = instrumentation_type_generator.generate()
             # insert the import statement between the docstring and the rest of the code
+            # use array slicing to extract segments of the node's body
             body_modified = (
                 *updated_node.body[0:1],
                 import_statement,
@@ -72,7 +76,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
         else:
             # create the import statement
             import_statement_type = (
-                codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_NO_DOCSTRONG
+                codegenerator.InstrumentationTypeSourceCode.TEST_INSTRUMENTATION_NO_DOCSTRONG
             )
             instrumentation_type_generator = (
                 codegenerator.InstrumentedSourceCodeGenerator(
@@ -88,7 +92,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
                     empty_line_type, self.name
                 )
             )
-            # generate the concrete abstract syntax tree for a test with no docstring
+            # generate the concrete abstract syntax tree for blank line of source code
             blank_line_statement = instrumentation_type_generator.generate()
             # insert the import statement before all existing lines of the body
             body_modified = (
@@ -99,5 +103,6 @@ class TestFixtureTransformer(cst.CSTTransformer):
             output.logger.debug(
                 f"Modified source code body to have length: {len(body_modified)}"
             )
+            # use the body_modified as the body of the updated_node
             updated_node = updated_node.with_changes(body=body_modified)
         return updated_node

@@ -2,6 +2,7 @@
 
 import difflib
 from pathlib import Path
+from typing import Callable
 
 import libcst as cst
 from libcst import Module
@@ -14,6 +15,7 @@ from discover_test_coverage import file
 from discover_test_coverage import instrumentation
 from discover_test_coverage import output
 from discover_test_coverage import transformergenerator
+
 
 # global configuration of the source tree
 # that libCST creates through initial parse;
@@ -42,14 +44,14 @@ def transform_files_using_libcst(
     project_directory_path: Path,
     program_directory: Path,
     instrumentation_type: instrumentation.InstrumentationType,
-) -> None:
+    file_finder: Callable,
+) -> int:
     """Transform directory of files by adding instrumentation."""
-    global progress
     # create the fully qualified directory that contains the program's source code
     fully_qualified_program_directory = project_directory_path / program_directory
     output.logger.debug(fully_qualified_program_directory)
     # find all of the Python source code files for instrumentation
-    program_files_list = file.find_python_files(fully_qualified_program_directory)
+    program_files_list = file_finder(fully_qualified_program_directory)
     # configure a progress bar for visual display in the terminal window
     text_column = TextColumn("{task.description}", table_column=Column(ratio=1))
     bar_column = BarColumn(bar_width=None, table_column=Column(ratio=2))
@@ -59,24 +61,26 @@ def transform_files_using_libcst(
         project_directory_path, project_directory_path / program_directory
     )
     # instrument each of the individual files in the program, updating progress bar
-    with Progress() as progress:
-        # create the instrumentation task label for the progress bar
-        task = progress.add_task(
-            f":sparkles: Add {instrumentation_type} instrumentation",
-            total=len(program_files_list),
-        )
-        # iteratively transform the source code for each of the program files
-        for program_file in program_files_list:
-            progress.console.print(f"Instrumenting {file.elide_path(program_file)}")
-            # instrument the current program file for the specific coverage type
-            instrumented_module = transform_file_using_libcst(
-                program_file, instrumentation_type
+    if len(program_files_list) > 0:
+        with Progress() as progress:
+            # create the instrumentation task label for the progress bar
+            task = progress.add_task(
+                f":sparkles: Add {instrumentation_type} instrumentation",
+                total=len(program_files_list),
             )
-            # create a new pathlib Path object for the instrumented module
-            instrumented_file = Path(hidden_program_directory / program_file.name)
-            instrumented_file.write_text(instrumented_module.code)
-            # indicate that the current task is finished to advance progress bar
-            progress.advance(task)
+            # iteratively transform the source code for each of the program files
+            for program_file in program_files_list:
+                progress.console.print(f"Instrumenting {file.elide_path(program_file)}")
+                # instrument the current program file for the specific coverage type
+                instrumented_module = transform_file_using_libcst(
+                    program_file, instrumentation_type
+                )
+                # create a new pathlib Path object for the instrumented module
+                instrumented_file = Path(hidden_program_directory / program_file.name)
+                instrumented_file.write_text(instrumented_module.code)
+                # indicate that the current task is finished to advance progress bar
+                progress.advance(task)
+    return len(program_files_list)
 
 
 def transform_file_using_libcst(

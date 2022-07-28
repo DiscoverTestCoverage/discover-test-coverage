@@ -41,7 +41,6 @@ typer = {extras = ["all"], version = "^0.6.1"}
 rich = "^12.5.1"
 isort = "^5.10.1"
 libcst = "^0.4.7"
-pydantic = "^1.9.1"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.4"
@@ -64,7 +63,7 @@ coverage = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report t
 coverage-html = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report term-missing --cov-report html --cov --cov-branch", help = "Run coverage monitoring for the test suite" }
 coverage-report = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report term-missing --cov-report xml --cov --cov-branch --cov-append", help = "Run coverage monitoring for the test suite" }
 flake8 = { cmd = "flake8 discover_test_coverage tests", help = "Run the flake8 checks for source code documentation" }
-mypy = { cmd = "poetry run mypy discover", help = "Run the mypy type checker for potential type errors" }
+mypy = { cmd = "poetry run mypy discover_test_coverage", help = "Run the mypy type checker for potential type errors" }
 pydocstyle = { cmd = "pydocstyle discover_test_coverage tests", help = "Run the pydocstyle checks for source code documentation" }
 pylint = { cmd = "pylint discover_test_coverage tests", help = "Run the pylint checks for source code documentation" }
 test = { cmd = "pytest -x -s", help = "Run the pytest test suite" }

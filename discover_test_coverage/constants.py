@@ -15,6 +15,39 @@ def create_constants(name, *args, **kwargs):
     return new_constants(*itertools.chain(args, kwargs.values()))
 
 
+# define the constants for the discover tool
+code = create_constants(
+    "code",
+    Comment="#",
+    Discover_Comment="# discover-test-coverage instrumentation generated on",
+)
+
+# define the constants for the discover tool
+discover = create_constants(
+    "discover",
+    Emoji=":shield: ",
+    Https="https://",
+    Name="discover-test-coverage",
+    Separator="/",
+    Server_Shutdown=":person_shrugging: Shut down discover's sylog server",
+    Tagline="discover-test-coverage: Disabling code to discover test effectiveness",
+    Website="https://github.com/DiscoverTestCoverage/discover-test-coverage",
+)
+
+# define the constants for the discover tool
+generator = create_constants(
+    "generator",
+    Function_Prefix="generate_{}",
+)
+
+# define the logger constants
+logger = create_constants(
+    "logger",
+    Function_Prefix="configure_logging_",
+    Richlog="discover-richlog",
+    Syslog="discover-syslog",
+)
+
 # The defined logging levels, in order of increasing severity, are as follows:
 #
 # DEBUG
@@ -32,30 +65,11 @@ logging = create_constants(
     Error="ERROR",
     Critical="CRITICAL",
     Console_Logging_Destination="CONSOLE",
-    Syslog_Logging_Destination="SYLOG",
-    Default_Logging_Destination="CONSOLE",
+    Syslog_Logging_Destination="syslog",
+    Default_Logging_Destination="console",
     Default_Logging_Level="ERROR",
     Format="%(message)s",
     Rich="Rich",
-)
-
-# define the logger constants
-logger = create_constants(
-    "logger",
-    Richlog="discover-richlog",
-    Syslog="discover-syslog",
-)
-
-# define the constants for the discover tool
-discover = create_constants(
-    "discover",
-    Emoji=":shield: ",
-    Https="https://",
-    Name="discover-test-coverage",
-    Separator="/",
-    Server_Shutdown=":person_shrugging: Shut down fortify's sylog server",
-    Tagline="discover-test-coverage: Does your test suite have effective coverage?",
-    Website="https://github.com/DiscoverTestCoverage/discover-test-coverage",
 )
 
 # define the constants for markers
@@ -99,6 +113,7 @@ server = create_constants(
 tests = create_constants(
     "tests",
     Backup="-backup",
+    Conftest="conftest.py",
 )
 
 # define the wildcards constants

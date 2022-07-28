@@ -3,6 +3,7 @@
 import logging
 import logging.config
 import logging.handlers
+import sys
 
 from rich.logging import RichHandler
 from rich.traceback import install
@@ -20,14 +21,15 @@ def configure_logging(
     debug_dest: str = constants.logging.Default_Logging_Destination,
 ) -> logging.Logger:
     """Configure standard Python logging package."""
-    # use rich logger as the destination if it console specified
-    if debug_dest == constants.logging.Console_Logging_Destination:
-        return configure_logging_rich(debug_level)
-    # otherwise, use the default sys logger
-    return configure_logging_syslog(debug_level)
+    # use the specified logger with the specified destination
+    # by dynamically constructing the function to call and then
+    # invoking it with the provided debug_dest parameter
+    function_name = constants.logger.Function_Prefix + debug_dest
+    configure_module = sys.modules[__name__]
+    return getattr(configure_module, function_name)(debug_level)
 
 
-def configure_logging_rich(
+def configure_logging_console(
     debug_level: str = constants.logging.Default_Logging_Level,
 ) -> logging.Logger:
     """Configure standard Python logging package to use rich."""
@@ -40,7 +42,7 @@ def configure_logging_rich(
         handlers=[RichHandler()],
     )
     # create a logger and then return it
-    logger = logging.getLogger(constants.logger.Richlog)
+    logger = logging.getLogger()
     return logger
 
 
@@ -59,5 +61,5 @@ def configure_logging_syslog(
         handlers=[syslog_handler],
     )
     # create a logger and then return it
-    logger = logging.getLogger(constants.logger.Syslog)
+    logger = logging.getLogger()
     return logger

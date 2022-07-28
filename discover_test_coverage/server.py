@@ -24,7 +24,7 @@ class SyslogUDPHandler(socketserver.BaseRequestHandler):
         message = bytes.decode(
             self.request[0].strip(), encoding=constants.server.Utf8_Encoding
         )
-        # remote not-printable characters that can appear in message
+        # remove not-printable characters that can appear in message
         enhanced_message = str(message).replace(
             constants.markers.Bad_Fifteen, constants.markers.Empty
         )
@@ -37,8 +37,8 @@ class SyslogUDPHandler(socketserver.BaseRequestHandler):
         logger.debug(enhanced_message)
 
 
-def run_syslog_server():
-    """Run a syslog server."""
+def start_syslog_server():
+    """Start a syslog server."""
     global logger
     # always log all of the messages to a file
     logger.setLevel(logging.DEBUG)

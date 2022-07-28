@@ -1,12 +1,17 @@
 """Perform logging and/or console output."""
 
+import logging
+
 from rich.console import Console
 
 from discover_test_coverage import configure
 from discover_test_coverage import constants
 from discover_test_coverage import debug
 
-logger = None
+# declare a default logger
+logger = logging.getLogger()
+
+# create a default console
 console = Console()
 
 

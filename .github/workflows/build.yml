@@ -65,6 +65,10 @@ jobs:
         - name: Run Pylint Linting Tool
           run: |
             poetry run task pylint
+        # Run the mypy linting and type checking tool
+        - name: Run Mypy Linting and Type Checking Tool
+          run: |
+            poetry run task mypy
         # Run the test suite and collect coverage
         - name: Run the Test Suite
           run: |

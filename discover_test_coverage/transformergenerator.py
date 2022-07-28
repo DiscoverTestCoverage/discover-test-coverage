@@ -2,7 +2,6 @@
 
 import libcst as cst
 
-from discover_test_coverage.transformers import functioncoverage
 from discover_test_coverage.transformers import testfixtures
 
 
@@ -17,10 +16,9 @@ class TransformerGenerator(object):
         """Generate a transformer based on type of instrumentation needed."""
         return getattr(self, "generate_transformer_{}".format(self.type))(*args, **kwgs)
 
-    def generate_transformer_function(self) -> cst.CSTTransformer:
+    def generate_transformer_function(self) -> None:
         """Generate a fortified function coverage transformer to create an instrumented program."""
-        transformer = functioncoverage.FortifiedFunctionCoverageTransformer()
-        return transformer
+        print("TODO: function coverage transformer")
 
     def generate_transformer_branch(self) -> None:
         """Generate a fortified branch coverage transformer to create an instrumented program."""
