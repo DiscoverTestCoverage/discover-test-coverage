@@ -44,7 +44,6 @@ def create_libcst_transformer(
 def transfer_files(
     project_directory_path: Path,
     program_directory: Path,
-    instrumentation_type: instrumentation.InstrumentationType,
     file_finder: Callable,
 ) -> int:
     """Transform directory of files by adding instrumentation."""
@@ -69,7 +68,7 @@ def transfer_files(
         with Progress() as progress:
             # create the instrumentation task label for the progress bar
             task = progress.add_task(
-                f":sparkles: Copy test files",
+                ":sparkles: Copy test files",
                 total=len(program_files_list),
             )
             # iteratively transform the source code for each of the program files
