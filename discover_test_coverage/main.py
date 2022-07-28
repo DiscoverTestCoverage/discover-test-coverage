@@ -116,6 +116,9 @@ def instrument_tests(
     transformed_file_count = transfer.transfer_files(
         project_directory, tests_directory, file.find_python_files
     )
+    # delete the conftest.py file that was added to the main tests
+    # directory for the project as it was only placed there to facilitate
+    # easy copying and was not originally a part of the project
     codegenerator.delete_instrumented_conftest_file(project_directory, tests_directory)
     # display the footer
     output.print_footer()
