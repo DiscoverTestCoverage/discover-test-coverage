@@ -91,7 +91,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
                     empty_line_type, self.name
                 )
             )
-            # generate the concrete abstract syntax tree for a test with no docstring
+            # generate the concrete abstract syntax tree for blank line of source code
             blank_line_statement = instrumentation_type_generator.generate()
             # insert the import statement before all existing lines of the body
             body_modified = (
@@ -102,5 +102,6 @@ class TestFixtureTransformer(cst.CSTTransformer):
             output.logger.debug(
                 f"Modified source code body to have length: {len(body_modified)}"
             )
+            # use the body_modified as the body of the updated_node
             updated_node = updated_node.with_changes(body=body_modified)
         return updated_node
