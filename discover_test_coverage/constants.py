@@ -27,6 +27,12 @@ discover = create_constants(
     Website="https://github.com/DiscoverTestCoverage/discover-test-coverage",
 )
 
+# define the constants for the discover tool
+generator = create_constants(
+    "generator",
+    Function_Prefix="generate_{}",
+)
+
 # define the logger constants
 logger = create_constants(
     "logger",
