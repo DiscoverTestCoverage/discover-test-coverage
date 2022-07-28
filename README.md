@@ -3,8 +3,8 @@
 [![build](https://github.com/DiscoverTestCoverage/discover-test-coverage/actions/workflows/build.yml/badge.svg)](https://github.com/DiscoverTestCoverage/discover-test-coverage/actions/workflows/build.yml)
 ![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/DiscoverTestCoverage/discover-test-coverage/python-coverage-comment-action-badge.json)
 [![Language: Python](https://img.shields.io/badge/Language-Python-blue.svg)](https://github.com/DiscoverTestCoverage/discover-test-coverage/search?l=python)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-blue.svg)](https://github.com/DiscoverTestCoverage/discover-test-coverage/graphs/commit-activity)
-[![Code Style: black](https://img.shields.io/badge/Code%20Style-black-blue.svg)](https://github.com/psf/black)
+[![Code Style: black](https://img.shields.io/badge/Code%20Style-Black-blue.svg)](https://github.com/psf/black)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-Yes-blue.svg)](https://github.com/DiscoverTestCoverage/discover-test-coverage/graphs/commit-activity)
 [![License LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
 This repository provides the `discover` command that allows you to:
