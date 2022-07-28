@@ -9,6 +9,8 @@ from rich.progress import Progress
 from rich.progress import TextColumn
 from rich.table import Column
 
+from discover_test_coverage import codegenerator
+from discover_test_coverage import constants
 from discover_test_coverage import file
 from discover_test_coverage import output
 
@@ -48,6 +50,19 @@ def transfer_files(
                 instrumented_file = Path(hidden_program_directory / program_file.name)
                 # copy the existing file to the "instrumented" one in hidden directory
                 shutil.copy(program_file, instrumented_file)
+                # create a fully qualified name of this function in this module
+                # so that this detail can be displayed in the generated comment
+                comment_name = (
+                    str(__name__)
+                    + constants.markers.Dot
+                    + str(transfer_files.__qualname__)
+                )
+                # append a comment indicating that a copy took place in this file
+                with instrumented_file.open("a") as append_to_file:
+                    append_to_file.write(
+                        constants.markers.Newline
+                        + codegenerator.get_discover_comment_code(comment_name)
+                    )
                 # indicate that the current task is finished to advance progress bar
                 progress.advance(task)
     return len(program_files_list)
