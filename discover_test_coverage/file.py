@@ -1,7 +1,5 @@
 """Perform file operations."""
 
-from typing import List
-
 from pathlib import Path
 from pathlib import PurePath
 from shutil import rmtree
@@ -91,12 +89,12 @@ def create_hidden_directory(
 
 
 def get_hidden_directory(
-    containing_directory: Path, directory: Path, delete_path: bool = True
+    containing_directory: Path, directory: Path,
 ) -> Path:
     """Create a hidden directory."""
     output.logger.debug(f"Hiding in containing directory: {containing_directory}")
     output.logger.debug(f"Hiding the directory with name: {directory.name}")
-    # create a hidden directory (i.e., a directory with name "program" will
+    # access a hidden directory (i.e., a directory with name "program" will
     # lead to creation of a hidden directory called ".program")
     hidden_directory = Path(
         containing_directory / Path(constants.markers.Hidden + str(directory.name))
