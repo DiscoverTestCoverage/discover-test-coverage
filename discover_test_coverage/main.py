@@ -106,6 +106,7 @@ def instrument_tests(
     # instrumented and thus one needs to be created and then
     # copied to the hidden directory location for the tests
     if transformed_file_count == 0:
+        output.console.print(":sparkles: Creating conftest.py file since one does not exist")
         codegenerator.create_instrumented_conftest_file(
             project_directory, tests_directory
         )
