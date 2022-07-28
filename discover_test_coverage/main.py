@@ -193,8 +193,9 @@ def test_coverage(
         project_directory=project_directory,
         program_directory=program_directory,
     )
-    # run the test suite using Pytest without collect coverage information;
-    # this run will not use instrumented program and/or test source code
+    # run the test suite using Pytest while collecting coverage information;
+    # this run will use instrumented program and/or test source code because
+    # of the fact that the last parameter to function call is True
     run.run_test_suite_with_optional_coverage(
         project_directory, tests_directory, test_run_command, True
     )
