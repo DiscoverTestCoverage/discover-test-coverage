@@ -28,6 +28,7 @@ def get_discover_comment_code(name) -> str:
     # module that added the instrumentation and full date-time details
     discover_comment_code = (
         constants.code.Discover_Comment
+        + constants.markers.Space
         + f"{datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {name}\n"
     )
     return discover_comment_code
