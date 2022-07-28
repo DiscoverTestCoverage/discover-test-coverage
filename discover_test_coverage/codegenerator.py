@@ -23,7 +23,7 @@ class InstrumentationTypeSourceCode(str, Enum):
 
 
 def get_discover_comment_code(name) -> str:
-    """Return the standard comment that goes along with fortify's instrumentation."""
+    """Return the standard comment that goes along with discover's instrumentation."""
     # define the standard code comment to include the name of the
     # module that added the instrumentation and full date-time details
     discover_comment_code = (
