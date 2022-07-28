@@ -44,11 +44,11 @@ def create_instrumented_conftest_file(
     """Create an instrumented conftest.py file in specified directory."""
     conftest_path = Path("conftest.py")
     initial_conftest_file = Path(project_directory / test_directory / conftest_path)
-    comment_name = str(__name__) + "." + str(create_instrumented_conftest_file.__qualname__)
+    comment_name = (
+        str(__name__) + "." + str(create_instrumented_conftest_file.__qualname__)
+    )
     full_code_text = (
-        get_discover_comment_code(comment_name)
-        + "\n"
-        + get_testfixture_start_import()
+        get_discover_comment_code(comment_name) + "\n" + get_testfixture_start_import()
     )
     initial_conftest_file.write_text(full_code_text)
 
