@@ -89,12 +89,21 @@ def instrument_tests(
         project_directory=project_directory,
         program_directory=tests_directory,
     )
-    # instrument all of the files in a program
-    transform.transform_files_using_libcst(
+    # instrument all of the conftest.py files in a program
+    transformed_file_count = transform.transform_files_using_libcst(
         project_directory,
         tests_directory,
         instrumentation_type,
-        file.find_conftest_files,
+        file.find_conftest_files
+    )
+    if transformed_file_count == 0:
+        print("need to copy one over!")
+    output.console.print()
+    transformed_file_count = transform.transfer_files(
+        project_directory,
+        tests_directory,
+        instrumentation_type,
+        file.find_python_files_not_conftest
     )
     # display the footer
     output.print_footer()
