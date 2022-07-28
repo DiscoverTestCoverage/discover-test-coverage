@@ -27,8 +27,8 @@ def get_discover_comment_code(name) -> str:
     # define the standard code comment to include the name of the
     # module that added the instrumentation and full date-time details
     discover_comment_code = (
-        "# discover-test-coverage instrumentation generated on"
-        f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {name}\n"
+        constants.code.Discover_Comment
+        + f"{datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {name}\n"
     )
     return discover_comment_code
 
