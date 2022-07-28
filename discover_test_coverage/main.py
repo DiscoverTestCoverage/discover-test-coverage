@@ -93,7 +93,9 @@ def instrument_tests(
     )
     # instrument all of the conftest.py files in a program; note
     # that these are normally in the tests/ directory but can,
-    # in fact, be at any location in a project
+    # in fact, be at any location in a project. The main import
+    # statement for the libdtc test fixtures will happen in the
+    # conftest.py files that this function call will transform.
     transformed_file_count = transform.transform_files_using_libcst(
         project_directory,
         tests_directory,
