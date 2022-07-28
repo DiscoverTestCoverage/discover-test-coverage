@@ -1,7 +1,6 @@
 """Instrument an application and its test suite using libCST transformers."""
 
 import difflib
-import shutil
 from pathlib import Path
 from typing import Callable
 
@@ -39,48 +38,6 @@ def create_libcst_transformer(
     libcst_transformer = instrumentation_type_generator.generate()
     output.logger.debug(f"Created the transformer: {type(libcst_transformer)}")
     return libcst_transformer
-
-
-def transfer_files(
-    project_directory_path: Path,
-    program_directory: Path,
-    file_finder: Callable,
-) -> int:
-    """Transform directory of files by adding instrumentation."""
-    # create the fully qualified directory that contains the program's source code
-    fully_qualified_program_directory = project_directory_path / program_directory
-    output.logger.debug(fully_qualified_program_directory)
-    # find all of the Python source code files for instrumentation
-    program_files_list = file_finder(fully_qualified_program_directory)
-    # configure a progress bar for visual display in the terminal window
-    text_column = TextColumn("{task.description}", table_column=Column(ratio=1))
-    bar_column = BarColumn(bar_width=None, table_column=Column(ratio=2))
-    progress = Progress(text_column, bar_column, expand=True)
-    # create a hidden directory that can store the instrumented files
-    hidden_program_directory = file.get_hidden_directory(
-        project_directory_path, project_directory_path / program_directory
-    )
-    # hidden_program_directory = Path(
-    # project_directory_path / project_directory_path / program_directory
-    # )
-    # instrument each of the individual files in the program, updating progress bar
-    if len(program_files_list) > 0:
-        with Progress() as progress:
-            # create the instrumentation task label for the progress bar
-            task = progress.add_task(
-                ":sparkles: Copy test files",
-                total=len(program_files_list),
-            )
-            # iteratively transform the source code for each of the program files
-            for program_file in program_files_list:
-                # progress.console.print(f"Copying {file.elide_path(program_file)}")
-                progress.console.print(f"Copying {(program_file)}")
-                # create a new pathlib Path object for the "instrumented" module
-                instrumented_file = Path(hidden_program_directory / program_file.name)
-                shutil.copy(program_file, instrumented_file)
-                # indicate that the current task is finished to advance progress bar
-                progress.advance(task)
-    return len(program_files_list)
 
 
 def transform_files_using_libcst(
