@@ -17,8 +17,8 @@ from discover_test_coverage import transform
 class InstrumentationTypeSourceCode(str, Enum):
     """The predefined levels for source code based on instrumentation type."""
 
-    TEST_SESSION_DOCSTRONG = "test_session_docstring"
-    TEST_SESSION_NO_DOCSTRONG = "test_session_no_docstring"
+    TEST_INSTRUMENTATION_DOCSTRING = "test_instrumentation_docstring"
+    TEST_INSTRUMENTATION_NO_DOCSTRONG = "test_instrumentation_no_docstring"
     EMPTY_LINE = "empty_line"
 
 
@@ -107,7 +107,7 @@ class InstrumentedSourceCodeGenerator(object):
             self, constants.generator.Function_Prefix.format(self.code_type)
         )(*args, **kwgs)
 
-    def generate_test_session_no_docstring(
+    def generate_test_instrumentation_no_docstring(
         self,
     ) -> Union[CSTNode, SimpleStatementLine, BaseCompoundStatement]:
         """Generate a concrete abstract syntax tree for importing test fixture when no docstring."""
@@ -125,7 +125,7 @@ class InstrumentedSourceCodeGenerator(object):
             multiple_line_import_statement_str
         )
 
-    def generate_test_session_docstring(
+    def generate_test_instrumentation_docstring(
         self,
     ) -> Union[CSTNode, SimpleStatementLine, BaseCompoundStatement]:
         """Generate a concrete abstract syntax tree for importing test fixture when docstring."""
