@@ -10,6 +10,7 @@ from libcst import CSTNode
 from libcst._nodes.statement import BaseCompoundStatement
 from libcst._nodes.statement import SimpleStatementLine
 
+from discover_test_coverage import constants
 from discover_test_coverage import transform
 
 
@@ -42,13 +43,25 @@ def create_instrumented_conftest_file(
     project_directory: Path, test_directory: Path
 ) -> None:
     """Create an instrumented conftest.py file in specified directory."""
-    conftest_path = Path("conftest.py")
+    # create a pathlib Path object for the conftest.py file that will
+    # be stored in the main test directory for the project
+    conftest_path = Path(constants.tests.Conftest)
     initial_conftest_file = Path(project_directory / test_directory / conftest_path)
+    # create a fully qualified name of this function in this module
+    # so that this detail can be displayed in the generated comment
     comment_name = (
-        str(__name__) + "." + str(create_instrumented_conftest_file.__qualname__)
+        str(__name__)
+        + constants.markers.Dot
+        + str(create_instrumented_conftest_file.__qualname__)
     )
+    # create the entire text string that will be written to the
+    # conftest.py file; there are two lines in this string
+    # Line 1: comment explaining the instrumentation
+    # Line 2: the import for all of the test fixtures
     full_code_text = (
-        get_discover_comment_code(comment_name) + "\n" + get_testfixture_start_import()
+        get_discover_comment_code(comment_name)
+        + constants.markers.Newline
+        + get_testfixture_start_import()
     )
     initial_conftest_file.write_text(full_code_text)
 
