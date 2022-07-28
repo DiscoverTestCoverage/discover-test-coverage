@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from enum import Enum
+from pathlib import Path
 from typing import Union
 
 import libcst as cst
@@ -20,6 +21,47 @@ class InstrumentationTypeSourceCode(str, Enum):
     EMPTY_LINE = "empty_line"
 
 
+def get_discover_comment_code(name) -> str:
+    """Return the standard comment that goes along with fortify's instrumentation."""
+    # define the standard code comment to include the name of the
+    # module that added the instrumentation and full date-time details
+    discover_comment_code = (
+        "# discover-test-coverage instrumentation generated on"
+        f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {name}\n"
+    )
+    return discover_comment_code
+
+
+def get_testfixture_start_import() -> str:
+    """Return the import statement for the test session fixture."""
+    # define the import statement for all of the test fixtures
+    return "from libdtc.testfixture import *\n"
+
+
+def create_instrumented_conftest_file(
+    project_directory: Path, test_directory: Path
+) -> None:
+    """Create an instrumented conftest.py file in specified directory."""
+    conftest_path = Path("conftest.py")
+    initial_conftest_file = Path(project_directory / test_directory / conftest_path)
+    comment_name = str(__name__) + "." + str(create_instrumented_conftest_file.__qualname__)
+    full_code_text = (
+        get_discover_comment_code(comment_name)
+        + "\n"
+        + get_testfixture_start_import()
+    )
+    initial_conftest_file.write_text(full_code_text)
+
+
+def delete_instrumented_conftest_file(
+    project_directory: Path, test_directory: Path
+) -> None:
+    """Delete an instrumented conftest.py file in specified directory."""
+    conftest_path = Path("conftest.py")
+    initial_conftest_file = Path(project_directory / test_directory / conftest_path)
+    initial_conftest_file.unlink()
+
+
 class InstrumentedSourceCodeGenerator(object):
     """Use a form of single dispatch to generate concrete abstract syntax trees."""
 
@@ -36,21 +78,6 @@ class InstrumentedSourceCodeGenerator(object):
             config=transform.source_tree_configuration,
         )
         return import_statement
-
-    def get_discover_comment_code(self) -> str:
-        """Return the standard comment that goes along with fortify's instrumentation."""
-        # define the standard code comment to include the name of the
-        # module that added the instrumentation and full date-time details
-        discover_comment_code = (
-            "# discover-test-coverage instrumentation generated on"
-            f" {datetime.now().strftime('%m/%d/%Y at %H:%M:%S')} by {self.name}\n"
-        )
-        return discover_comment_code
-
-    def get_testfixture_start_import(self) -> str:
-        """Return the import statement for the test session fixture."""
-        # define the import statement for all of the test fixtures
-        return "from libdtc.testfixture import *\n"
 
     def generate(
         self, *args, **kwgs
@@ -72,7 +99,7 @@ class InstrumentedSourceCodeGenerator(object):
         # Note: discover_test_coverage package is not part of the discover package;
         # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
-            self.get_discover_comment_code() + self.get_testfixture_start_import()
+            get_discover_comment_code(self.name) + get_testfixture_start_import()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
@@ -91,7 +118,7 @@ class InstrumentedSourceCodeGenerator(object):
         # Note: discover_test_coverage package is not part of the discover package;
         # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
-            "\n" + self.get_discover_comment_code() + self.get_testfixture_start_import()
+            "\n" + get_discover_comment_code(self.name) + get_testfixture_start_import()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
