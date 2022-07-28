@@ -36,7 +36,7 @@ def get_discover_comment_code(name) -> str:
 def get_testfixture_start_import() -> str:
     """Return the import statement for the test session fixture."""
     # define the import statement for all of the test fixtures
-    return "from libdtc.testfixture import *\n"
+    return "from libdtc.testfixture import *" + constants.markers.Newline
 
 
 def create_instrumented_conftest_file(
@@ -135,7 +135,9 @@ class InstrumentedSourceCodeGenerator(object):
         # Note: discover_test_coverage package is not part of the discover package;
         # it is a separate package on which discover and a subject program depends
         multiple_line_import_statement_str = (
-            "\n" + get_discover_comment_code(self.name) + get_testfixture_start_import()
+            constants.markers.Newline
+            + get_discover_comment_code(self.name)
+            + get_testfixture_start_import()
         )
         return InstrumentedSourceCodeGenerator.create_parsed_statement(
             multiple_line_import_statement_str
