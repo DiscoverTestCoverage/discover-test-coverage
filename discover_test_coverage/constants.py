@@ -18,6 +18,7 @@ def create_constants(name, *args, **kwargs):
 # define the constants for the discover tool
 code = create_constants(
     "code",
+    Comment="#",
     Discover_Comment="# discover-test-coverage instrumentation generated on",
 )
 
