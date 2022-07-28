@@ -1,8 +1,6 @@
-<span style="display:block; margin-top:-20px;margin-bottom:-50px;">
 <p align="center">
-<img src="https://raw.githubusercontent.com/DiscoverTestCoverage/discover-test-coverage/master/.github/logos/Discover.svg" alt="DiscoverTestCoverage"</img>
+<img src="https://raw.githubusercontent.com/DiscoverTestCoverage/discover-test-coverage/master/.github/logos/Discover.svg" alt="DiscoverTestCoverage"/>
 </p>
-</span>
 
 # discover-test-coverage
 
