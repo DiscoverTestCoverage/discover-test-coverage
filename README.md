@@ -15,13 +15,13 @@
 
 This repository provides the `discover` command that allows you to:
 
-- Instrument a subject application to collect discover test coverage through
+- Instrument a subject application to discover test coverage through
   disabling code segments
 - Run the test suite of a subject application to:
   - Start and stop a logging server
   - Execute the test suite and report its status
   - Collect standard coverage information
-  - Collect fortified coverage information
+  - Collect effective coverage information
 
 This project is in early stages and thus the documentation and implementation
 are emerging.
