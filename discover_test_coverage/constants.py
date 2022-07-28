@@ -16,6 +16,12 @@ def create_constants(name, *args, **kwargs):
 
 
 # define the constants for the discover tool
+code = create_constants(
+    "code",
+    Discover_Comment="# discover-test-coverage instrumentation generated on",
+)
+
+# define the constants for the discover tool
 discover = create_constants(
     "discover",
     Emoji=":shield: ",
