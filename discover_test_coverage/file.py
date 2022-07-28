@@ -5,6 +5,7 @@ from pathlib import PurePath
 from shutil import rmtree
 from typing import List
 
+from discover_test_coverage import codegenerator
 from discover_test_coverage import constants
 from discover_test_coverage import output
 
@@ -20,9 +21,13 @@ def find_python_files(directory: Path) -> List[Path]:
 
 
 def find_python_files_not_conftest(directory: Path) -> List[Path]:
-    """Determine if the list of Path objects contains one for the conftest file."""
+    """Find all of the Python files that are not a conftest.py file."""
+    # create a list to store Python files that are not conftest.py
     not_conftest_file_list = []
+    # find all of the Python files in the specified directory
     python_file_list = find_python_files(directory)
+    # add to the not_conftest_file_list all files that
+    # are not conftest.py according to their name
     for python_file in python_file_list:
         if python_file.name != "conftest.py":
             not_conftest_file_list.append(python_file)
@@ -30,27 +35,16 @@ def find_python_files_not_conftest(directory: Path) -> List[Path]:
 
 
 def find_conftest_files(directory: Path) -> List[Path]:
-    """Determine if the list of Path objects contains one for the conftest file."""
+    """Find all of the Python files that are a conftest.py file."""
+    # create a list of all the conftest.py files
     conftest_file_list = []
+    # find all of the Python files in the specified directory
     python_file_list = find_python_files(directory)
+    # add to the conftest_file_list all files that are
+    # conftest.py according to their name
     for python_file in python_file_list:
         if python_file.name == "conftest.py":
             conftest_file_list.append(python_file)
-    return conftest_file_list
-
-
-def find_and_create_conftest_files(directory: Path) -> List[Path]:
-    """Determine if the list of Path objects contains one for the conftest file."""
-    conftest_file_list = []
-    python_file_list = find_python_files(directory)
-    for python_file in python_file_list:
-        if python_file.name == "conftest.py":
-            conftest_file_list.append(python_file)
-    if len(conftest_file_list) == 0:
-        initial_conftest_file = Path(str(directory) + "/" + "conftest.py")
-        initial_conftest_file.write_text('"""created conftest file."""')
-        conftest_file_list.append(initial_conftest_file)
-    conftest_file_list.extend(python_file_list)
     return conftest_file_list
 
 
@@ -89,7 +83,8 @@ def create_hidden_directory(
 
 
 def get_hidden_directory(
-    containing_directory: Path, directory: Path,
+    containing_directory: Path,
+    directory: Path,
 ) -> Path:
     """Create a hidden directory."""
     output.logger.debug(f"Hiding in containing directory: {containing_directory}")
