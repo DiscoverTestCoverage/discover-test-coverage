@@ -54,7 +54,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
         if module_has_docstring:
             # generate the correct type of import statement for a module with a docstring
             import_statement_type = (
-                codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_DOCSTRONG
+                codegenerator.InstrumentationTypeSourceCode.TEST_INSTRUMENTATION_DOCSTRING
             )
             instrumentation_type_generator = (
                 codegenerator.InstrumentedSourceCodeGenerator(
@@ -75,7 +75,7 @@ class TestFixtureTransformer(cst.CSTTransformer):
         else:
             # create the import statement
             import_statement_type = (
-                codegenerator.InstrumentationTypeSourceCode.TEST_SESSION_NO_DOCSTRONG
+                codegenerator.InstrumentationTypeSourceCode.TEST_INSTRUMENTATION_NO_DOCSTRONG
             )
             instrumentation_type_generator = (
                 codegenerator.InstrumentedSourceCodeGenerator(
