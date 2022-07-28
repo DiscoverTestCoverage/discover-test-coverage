@@ -102,7 +102,9 @@ class InstrumentedSourceCodeGenerator(object):
         """Generate by dispatch a concrete abstract syntax tree by needed instrumentation."""
         # call the function with the name that starts with the word "generate"
         # and then finishes with the specific type of source code needed
-        return getattr(self, "generate_{}".format(self.code_type))(*args, **kwgs)
+        return getattr(
+            self, constants.generator.Function_Prefix.format(self.code_type)
+        )(*args, **kwgs)
 
     def generate_test_session_no_docstring(
         self,
