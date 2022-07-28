@@ -20,7 +20,7 @@ def configure_logging(
     debug_dest: str = constants.logging.Default_Logging_Destination,
 ) -> logging.Logger:
     """Configure standard Python logging package."""
-    # use rich logger as the destination if it console specified
+    # use rich logger as the destination if the console is specified
     if debug_dest == constants.logging.Console_Logging_Destination:
         return configure_logging_rich(debug_level)
     # otherwise, use the default sys logger
