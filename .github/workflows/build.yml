@@ -53,6 +53,10 @@ jobs:
         - name: Run Black Code Formatter
           run: |
             poetry run task black
+        # Run the isort import code formatter in checking mode
+        - name: Run Isort Import Formatter
+          run: |
+            poetry run task isort
         # Run the flake8 linting tool
         - name: Run Flake8 Linting Tool
           run: |
