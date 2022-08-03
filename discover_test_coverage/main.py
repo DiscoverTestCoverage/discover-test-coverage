@@ -173,11 +173,10 @@ def test_coverage(
     project_directory: Path = typer.Option(...),
     program_directory: Path = typer.Option(...),
     tests_directory: Path = typer.Option(...),
-    config_file: Path = typer.Option(
+    discover_dir: Path = typer.Option(
         configure.Configuration.HOME
         + configure.Configuration.SEPARATOR
         + configure.Configuration.DIRECTORY
-        + configure.Configuration.FILE
     ),
     test_run_command: str = typer.Option(
         run.TestRunCommand.VENV_TEST.value, "--test-run-cmd"
@@ -204,21 +203,28 @@ def test_coverage(
         test_run_command=test_run_command,
         project_directory=project_directory,
         program_directory=program_directory,
-        config_file=config_file,
+        discover_dir=discover_dir,
     )
+    # save the configuration of the discover configuration
+    # file so as to support configuration between the cli
+    # and the executing test suite that will use libdtc
     configure.save_configuration(
         debug_level=debug_level,
         debug_destination=debug_destination,
         test_run_command=test_run_command,
-        project_directory=project_directory,
-        program_directory=program_directory,
-        config_file=config_file,
+        project_directory=str(project_directory),
+        program_directory=str(program_directory),
+        discover_dir=discover_dir,
     )
     # run the test suite using Pytest while collecting coverage information;
     # this run will use instrumented program and/or test source code because
-    # of the fact that the last parameter to function call is True
-    configure_arg = (" --configure " + "'" + str(config_file) + "'").replace("/", "SEP")
-    test_run_command_complete = test_run_command + configure_arg
+    # of the fact that the last parameter to function call is True; the
+    # coveragereport argument allows the instrumentation that runs during
+    # coverage monitoring to save its results for this program and others
+    coveragereport_arg = (
+        " --configure " + "'" + str(discover_dir) + "/discover.json" + "'"
+    ).replace("/", "SEP")
+    test_run_command_complete = test_run_command + coveragereport_arg
     run.run_test_suite_with_optional_coverage(
         project_directory,
         tests_directory,
