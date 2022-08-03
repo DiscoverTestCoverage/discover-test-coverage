@@ -5,6 +5,7 @@ from pathlib import Path
 import typer
 
 from discover_test_coverage import codegenerator
+from discover_test_coverage import configure
 from discover_test_coverage import debug
 from discover_test_coverage import file
 from discover_test_coverage import instrumentation
@@ -172,6 +173,12 @@ def test_coverage(
     project_directory: Path = typer.Option(...),
     program_directory: Path = typer.Option(...),
     tests_directory: Path = typer.Option(...),
+    config_file: Path = typer.Option(
+        configure.Configuration.HOME
+        + configure.Configuration.SEPARATOR
+        + configure.Configuration.DIRECTORY
+        + configure.Configuration.FILE
+    ),
     test_run_command: str = typer.Option(
         run.TestRunCommand.VENV_TEST.value, "--test-run-cmd"
     ),
@@ -197,12 +204,26 @@ def test_coverage(
         test_run_command=test_run_command,
         project_directory=project_directory,
         program_directory=program_directory,
+        config_file=config_file,
+    )
+    configure.save_configuration(
+        debug_level=debug_level,
+        debug_destination=debug_destination,
+        test_run_command=test_run_command,
+        project_directory=project_directory,
+        program_directory=program_directory,
+        config_file=config_file,
     )
     # run the test suite using Pytest while collecting coverage information;
     # this run will use instrumented program and/or test source code because
     # of the fact that the last parameter to function call is True
+    configure_arg = (" --configure " + "'" + str(config_file) + "'").replace("/", "SEP")
+    test_run_command_complete = test_run_command + configure_arg
     run.run_test_suite_with_optional_coverage(
-        project_directory, tests_directory, test_run_command, True
+        project_directory,
+        tests_directory,
+        test_run_command_complete,
+        True,
     )
 
 
