@@ -63,6 +63,9 @@ coverage = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report t
 coverage-html = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report term-missing --cov-report html --cov --cov-branch", help = "Run coverage monitoring for the test suite" }
 coverage-report = { cmd = "poetry run pytest -s --cov-config .coveragerc --cov-report term-missing --cov-report xml --cov --cov-branch --cov-append", help = "Run coverage monitoring for the test suite" }
 flake8 = { cmd = "flake8 discover_test_coverage tests", help = "Run the flake8 checks for source code documentation" }
+fiximports = { cmd = "isort discover_test_coverage tests", help = "Run isort to fix source code imports" }
+fixformat = { cmd = "black discover_test_coverage tests", help = "Run the black checks for source code format" }
+isort = { cmd = "isort -c discover_test_coverage tests", help = "Run the isort checks for source code" }
 mypy = { cmd = "poetry run mypy discover_test_coverage", help = "Run the mypy type checker for potential type errors" }
 pydocstyle = { cmd = "pydocstyle discover_test_coverage tests", help = "Run the pydocstyle checks for source code documentation" }
 pylint = { cmd = "pylint discover_test_coverage tests", help = "Run the pylint checks for source code documentation" }
@@ -70,6 +73,14 @@ test = { cmd = "pytest -x -s", help = "Run the pytest test suite" }
 test-silent = { cmd = "pytest -x --show-capture=no", help = "Run the pytest test suite without showing output" }
 all = "task black && task flake8 && task pydocstyle && task pylint && task mypy && task test"
 lint = "task black && task flake8 && task pydocstyle && task pylint"
+
+[tool.isort]
+include_trailing_comma = true
+force_single_line = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
