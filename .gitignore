@@ -357,3 +357,6 @@ Temporary Items
 
 # pytest-cov htmlcov
 htmlcov
+
+# coverage report
+.coveragereport.json
