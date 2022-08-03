@@ -3,12 +3,30 @@
 import logging
 import logging.config
 import logging.handlers
+import os
 import sys
+from enum import Enum
+from pathlib import Path
 
 from rich.logging import RichHandler
 from rich.traceback import install
 
 from discover_test_coverage import constants
+
+
+class Configuration(str, Enum):
+    """The predefined values for the configuration file."""
+
+    HOME = Path.home()
+    DIRECTORY = ".discover/"
+    FILE = "discover.ini"
+    SEPARATOR = os.sep
+
+
+def save_configuration(**configurations) -> None:
+    """Save the configuration in the specified directory."""
+    print("these are the configurations")
+    print(configurations)
 
 
 def configure_tracebacks() -> None:
