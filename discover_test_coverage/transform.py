@@ -16,7 +16,6 @@ from discover_test_coverage import instrumentation
 from discover_test_coverage import output
 from discover_test_coverage import transformergenerator
 
-
 # global configuration of the source tree
 # that libCST creates through initial parse;
 # declared here so that it can be accessed

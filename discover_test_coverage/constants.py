@@ -15,6 +15,13 @@ def create_constants(name, *args, **kwargs):
     return new_constants(*itertools.chain(args, kwargs.values()))
 
 
+# define the constants for the arguments to testing process
+arguments = create_constants(
+    "arguments",
+    Configure="--configure",
+    Discover_Json="discover.json",
+)
+
 # define the constants for the discover tool
 code = create_constants(
     "code",
@@ -80,11 +87,13 @@ markers = create_constants(
     Empty_Bytes=b"",
     Empty="",
     Ellipse="...",
+    Forward_Slash="/",
     Dot=".",
     Hidden=".",
     Indent="   ",
     Newline="\n",
     Nothing="",
+    Single_Quote="'",
     Space=" ",
     Tab="\t",
     Underscore="_",

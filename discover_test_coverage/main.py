@@ -6,6 +6,7 @@ import typer
 
 from discover_test_coverage import codegenerator
 from discover_test_coverage import configure
+from discover_test_coverage import constants
 from discover_test_coverage import debug
 from discover_test_coverage import file
 from discover_test_coverage import instrumentation
@@ -222,7 +223,15 @@ def test_coverage(
     # coveragereport argument allows the instrumentation that runs during
     # coverage monitoring to save its results for this program and others
     coveragereport_arg = (
-        " --configure " + "'" + str(discover_dir) + "/discover.json" + "'"
+        constants.markers.Space
+        + constants.arguments.Configure
+        + constants.markers.Space
+        + constants.markers.Single_Quote
+        + str(discover_dir)
+        + constants.markers.Forward_Slash
+        + constants.arguments.Discover_Json
+        + constants.markers.Forward_Slash
+        + constants.markers.Single_Quote
     ).replace("/", "SEP")
     test_run_command_complete = test_run_command + coveragereport_arg
     run.run_test_suite_with_optional_coverage(

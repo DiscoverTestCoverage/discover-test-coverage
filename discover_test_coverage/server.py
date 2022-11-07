@@ -1,11 +1,11 @@
 """Create and run a syslog remote server."""
 
-from discover_test_coverage import constants
-from discover_test_coverage import output
-
 import logging
 import logging.handlers
 import socketserver
+
+from discover_test_coverage import constants
+from discover_test_coverage import output
 
 LOG_FILE = constants.server.Log_File
 HOST = constants.server.Localhost

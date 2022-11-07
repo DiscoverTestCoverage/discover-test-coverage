@@ -1,5 +1,6 @@
 """Configure logging and console output."""
 
+import json
 import logging
 import logging.config
 import logging.handlers
@@ -27,6 +28,22 @@ def save_configuration(**configurations) -> None:
     """Save the configuration in the specified directory."""
     print("these are the configurations")
     print(configurations)
+    # extract the string that contains the discover directory
+    discover_dir = configurations["discover_dir"]
+    discover_dir.mkdir(parents=True, exist_ok=True)
+    discover_json_file_path = Path(discover_dir / "discover.json")
+    discover_dir_str = str(discover_dir)
+    configurations["discover_dir"] = discover_dir_str
+    print("discover_dir")
+    print(type(discover_dir))
+    print(discover_dir)
+    # save details about the coverage report inside of the
+    # configurations dictionary so that the test coverage
+    # monitoring instrumentation can pick it up and use it
+    configurations["coverage_file"] = str(discover_dir) + "/coveragereport.json"
+    configurations_str = json.dumps(configurations, indent=2)
+    discover_json_file_path.touch()
+    discover_json_file_path.write_text(configurations_str)
 
 
 def configure_tracebacks() -> None:

@@ -97,6 +97,7 @@ def run_test_suite_with_optional_coverage(
         project_directory, test_directory, coverage
     )
     # run the test suite with the provided test execution command
+    print("test run command " + test_run_command)
     subprocess.run(test_run_command, shell=True)
     # display a label in standard output about finishing the test suite run
     output.print_test_finish()
